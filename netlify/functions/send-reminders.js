@@ -11,6 +11,16 @@ const VAPID_SUBJECT = process.env.VAPID_SUBJECT || 'mailto:contact@example.com';
 
 webpush.setVapidDetails(VAPID_SUBJECT, VAPID_PUBLIC_KEY, VAPID_PRIVATE_KEY);
 
+// Ajoute `days` jours à une date 'YYYY-MM-DD' et renvoie une chaîne 'YYYY-MM-DD'.
+// (Calcul fait en UTC pour éviter tout souci de décalage horaire sur le jour civil.)
+function addDaysStr(dateStr, days) {
+  const [y, m, d] = dateStr.split('-').map(Number);
+  const dt = new Date(Date.UTC(y, m - 1, d));
+  dt.setUTCDate(dt.getUTCDate() + days);
+  const pad = (n) => String(n).padStart(2, '0');
+  return `${dt.getUTCFullYear()}-${pad(dt.getUTCMonth() + 1)}-${pad(dt.getUTCDate())}`;
+}
+
 function todayInTimezone(timezone) {
   // Renvoie {dateStr:'YYYY-MM-DD', hour:Number} dans le fuseau horaire donné.
   const parts = new Intl.DateTimeFormat('en-CA', {
@@ -65,6 +75,31 @@ exports.handler = async () => {
       else if (sent === null) { await store.delete(deviceId); continue; }
     }
 
+    // --- Rappel échéances : tâches "limitées dans le temps" qui expirent demain ou aujourd'hui,
+    // et tâches "urgentes" toujours ouvertes (ce type n'a pas de date, donc on les rappelle tant
+    // qu'elles ne sont pas faites). Envoyé une fois par jour, à partir de 8h heure locale.
+    if (hour >= 8 && record.deadlineNotifiedDate !== today) {
+      const tomorrow = addDaysStr(today, 1);
+      const deadlineTasks = Array.isArray(state.deadlineTasks) ? state.deadlineTasks : [];
+      const dueToday = deadlineTasks.filter((t) => t.dueDate === today).map((t) => t.name);
+      const dueTomorrow = deadlineTasks.filter((t) => t.dueDate === tomorrow).map((t) => t.name);
+      const urgent = Array.isArray(state.urgentTaskNames) ? state.urgentTaskNames : [];
+
+      if (dueToday.length || dueTomorrow.length || urgent.length) {
+        const lines = [];
+        if (dueToday.length) lines.push(`⏳ Expire aujourd'hui : ${dueToday.join(', ')}`);
+        if (dueTomorrow.length) lines.push(`📅 Expire demain : ${dueTomorrow.join(', ')}`);
+        if (urgent.length) lines.push(`🔥 Urgent : ${urgent.join(', ')}`);
+
+        const sent = await sendPush(record.subscription, {
+          title: 'SYSTEM // Hunter Log',
+          body: lines.join('\n'),
+        });
+        if (sent) { record.deadlineNotifiedDate = today; changed = true; }
+        else if (sent === null) { await store.delete(deviceId); continue; }
+      }
+    }
+
     if (changed) await store.setJSON(deviceId, record);
   }
 
@@ -83,3 +118,4 @@ async function sendPush(subscription, payload) {
     return false;
   }
 }
+
