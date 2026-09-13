@@ -38,6 +38,7 @@ exports.handler = async (event) => {
     // send-reminders.js et ne doivent pas se réinitialiser à chaque simple sync d'état.
     eveningNotifiedDate: existing.eveningNotifiedDate || null,
     morningNotifiedDate: existing.morningNotifiedDate || null,
+    deadlineNotifiedDate: existing.deadlineNotifiedDate || null,
     updatedAt: new Date().toISOString(),
   };
 
