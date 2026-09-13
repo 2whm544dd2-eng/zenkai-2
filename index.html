@@ -1303,6 +1303,10 @@ async function syncPushState(existingSub){
     if(!sub) return;
     const commitment = STATE.commitment || {};
     const taskNames = (commitment.taskIds||[]).map(id=>{ const t=STATE.tasks.find(x=>x.id===id); return t?t.name:null; }).filter(Boolean);
+    // Tâches urgentes encore ouvertes (pas de date associée à ce type — on les rappelle tant qu'elles ne sont pas faites)
+    const urgentTaskNames = STATE.tasks.filter(t=>t.type==='urgente' && !t.done).map(t=>t.name);
+    // Tâches limitées dans le temps encore ouvertes, avec leur date d'échéance (le serveur calcule "aujourd'hui/demain" par fuseau horaire)
+    const deadlineTasks = STATE.tasks.filter(t=>t.type==='limitee' && !t.done && t.dueDate).map(t=>({name:t.name, dueDate:t.dueDate}));
     const body = {
       subscription: sub.toJSON ? sub.toJSON() : sub,
       timezone: Intl.DateTimeFormat().resolvedOptions().timeZone,
@@ -1310,6 +1314,8 @@ async function syncPushState(existingSub){
         hasPendingTasks: STATE.tasks.some(t=>!t.done),
         commitmentForDate: commitment.forDate || null,
         commitmentTaskNames: taskNames,
+        urgentTaskNames,
+        deadlineTasks,
       },
     };
     fetch('/.netlify/functions/subscribe', {method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify(body)}).catch(()=>{});
@@ -1875,6 +1881,7 @@ function submitAddTask(){
   }
   modalSubtasks = [];
   queueSave(); closeModal(); render();
+  syncPushState();
 }
 function toggleTask(id){
   const t = STATE.tasks.find(x=>x.id===id);
@@ -1902,6 +1909,7 @@ function toggleTask(id){
     t.done = false;
     t.completedDate = null;
     addSkillXP(t.skill, -t.xp);
+    syncPushState();
     return;
   }
   const subtasks = t.subtasks || [];
@@ -1918,6 +1926,7 @@ function toggleTask(id){
   checkNightOwl();
   sfxCheck();
   addSkillXP(t.skill, amount);
+  syncPushState();
 }
 function checkNightOwl(){
   const h = new Date().getHours();
@@ -1931,6 +1940,7 @@ function reporterTask(id){
   t.dueDate = `${base.getFullYear()}-${String(base.getMonth()+1).padStart(2,'0')}-${String(base.getDate()).padStart(2,'0')}`;
   queueSave(); render();
   showToast('QUÊTE REPORTÉE', t.name, base.toLocaleDateString('fr-FR'));
+  syncPushState();
 }
 function deleteTask(id){
   const t = STATE.tasks.find(x=>x.id===id);
@@ -1940,6 +1950,7 @@ function deleteTask(id){
   }
   STATE.tasks = STATE.tasks.filter(x=>x.id!==id);
   queueSave(); render();
+  syncPushState();
 }
 
 /* ---- engagement non-négociable pour demain (pré-engagement du soir) ---- */
@@ -3366,6 +3377,11 @@ function setupPWA(){
     setTimeout(()=>modalWeeklyRecap(), 400);
   }
 })();
+</script>
+</body>
+</html>
+
+
 </script>
 </body>
 </html>
