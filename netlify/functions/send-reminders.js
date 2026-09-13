@@ -3,7 +3,7 @@
 // les rappels dus : "choisis tes tâches de demain" (dès 20h) et "voici tes tâches non-
 // négociables du jour" (le matin, une fois par jour).
 const webpush = require('web-push');
-const { getStore } = require('@netlify/blobs');
+const { getStore, connectLambda } = require('@netlify/blobs');
 
 const VAPID_PUBLIC_KEY = process.env.VAPID_PUBLIC_KEY;
 const VAPID_PRIVATE_KEY = process.env.VAPID_PRIVATE_KEY;
@@ -32,7 +32,8 @@ function todayInTimezone(timezone) {
   return { dateStr: `${get('year')}-${get('month')}-${get('day')}`, hour: parseInt(get('hour'), 10) };
 }
 
-exports.handler = async () => {
+exports.handler = async (event) => {
+  connectLambda(event);
   const store = getStore('hunter-log-subscribers');
   const { blobs } = await store.list();
 
