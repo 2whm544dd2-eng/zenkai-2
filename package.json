@@ -1,0 +1,10 @@
+{
+  "name": "hunter-log-push-server",
+  "private": true,
+  "version": "1.0.0",
+  "description": "Serveur de notifications push (Web Push) pour Hunter Log",
+  "dependencies": {
+    "web-push": "^3.6.7",
+    "@netlify/blobs": "^7.3.0"
+  }
+}

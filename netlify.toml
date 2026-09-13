@@ -1,0 +1,7 @@
+[build]
+  functions = "netlify/functions"
+
+# Vérifie l'état de chaque abonné toutes les 10 minutes et envoie
+# les rappels dus (engagement du soir / non-négociables du matin).
+[functions."send-reminders"]
+  schedule = "*/10 * * * *"
