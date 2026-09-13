@@ -3,9 +3,10 @@
 // (fuseau horaire, si l'engagement de demain est déjà pris, les tâches non-négociables
 // du jour) pour que la fonction planifiée (send-reminders.js) sache quoi envoyer et quand.
 const crypto = require('crypto');
-const { getStore } = require('@netlify/blobs');
+const { getStore, connectLambda } = require('@netlify/blobs');
 
 exports.handler = async (event) => {
+  connectLambda(event);
   if (event.httpMethod !== 'POST') {
     return { statusCode: 405, body: 'Method Not Allowed' };
   }
@@ -50,3 +51,4 @@ exports.handler = async (event) => {
     body: JSON.stringify({ ok: true, deviceId }),
   };
 };
+
