@@ -1,11 +1,15 @@
 const { getStore } = require('@netlify/blobs');
 
+function blobStore(name) {
+  return getStore({ name, siteID: process.env.NETLIFY_SITE_ID, token: process.env.NETLIFY_AUTH_TOKEN });
+}
+
 function normalizeCode(code) {
   return (code || '').toString().trim().toUpperCase();
 }
 
 exports.handler = async (event) => {
-  const store = getStore('hunter-log-state');
+  const store = blobStore('hunter-log-state');
 
   if (event.httpMethod === 'GET') {
     const code = normalizeCode(event.queryStringParameters && event.queryStringParameters.code);
