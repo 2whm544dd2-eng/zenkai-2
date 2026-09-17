@@ -547,15 +547,143 @@ function migrateState(){
 function queueSave(){
   clearTimeout(saveTimer);
   saveTimer = setTimeout(()=>{ storeSet(STORAGE_KEY, JSON.stringify(STATE)); }, 250);
+  queueSyncPush();
 }
 function flushSave(){
   // Force l'écriture immédiate en attente, pour ne pas perdre la dernière action
   // si l'app passe en arrière-plan ou se ferme juste avant la fin du debounce de 250ms.
   clearTimeout(saveTimer);
   storeSet(STORAGE_KEY, JSON.stringify(STATE));
+  queueSyncPush(true);
 }
 document.addEventListener('visibilitychange', ()=>{ if(document.visibilityState === 'hidden') flushSave(); });
 window.addEventListener('pagehide', flushSave);
+
+/* ========================= SYNCHRONISATION MULTI-APPAREILS ========================= */
+// Le code de synchro et l'horodatage local sont volontairement stockés à part de STATE
+// (pas dans le même objet que l'app synchronise) pour ne jamais s'écraser eux-mêmes
+// quand on reçoit l'état d'un autre appareil.
+const SYNC_CODE_KEY = STORAGE_KEY + '-sync-code';
+const SYNC_TS_KEY = STORAGE_KEY + '-sync-ts';
+let syncCode = null;
+let localStateTs = 0;
+let syncPushTimer = null;
+let syncWatcherStarted = false;
+let syncInFlight = false;
+
+async function loadSyncMeta(){
+  syncCode = await storeGet(SYNC_CODE_KEY);
+  const ts = await storeGet(SYNC_TS_KEY);
+  localStateTs = ts ? parseInt(ts, 10) || 0 : 0;
+  if(syncCode) startSyncWatcher();
+}
+function randomSyncCode(){
+  const alphabet = 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789'; // sans caractères ambigus (0/O, 1/I...)
+  let code = '';
+  for(let i=0;i<8;i++) code += alphabet[Math.floor(Math.random()*alphabet.length)];
+  return code;
+}
+function queueSyncPush(immediate){
+  if(!syncCode) return;
+  clearTimeout(syncPushTimer);
+  if(immediate){ pushStateToServer(); return; }
+  syncPushTimer = setTimeout(pushStateToServer, 1500);
+}
+async function pushStateToServer(){
+  if(!syncCode) return;
+  localStateTs = Date.now();
+  await storeSet(SYNC_TS_KEY, String(localStateTs));
+  try{
+    await fetch('/.netlify/functions/sync-state', {
+      method:'POST', headers:{'Content-Type':'application/json'},
+      body: JSON.stringify({code: syncCode, state: STATE, updatedAt: localStateTs}),
+    });
+  }catch(e){ /* pas grave, le prochain push (ou pull sur l'autre appareil) rattrapera */ }
+}
+async function pullStateFromServer(){
+  if(!syncCode || syncInFlight) return;
+  syncInFlight = true;
+  try{
+    const res = await fetch(`/.netlify/functions/sync-state?code=${encodeURIComponent(syncCode)}`);
+    if(res.ok){
+      const data = await res.json();
+      if(data && data.updatedAt > localStateTs && data.state){
+        STATE = data.state;
+        migrateState();
+        localStateTs = data.updatedAt;
+        await storeSet(SYNC_TS_KEY, String(localStateTs));
+        await storeSet(STORAGE_KEY, JSON.stringify(STATE));
+        render();
+      }
+    }
+  }catch(e){ /* offline ou fonction indisponible : réessaiera au prochain tick */ }
+  syncInFlight = false;
+}
+function startSyncWatcher(){
+  if(syncWatcherStarted) return;
+  syncWatcherStarted = true;
+  setInterval(pullStateFromServer, 20000);
+  document.addEventListener('visibilitychange', ()=>{ if(document.visibilityState==='visible') pullStateFromServer(); });
+}
+async function generateSyncCode(){
+  syncCode = randomSyncCode();
+  await storeSet(SYNC_CODE_KEY, syncCode);
+  localStateTs = Date.now();
+  await storeSet(SYNC_TS_KEY, String(localStateTs));
+  startSyncWatcher();
+  await pushStateToServer();
+  renderSyncStatus();
+  showToast('SYNCHRO ACTIVÉE', syncCode, 'Entre ce code sur ton autre appareil');
+}
+async function joinSyncCode(){
+  const input = document.getElementById('syncJoinInput');
+  const code = (input.value || '').trim().toUpperCase();
+  if(!code){ return; }
+  try{
+    const res = await fetch(`/.netlify/functions/sync-state?code=${encodeURIComponent(code)}`);
+    if(!res.ok){
+      showToast('CODE INTROUVABLE', "Vérifie le code, ou génère-le d'abord sur l'autre appareil", '', 'penalty');
+      return;
+    }
+    if(!confirm("Remplacer les données de CET appareil par celles synchronisées sous ce code ? (Vérifie d'abord que c'est bien ce que tu veux — action irréversible sur cet appareil.)")) return;
+    const data = await res.json();
+    STATE = data.state;
+    migrateState();
+    syncCode = code;
+    localStateTs = data.updatedAt;
+    await storeSet(SYNC_CODE_KEY, syncCode);
+    await storeSet(SYNC_TS_KEY, String(localStateTs));
+    await storeSet(STORAGE_KEY, JSON.stringify(STATE));
+    startSyncWatcher();
+    render();
+    renderSyncStatus();
+    showToast('SYNCHRONISÉ', 'Les deux appareils partagent maintenant la même sauvegarde');
+  }catch(e){
+    showToast('ERREUR', 'Impossible de contacter le serveur de synchro', '', 'penalty');
+  }
+}
+function renderSyncStatus(){
+  const el = document.getElementById('syncStatusBox');
+  if(el) el.outerHTML = syncStatusHtml();
+}
+function syncStatusHtml(){
+  if(syncCode){
+    return `<div id="syncStatusBox">
+      <div class="field-row" style="justify-content:space-between;">
+        <label style="width:auto;">Code de synchro</label>
+        <span style="font-family:var(--font-mono); font-size:13px; letter-spacing:1px; color:var(--cyan);">${syncCode}</span>
+      </div>
+      <p style="font-family:var(--font-mono); font-size:9.5px; color:var(--text-faint); margin:2px 0 10px;">Entre ce même code sur ton autre appareil pour partager la sauvegarde. Synchro auto en arrière-plan.</p>
+    </div>`;
+  }
+  return `<div id="syncStatusBox">
+    <button class="btn ghost small" onclick="generateSyncCode()">Générer un code de synchro</button>
+    <div style="display:flex; gap:6px; margin-top:8px;">
+      <input type="text" id="syncJoinInput" placeholder="Ou entre un code existant…" maxlength="8" style="flex:1; text-transform:uppercase;">
+      <button type="button" class="btn ghost small" onclick="joinSyncCode()">Rejoindre</button>
+    </div>
+  </div>`;
+}
 
 /* ========================= XP / LEVEL / RANK ========================= */
 function xpToNextSkill(level){ return Math.round(80 + (level-1)*40); }
@@ -1273,7 +1401,7 @@ function requestNotifications(){
 }
 /* ---- Web Push (vrai push serveur, fonctionne même app fermée) ---- */
 // Généré une fois pour ce déploiement — la clé PUBLIQUE seulement, sans risque à exposer.
-const PUSH_VAPID_PUBLIC_KEY = 'BNB5enwSfarZ2OeKcp-dMWo20GDI501mRkQ4ECeyYDVIZ4sM3O7Q2oq9TfFeC2r9c4cdB5B_6qsTZkOVcejqr0w';
+const PUSH_VAPID_PUBLIC_KEY = 'BMIIMxgPMhtVutp5r-PkqV7NEIIUfgqs1aOgDYHn7FFAI3MaZ9eNnZG9SSX-uwPS7zMBu8rb8wVk9L7i4tpt91c';
 function urlBase64ToUint8Array(base64String){
   const padding = '='.repeat((4 - base64String.length % 4) % 4);
   const base64 = (base64String + padding).replace(/-/g,'+').replace(/_/g,'/');
@@ -1303,10 +1431,6 @@ async function syncPushState(existingSub){
     if(!sub) return;
     const commitment = STATE.commitment || {};
     const taskNames = (commitment.taskIds||[]).map(id=>{ const t=STATE.tasks.find(x=>x.id===id); return t?t.name:null; }).filter(Boolean);
-    // Tâches urgentes encore ouvertes (pas de date associée à ce type — on les rappelle tant qu'elles ne sont pas faites)
-    const urgentTaskNames = STATE.tasks.filter(t=>t.type==='urgente' && !t.done).map(t=>t.name);
-    // Tâches limitées dans le temps encore ouvertes, avec leur date d'échéance (le serveur calcule "aujourd'hui/demain" par fuseau horaire)
-    const deadlineTasks = STATE.tasks.filter(t=>t.type==='limitee' && !t.done && t.dueDate).map(t=>({name:t.name, dueDate:t.dueDate}));
     const body = {
       subscription: sub.toJSON ? sub.toJSON() : sub,
       timezone: Intl.DateTimeFormat().resolvedOptions().timeZone,
@@ -1314,8 +1438,6 @@ async function syncPushState(existingSub){
         hasPendingTasks: STATE.tasks.some(t=>!t.done),
         commitmentForDate: commitment.forDate || null,
         commitmentTaskNames: taskNames,
-        urgentTaskNames,
-        deadlineTasks,
       },
     };
     fetch('/.netlify/functions/subscribe', {method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify(body)}).catch(()=>{});
@@ -1881,7 +2003,6 @@ function submitAddTask(){
   }
   modalSubtasks = [];
   queueSave(); closeModal(); render();
-  syncPushState();
 }
 function toggleTask(id){
   const t = STATE.tasks.find(x=>x.id===id);
@@ -1909,7 +2030,6 @@ function toggleTask(id){
     t.done = false;
     t.completedDate = null;
     addSkillXP(t.skill, -t.xp);
-    syncPushState();
     return;
   }
   const subtasks = t.subtasks || [];
@@ -1926,7 +2046,6 @@ function toggleTask(id){
   checkNightOwl();
   sfxCheck();
   addSkillXP(t.skill, amount);
-  syncPushState();
 }
 function checkNightOwl(){
   const h = new Date().getHours();
@@ -1940,7 +2059,6 @@ function reporterTask(id){
   t.dueDate = `${base.getFullYear()}-${String(base.getMonth()+1).padStart(2,'0')}-${String(base.getDate()).padStart(2,'0')}`;
   queueSave(); render();
   showToast('QUÊTE REPORTÉE', t.name, base.toLocaleDateString('fr-FR'));
-  syncPushState();
 }
 function deleteTask(id){
   const t = STATE.tasks.find(x=>x.id===id);
@@ -1950,7 +2068,6 @@ function deleteTask(id){
   }
   STATE.tasks = STATE.tasks.filter(x=>x.id!==id);
   queueSave(); render();
-  syncPushState();
 }
 
 /* ---- engagement non-négociable pour demain (pré-engagement du soir) ---- */
@@ -2492,6 +2609,8 @@ function modalGeneralSettings(){
     <p style="font-family:var(--font-mono); font-size:10px; color:var(--text-faint); line-height:1.5; margin:2px 0 14px;">
       Affiche un titre narratif (Novice, Vétéran, Légende...) sous chaque compétence en fonction de son niveau.
     </p>
+    <div class="field-row"><label style="width:auto; font-family:var(--font-display); font-weight:600; font-size:13px; color:var(--text);">Synchronisation multi-appareils</label></div>
+    ${syncStatusHtml()}
     <div class="field-row"><label>Notifications</label>
       <button class="btn small" style="flex:1;" onclick="requestNotifications()">${notifState==='granted' && STATE.settings.notificationsOn ? 'ACTIVÉES ✓' : 'ACTIVER'}</button>
     </div>
@@ -3325,7 +3444,27 @@ function setupPWA(){
     document.getElementById('manifestLink').href = URL.createObjectURL(manifestBlob);
 
     if('serviceWorker' in navigator && location.protocol.startsWith('http')){
-      navigator.serviceWorker.register('sw.js').catch(()=>{});
+      const swCode = `
+        self.addEventListener('install', e => self.skipWaiting());
+        self.addEventListener('activate', e => e.waitUntil(self.clients.claim()));
+        self.addEventListener('fetch', e => {});
+        self.addEventListener('notificationclick', e => {
+          e.notification.close();
+          e.waitUntil(self.clients.matchAll({type:'window', includeUncontrolled:true}).then(list=>{
+            if(list.length>0) return list[0].focus();
+            return self.clients.openWindow('.');
+          }));
+        });
+        // Notification reçue depuis le serveur (Web Push) — fonctionne même app fermée,
+        // contrairement au check périodique côté page qui, lui, s'arrête en arrière-plan.
+        self.addEventListener('push', e => {
+          let data = {title:'SYSTEM // Hunter Log', body:''};
+          try{ data = e.data ? e.data.json() : data; }catch(err){ if(e.data) data.body = e.data.text(); }
+          e.waitUntil(self.registration.showNotification(data.title, {body:data.body, vibrate:[30,40,30]}));
+        });
+      `;
+      const swBlob = new Blob([swCode], {type:'application/javascript'});
+      navigator.serviceWorker.register(URL.createObjectURL(swBlob)).catch(()=>{});
     }
 
     const standalone = window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone;
@@ -3342,6 +3481,7 @@ function setupPWA(){
 /* ========================= INIT ========================= */
 (async function init(){
   await loadState();
+  await loadSyncMeta();
   pomoInit();
   render();
   setupPWA();
@@ -3360,3 +3500,5 @@ function setupPWA(){
 </script>
 </body>
 </html>
+
+
