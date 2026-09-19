@@ -290,7 +290,7 @@
 <script>
 /* ========================= STORAGE (Claude artifact OR standalone phone) ========================= */
 const STORAGE_KEY = 'sl-tracker-state-v1';
-const APP_VERSION = '60';
+const APP_VERSION = '62';
 const hasClaudeStorage = () => (typeof window.storage !== 'undefined' && window.storage && typeof window.storage.get === 'function');
 
 async function storeGet(key){
@@ -556,7 +556,8 @@ function flushSave(){
   // si l'app passe en arrière-plan ou se ferme juste avant la fin du debounce de 250ms.
   clearTimeout(saveTimer);
   storeSet(STORAGE_KEY, JSON.stringify(STATE));
-  queueSyncPush(true);
+  clearTimeout(syncPushTimer);
+  flushSyncPushBeacon();
 }
 document.addEventListener('visibilitychange', ()=>{ if(document.visibilityState === 'hidden') flushSave(); });
 window.addEventListener('pagehide', flushSave);
@@ -599,14 +600,40 @@ function queueSyncPush(immediate){
 }
 async function pushStateToServer(){
   if(!syncCode) return;
-  const ts = localStateTs;
   try{
     const res = await fetch('/.netlify/functions/sync-state', {
       method:'POST', headers:{'Content-Type':'application/json'},
-      body: JSON.stringify({code: syncCode, state: STATE, updatedAt: ts}),
+      body: JSON.stringify({code: syncCode, state: STATE}),
     });
-    if(res.status === 403) handleAccessRevoked();
+    if(res.status === 403){ handleAccessRevoked(); return; }
+    if(res.ok){
+      const data = await res.json();
+      // On adopte l'horodatage renvoyé par le SERVEUR (jamais l'horloge locale) comme
+      // référence de "dernière version connue" — évite tout biais dû à une horloge
+      // d'appareil mal réglée.
+      if(data && data.updatedAt){
+        localStateTs = data.updatedAt;
+        storeSet(SYNC_TS_KEY, String(localStateTs));
+      }
+    }
   }catch(e){ /* pas grave, le prochain push (ou pull sur l'autre appareil) rattrapera */ }
+}
+// À utiliser uniquement quand la page est en train de se cacher/fermer (verrouillage du
+// téléphone, changement d'app, fermeture d'onglet) : un fetch() classique lancé à ce moment
+// peut être coupé net par l'OS avant d'aboutir, alors qu'un ordinateur qui reste ouvert n'a
+// jamais ce problème — c'est ce qui faisait paraître "l'ordinateur toujours prioritaire".
+// sendBeacon est justement conçu pour survivre à la fermeture de la page (mais ne permet
+// pas de lire la réponse : le vrai horodatage serveur ne sera récupéré qu'au prochain pull).
+function flushSyncPushBeacon(){
+  if(!syncCode) return;
+  const payload = JSON.stringify({code: syncCode, state: STATE});
+  try{
+    if(navigator.sendBeacon){
+      const blob = new Blob([payload], {type:'application/json'});
+      if(navigator.sendBeacon('/.netlify/functions/sync-state', blob)) return;
+    }
+  }catch(e){ /* on retente en fetch classique ci-dessous */ }
+  fetch('/.netlify/functions/sync-state', {method:'POST', headers:{'Content-Type':'application/json'}, body: payload, keepalive:true}).catch(()=>{});
 }
 async function pullStateFromServer(){
   if(!syncCode || syncInFlight) return;
@@ -3700,6 +3727,7 @@ function setupPWA(){
 </script>
 </body>
 </html>
+
 
 
 
