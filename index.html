@@ -341,6 +341,7 @@ const DEFAULT_STATE = () => ({
     log: [],
   },
   commitment: {forDate:null, taskIds:[], promptDismissedDate:null, eveningNotifiedDate:null, morningNotifiedDate:null},
+  oath: {displayName:'', text:''},
 });
 
 let STATE = null;
@@ -389,7 +390,6 @@ async function loadState(){
     STATE = DEFAULT_STATE();
   }
   migrateState();
-  checkDayRollover();
 }
 
 // Réévalue le changement de jour (routines, eau, pomodoro, pénalités, récap hebdo).
@@ -503,6 +503,7 @@ function migrateState(){
   if(!STATE.workouts.types || !STATE.workouts.types.length) STATE.workouts.types = d.workouts.types;
   if(!STATE.workouts.log) STATE.workouts.log = [];
   if(!STATE.commitment) STATE.commitment = {forDate:null, taskIds:[], promptDismissedDate:null, eveningNotifiedDate:null, morningNotifiedDate:null};
+  if(!STATE.oath) STATE.oath = {displayName:'', text:''};
   if(STATE.commitment.promptDismissedDate===undefined) STATE.commitment.promptDismissedDate = null;
   if(STATE.commitment.eveningNotifiedDate===undefined) STATE.commitment.eveningNotifiedDate = null;
   if(STATE.commitment.morningNotifiedDate===undefined) STATE.commitment.morningNotifiedDate = null;
@@ -594,10 +595,11 @@ async function pushStateToServer(){
   localStateTs = Date.now();
   await storeSet(SYNC_TS_KEY, String(localStateTs));
   try{
-    await fetch('/.netlify/functions/sync-state', {
+    const res = await fetch('/.netlify/functions/sync-state', {
       method:'POST', headers:{'Content-Type':'application/json'},
       body: JSON.stringify({code: syncCode, state: STATE, updatedAt: localStateTs}),
     });
+    if(res.status === 403) handleAccessRevoked();
   }catch(e){ /* pas grave, le prochain push (ou pull sur l'autre appareil) rattrapera */ }
 }
 async function pullStateFromServer(){
@@ -605,6 +607,7 @@ async function pullStateFromServer(){
   syncInFlight = true;
   try{
     const res = await fetch(`/.netlify/functions/sync-state?code=${encodeURIComponent(syncCode)}`);
+    if(res.status === 403){ handleAccessRevoked(); syncInFlight = false; return; }
     if(res.ok){
       const data = await res.json();
       if(data && data.updatedAt > localStateTs && data.state){
@@ -618,6 +621,17 @@ async function pullStateFromServer(){
     }
   }catch(e){ /* offline ou fonction indisponible : réessaiera au prochain tick */ }
   syncInFlight = false;
+}
+// Appelé quand le serveur répond 403 (accès désactivé, ex: membre qui a arrêté de payer) —
+// on arrête simplement d'essayer de synchroniser, sans effacer les données locales déjà là.
+let accessRevokedNotified = false;
+function handleAccessRevoked(){
+  syncCode = null;
+  storeSet(SYNC_CODE_KEY, '');
+  if(!accessRevokedNotified){
+    accessRevokedNotified = true;
+    showToast('SYNCHRO DÉSACTIVÉE', "L'accès à ce code a été révoqué", '', 'penalty');
+  }
 }
 function startSyncWatcher(){
   if(syncWatcherStarted) return;
@@ -641,8 +655,21 @@ async function joinSyncCode(){
   if(!code){ return; }
   try{
     const res = await fetch(`/.netlify/functions/sync-state?code=${encodeURIComponent(code)}`);
+    if(res.status === 404){
+      // Code tout neuf (ex: donné à un nouveau membre) : rien à écraser, on démarre
+      // simplement la synchro à partir de maintenant avec les données déjà sur cet appareil.
+      syncCode = code;
+      localStateTs = Date.now();
+      await storeSet(SYNC_CODE_KEY, syncCode);
+      await storeSet(SYNC_TS_KEY, String(localStateTs));
+      startSyncWatcher();
+      await pushStateToServer();
+      renderSyncStatus();
+      showToast('SYNCHRO ACTIVÉE', code, 'Nouveau code — synchro démarrée');
+      return;
+    }
     if(!res.ok){
-      showToast('CODE INTROUVABLE', "Vérifie le code, ou génère-le d'abord sur l'autre appareil", '', 'penalty');
+      showToast('ERREUR', 'Impossible de contacter le serveur de synchro', '', 'penalty');
       return;
     }
     if(!confirm("Remplacer les données de CET appareil par celles synchronisées sous ce code ? (Vérifie d'abord que c'est bien ce que tu veux — action irréversible sur cet appareil.)")) return;
@@ -662,27 +689,184 @@ async function joinSyncCode(){
     showToast('ERREUR', 'Impossible de contacter le serveur de synchro', '', 'penalty');
   }
 }
+// Génère un code à donner à un membre (ex: après son inscription payante sur Skool),
+// SANS relier ce code à cet appareil — voir plus bas generateCodeForMember() (version admin).
 function renderSyncStatus(){
   const el = document.getElementById('syncStatusBox');
   if(el) el.outerHTML = syncStatusHtml();
 }
 function syncStatusHtml(){
-  if(syncCode){
-    return `<div id="syncStatusBox">
-      <div class="field-row" style="justify-content:space-between;">
-        <label style="width:auto;">Code de synchro</label>
-        <span style="font-family:var(--font-mono); font-size:13px; letter-spacing:1px; color:var(--cyan);">${syncCode}</span>
-      </div>
-      <p style="font-family:var(--font-mono); font-size:9.5px; color:var(--text-faint); margin:2px 0 10px;">Entre ce même code sur ton autre appareil pour partager la sauvegarde. Synchro auto en arrière-plan.</p>
-    </div>`;
-  }
-  return `<div id="syncStatusBox">
+  const branch = syncCode ? `
+    <div class="field-row" style="justify-content:space-between;">
+      <label style="width:auto;">Code de synchro</label>
+      <span style="font-family:var(--font-mono); font-size:13px; letter-spacing:1px; color:var(--cyan);">${syncCode}</span>
+    </div>
+    <p style="font-family:var(--font-mono); font-size:9.5px; color:var(--text-faint); margin:2px 0 10px;">Entre ce même code sur ton autre appareil pour partager la sauvegarde. Synchro auto en arrière-plan.</p>
+  ` : `
     <button class="btn ghost small" onclick="generateSyncCode()">Générer un code de synchro</button>
     <div style="display:flex; gap:6px; margin-top:8px;">
       <input type="text" id="syncJoinInput" placeholder="Ou entre un code existant…" maxlength="8" style="flex:1; text-transform:uppercase;">
       <button type="button" class="btn ghost small" onclick="joinSyncCode()">Rejoindre</button>
     </div>
+  `;
+  return `<div id="syncStatusBox">
+    ${branch}
+    <div style="display:flex; gap:6px; margin-top:8px; flex-wrap:wrap;">
+      <button class="btn ghost small" onclick="generateCodeForMember()">+ Générer un code pour un membre</button>
+      <button class="btn ghost small" onclick="manageMembers()">Gérer les membres</button>
+    </div>
   </div>`;
+}
+/* ---- Admin : registre des membres (codes émis à des clients payants) ---- */
+const ADMIN_SECRET_KEY = STORAGE_KEY + '-admin-secret';
+let adminSecret = null;
+async function getAdminSecret(forcePrompt){
+  if(!adminSecret) adminSecret = await storeGet(ADMIN_SECRET_KEY);
+  if(!adminSecret || forcePrompt){
+    const entered = prompt("Mot de passe admin (celui défini dans ADMIN_SECRET sur Netlify) :");
+    if(!entered) return null;
+    adminSecret = entered;
+    await storeSet(ADMIN_SECRET_KEY, adminSecret);
+  }
+  return adminSecret;
+}
+async function membersApi(body){
+  const secret = await getAdminSecret();
+  if(!secret) return null;
+  const res = await fetch('/.netlify/functions/members', {
+    method: body ? 'POST' : 'GET',
+    headers: {'Content-Type':'application/json', 'x-admin-secret': secret},
+    body: body ? JSON.stringify(body) : undefined,
+  });
+  if(res.status === 401){
+    adminSecret = null;
+    await storeSet(ADMIN_SECRET_KEY, '');
+    showToast('MOT DE PASSE INCORRECT', "Réessaie avec le bon mot de passe admin", '', 'penalty');
+    return null;
+  }
+  return res;
+}
+async function generateCodeForMember(){
+  const label = prompt("Nom ou email du membre (pour t'y retrouver dans la liste) :");
+  if(label === null) return;
+  const code = randomSyncCode();
+  const res = await membersApi({action:'register', code, label});
+  if(!res || !res.ok){ showToast('ERREUR', "Impossible d'enregistrer ce membre", '', 'penalty'); return; }
+  openModal(`
+    <h3>CODE POUR UN NOUVEAU MEMBRE</h3>
+    <p style="font-family:var(--font-mono); font-size:10.5px; color:var(--text-dim); line-height:1.5; margin-bottom:10px;">
+      Envoie ce code au membre (ex: en message privé sur Skool). Il devra l'entrer dans
+      "Rejoindre avec un code" sur son propre appareil, dans une app vierge (première ouverture).
+    </p>
+    <div style="text-align:center; font-family:var(--font-mono); font-size:22px; letter-spacing:3px; color:var(--cyan); padding:16px 0;">${code}</div>
+    <div class="modal-actions"><button class="btn" onclick="closeModal()">Fermer</button></div>
+  `);
+}
+async function manageMembers(){
+  const res = await membersApi(null);
+  if(!res){ return; }
+  if(!res.ok){ showToast('ERREUR', 'Impossible de charger la liste', '', 'penalty'); return; }
+  const data = await res.json();
+  openModal(`<h3>MEMBRES</h3><div id="membersList">${membersListHtml(data.members)}</div><div class="modal-actions"><button class="btn ghost" onclick="closeModal()">Fermer</button></div>`);
+}
+function membersListHtml(members){
+  if(!members || !members.length) return '<div class="empty">AUCUN MEMBRE ENREGISTRÉ</div>';
+  return members.map(m=>`
+    <div class="field-row" style="justify-content:space-between; align-items:center;">
+      <div>
+        <div style="font-family:var(--font-display); font-size:13px;">${escapeHtml(m.label || '(sans nom)')}</div>
+        <div style="font-family:var(--font-mono); font-size:9px; color:var(--text-faint);">${m.code} · ${m.active===false ? 'DÉSACTIVÉ' : 'actif'}</div>
+      </div>
+      <button class="btn ghost small" onclick="toggleMemberActive('${m.code}', ${m.active===false})">${m.active===false ? 'Réactiver' : 'Désactiver'}</button>
+    </div>`).join('');
+}
+async function toggleMemberActive(code, newActive){
+  const res = await membersApi({action:'toggle', code, active:newActive});
+  if(!res || !res.ok){ showToast('ERREUR', "Impossible de changer l'état", '', 'penalty'); return; }
+  const listRes = await membersApi(null);
+  if(listRes && listRes.ok){
+    const data = await listRes.json();
+    const el = document.getElementById('membersList');
+    if(el) el.innerHTML = membersListHtml(data.members);
+  }
+  showToast(newActive ? 'MEMBRE RÉACTIVÉ' : 'MEMBRE DÉSACTIVÉ', code);
+}
+
+/* ---- Serment Inné : objectif public visible de tous dans le classement ---- */
+async function saveOath(){
+  const nameInput = document.getElementById('oathNameInput');
+  const textInput = document.getElementById('oathTextInput');
+  const displayName = (nameInput.value || '').trim();
+  const text = (textInput.value || '').trim();
+  if(!displayName || !text){ showToast('SERMENT INCOMPLET', 'Renseigne un pseudo et ton objectif', '', 'penalty'); return; }
+  STATE.oath = {displayName, text};
+  queueSave();
+  if(!syncCode){
+    // Un serment public a besoin d'une identité stable : on en crée une silencieusement
+    // si l'appareil n'en a pas encore (ex: usage solo sans synchro jusqu'ici).
+    syncCode = randomSyncCode();
+    await storeSet(SYNC_CODE_KEY, syncCode);
+    localStateTs = Date.now();
+    await storeSet(SYNC_TS_KEY, String(localStateTs));
+    startSyncWatcher();
+    await pushStateToServer();
+    renderSyncStatus();
+  }
+  try{
+    const res = await fetch('/.netlify/functions/oath', {
+      method:'POST', headers:{'Content-Type':'application/json'},
+      body: JSON.stringify({code: syncCode, displayName, text}),
+    });
+    if(!res.ok){ showToast('ERREUR', "Impossible d'enregistrer le serment", '', 'penalty'); return; }
+    showToast('SERMENT ENREGISTRÉ', displayName, 'Visible dans le classement');
+  }catch(e){
+    showToast('ERREUR', "Impossible de contacter le serveur", '', 'penalty');
+  }
+}
+async function showOathLeaderboard(){
+  try{
+    const res = await fetch('/.netlify/functions/oath');
+    if(!res.ok){ showToast('ERREUR', 'Impossible de charger le classement', '', 'penalty'); return; }
+    const data = await res.json();
+    openModal(`<h3>CLASSEMENT DES SERMENTS</h3><div>${oathListHtml(data.oaths)}</div><div class="modal-actions"><button class="btn ghost" onclick="closeModal()">Fermer</button></div>`);
+  }catch(e){
+    showToast('ERREUR', 'Impossible de contacter le serveur', '', 'penalty');
+  }
+}
+function oathListHtml(oaths){
+  if(!oaths || !oaths.length) return '<div class="empty">AUCUN SERMENT POUR L\'INSTANT</div>';
+  return oaths.map(o=>`
+    <div class="item">
+      <div class="item-body">
+        <div class="item-name">${escapeHtml(o.displayName)}</div>
+        <div class="sub" style="margin:2px 0 0;">${escapeHtml(o.text)}</div>
+      </div>
+    </div>`).join('');
+}
+// Admin uniquement : envoie une notification à TOUS les membres abonnés pour ouvrir
+// un nouveau cycle de Serments (ex: annonce faite en début de live).
+async function launchOathEvent(){
+  const secret = await getAdminSecret();
+  if(!secret) return;
+  const customMsg = prompt("Message de la notification :", "⚔️ Un Serment Inné est ouvert — définis ton prochain objectif !");
+  if(customMsg === null) return;
+  try{
+    const res = await fetch('/.netlify/functions/broadcast', {
+      method:'POST', headers:{'Content-Type':'application/json', 'x-admin-secret': secret},
+      body: JSON.stringify({body: customMsg}),
+    });
+    if(res.status === 401){
+      adminSecret = null;
+      await storeSet(ADMIN_SECRET_KEY, '');
+      showToast('MOT DE PASSE INCORRECT', '', '', 'penalty');
+      return;
+    }
+    if(!res.ok){ showToast('ERREUR', "Échec de l'envoi", '', 'penalty'); return; }
+    const data = await res.json();
+    showToast('SERMENT LANCÉ', `${data.sent} notifié(s)`, data.failed ? `${data.failed} échec(s)` : '');
+  }catch(e){
+    showToast('ERREUR', 'Impossible de contacter le serveur', '', 'penalty');
+  }
 }
 
 /* ========================= XP / LEVEL / RANK ========================= */
@@ -1203,19 +1387,26 @@ function pomoReset(){
 // (le système le libère automatiquement quand l'écran s'éteint ou l'app passe en arrière-plan).
 document.addEventListener('visibilitychange', ()=>{
   if(document.visibilityState === 'visible'){
-    if(STATE && STATE.todayStats && STATE.todayStats.date !== todayStr()){
-      checkDayRollover();
-      render();
-      if(STATE.pendingWeeklyRecap){
-        STATE.pendingWeeklyRecap = false;
-        queueSave();
-        setTimeout(()=>modalWeeklyRecap(), 400);
+    (async ()=>{
+      if(STATE && STATE.todayStats && STATE.todayStats.date !== todayStr()){
+        // Un autre appareil a pu progresser pendant que celui-ci était en veille : on
+        // récupère d'abord sa version avant de faire tourner le changement de jour dessus,
+        // sinon on risquerait de repartir d'une copie locale périmée et de la pousser
+        // (avec tout remis à zéro) par-dessus les données plus récentes de l'autre appareil.
+        if(syncCode) await pullStateFromServer();
+        checkDayRollover();
+        render();
+        if(STATE.pendingWeeklyRecap){
+          STATE.pendingWeeklyRecap = false;
+          queueSave();
+          setTimeout(()=>modalWeeklyRecap(), 400);
+        }
       }
-    }
-    if(pomoRunning){
-      pomoTick();
-      pomoRequestWakeLock();
-    }
+      if(pomoRunning){
+        pomoTick();
+        pomoRequestWakeLock();
+      }
+    })();
   }
 });
 function fmtTime(s){
@@ -2611,6 +2802,15 @@ function modalGeneralSettings(){
     </p>
     <div class="field-row"><label style="width:auto; font-family:var(--font-display); font-weight:600; font-size:13px; color:var(--text);">Synchronisation multi-appareils</label></div>
     ${syncStatusHtml()}
+    <div class="field-row"><label style="width:auto; font-family:var(--font-display); font-weight:600; font-size:13px; color:var(--text);">⚔️ Serment Inné</label></div>
+    <p style="font-family:var(--font-mono); font-size:9.5px; color:var(--text-faint); margin:2px 0 8px;">Définis un objectif public, visible de tous dans le classement.</p>
+    <div class="field-row"><label style="width:auto;">Pseudo</label><input type="text" id="oathNameInput" value="${escapeHtml(STATE.oath.displayName||'')}" maxlength="40" style="flex:1;"></div>
+    <textarea id="oathTextInput" placeholder="Ton prochain objectif…" maxlength="280" rows="2" style="width:100%; margin:4px 0 8px; font-family:var(--font-mono); font-size:11px;">${escapeHtml(STATE.oath.text||'')}</textarea>
+    <div style="display:flex; gap:6px; flex-wrap:wrap;">
+      <button class="btn ghost small" onclick="saveOath()">Enregistrer mon serment</button>
+      <button class="btn ghost small" onclick="showOathLeaderboard()">Voir le classement</button>
+      <button class="btn ghost small" onclick="launchOathEvent()">📢 Lancer un Serment Inné (admin)</button>
+    </div>
     <div class="field-row"><label>Notifications</label>
       <button class="btn small" style="flex:1;" onclick="requestNotifications()">${notifState==='granted' && STATE.settings.notificationsOn ? 'ACTIVÉES ✓' : 'ACTIVER'}</button>
     </div>
@@ -3482,6 +3682,8 @@ function setupPWA(){
 (async function init(){
   await loadState();
   await loadSyncMeta();
+  if(syncCode) await pullStateFromServer();
+  checkDayRollover();
   pomoInit();
   render();
   setupPWA();
@@ -3500,5 +3702,6 @@ function setupPWA(){
 </script>
 </body>
 </html>
+
 
 
