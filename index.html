@@ -290,6 +290,7 @@
 <script>
 /* ========================= STORAGE (Claude artifact OR standalone phone) ========================= */
 const STORAGE_KEY = 'sl-tracker-state-v1';
+const APP_VERSION = '60';
 const hasClaudeStorage = () => (typeof window.storage !== 'undefined' && window.storage && typeof window.storage.get === 'function');
 
 async function storeGet(key){
@@ -586,18 +587,23 @@ function randomSyncCode(){
 }
 function queueSyncPush(immediate){
   if(!syncCode) return;
+  // On avance l'horloge locale tout de suite (pas seulement au moment de l'envoi réel) :
+  // sinon, un pull concurrent (tick des 20s, retour au premier plan) pouvait voir une
+  // version serveur plus ancienne comme "plus récente" que ce changement encore en
+  // attente, et l'écraser — c'était la cause du bug "ma coche/mon eau redescend toute seule".
+  localStateTs = Date.now();
+  storeSet(SYNC_TS_KEY, String(localStateTs));
   clearTimeout(syncPushTimer);
   if(immediate){ pushStateToServer(); return; }
   syncPushTimer = setTimeout(pushStateToServer, 1500);
 }
 async function pushStateToServer(){
   if(!syncCode) return;
-  localStateTs = Date.now();
-  await storeSet(SYNC_TS_KEY, String(localStateTs));
+  const ts = localStateTs;
   try{
     const res = await fetch('/.netlify/functions/sync-state', {
       method:'POST', headers:{'Content-Type':'application/json'},
-      body: JSON.stringify({code: syncCode, state: STATE, updatedAt: localStateTs}),
+      body: JSON.stringify({code: syncCode, state: STATE, updatedAt: ts}),
     });
     if(res.status === 403) handleAccessRevoked();
   }catch(e){ /* pas grave, le prochain push (ou pull sur l'autre appareil) rattrapera */ }
@@ -2802,15 +2808,6 @@ function modalGeneralSettings(){
     </p>
     <div class="field-row"><label style="width:auto; font-family:var(--font-display); font-weight:600; font-size:13px; color:var(--text);">Synchronisation multi-appareils</label></div>
     ${syncStatusHtml()}
-    <div class="field-row"><label style="width:auto; font-family:var(--font-display); font-weight:600; font-size:13px; color:var(--text);">⚔️ Serment Inné</label></div>
-    <p style="font-family:var(--font-mono); font-size:9.5px; color:var(--text-faint); margin:2px 0 8px;">Définis un objectif public, visible de tous dans le classement.</p>
-    <div class="field-row"><label style="width:auto;">Pseudo</label><input type="text" id="oathNameInput" value="${escapeHtml(STATE.oath.displayName||'')}" maxlength="40" style="flex:1;"></div>
-    <textarea id="oathTextInput" placeholder="Ton prochain objectif…" maxlength="280" rows="2" style="width:100%; margin:4px 0 8px; font-family:var(--font-mono); font-size:11px;">${escapeHtml(STATE.oath.text||'')}</textarea>
-    <div style="display:flex; gap:6px; flex-wrap:wrap;">
-      <button class="btn ghost small" onclick="saveOath()">Enregistrer mon serment</button>
-      <button class="btn ghost small" onclick="showOathLeaderboard()">Voir le classement</button>
-      <button class="btn ghost small" onclick="launchOathEvent()">📢 Lancer un Serment Inné (admin)</button>
-    </div>
     <div class="field-row"><label>Notifications</label>
       <button class="btn small" style="flex:1;" onclick="requestNotifications()">${notifState==='granted' && STATE.settings.notificationsOn ? 'ACTIVÉES ✓' : 'ACTIVER'}</button>
     </div>
@@ -2830,6 +2827,7 @@ function modalGeneralSettings(){
       Une sauvegarde automatique est prise chaque jour sur cet appareil (7 derniers jours conservés) — un filet de sécurité en cas d'erreur. Elle ne remplace pas « Exporter », seul moyen de transférer tes données vers un autre appareil.
     </p>
     <button class="btn danger-outline wide" onclick="confirmResetAll()">Réinitialiser tout</button>
+    <div style="text-align:center; margin-top:14px;"><span style="font-family:var(--font-mono); font-size:9px; color:var(--text-faint); letter-spacing:1px;">HUNTER LOG — BUILD ${APP_VERSION}</span></div>
     <div class="modal-actions"><button class="btn wide" onclick="closeModal()">Fermer</button></div>
   `);
 }
