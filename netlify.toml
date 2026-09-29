@@ -5,3 +5,15 @@
 # les rappels dus (engagement du soir / non-négociables du matin).
 [functions."send-reminders"]
   schedule = "*/10 * * * *"
+
+# index.html et sw.js ne doivent pas rester en cache navigateur : sinon une mise à
+# jour déployée n'arrive sur le téléphone qu'après plusieurs ouvertures de l'app.
+[[headers]]
+  for = "/index.html"
+  [headers.values]
+    Cache-Control = "no-cache"
+
+[[headers]]
+  for = "/sw.js"
+  [headers.values]
+    Cache-Control = "no-cache"
