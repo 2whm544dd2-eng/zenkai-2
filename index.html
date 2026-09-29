@@ -1092,6 +1092,18 @@
   .ep-tiles b.acc{color:var(--glow);}
   .ep-tiles span{font-size:11px; color:#8b9099;}
   body.theme-epure .oath-reminder-tag{letter-spacing:1px;}
+
+
+  /* ===== Onglet Stats (version admin) : personnage à la place du portail ===== */
+  .perso-stage{position:relative; width:170px; height:250px; flex-shrink:0; margin:0 auto; display:flex; align-items:flex-end; justify-content:center;}
+  .perso-stage img{position:relative; z-index:2; height:218px; width:auto; margin-bottom:14px; image-rendering:pixelated; display:block; filter:drop-shadow(0 8px 10px rgba(0,0,0,0.55));}
+  .perso-aura{position:absolute; left:-12%; right:-12%; top:4%; bottom:6%; border-radius:50%; background:radial-gradient(ellipse at 50% 58%, color-mix(in srgb, var(--pc) 42%, transparent), transparent 66%); animation:auraPulse 2.6s ease-in-out infinite;}
+  .perso-ring{position:absolute; left:50%; top:46%; width:190px; height:190px; margin:-95px 0 0 -95px; border-radius:50%;
+    background:repeating-conic-gradient(from 0deg, color-mix(in srgb, var(--pc) 30%, transparent) 0deg 3deg, transparent 3deg 15deg);
+    -webkit-mask-image:radial-gradient(circle, #000 35%, transparent 70%); mask-image:radial-gradient(circle, #000 35%, transparent 70%); animation:rbSpin 40s linear infinite;}
+  .perso-floor{position:absolute; z-index:1; left:0; right:0; bottom:0; width:100%; height:44px; filter:drop-shadow(0 0 6px var(--pc)); animation:auraPulse 3.2s ease-in-out infinite;}
+  .perso-rank{position:absolute; z-index:3; right:8px; top:6px; width:28px; height:28px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-family:'Cinzel', Georgia, serif; font-weight:700; font-size:14px; color:var(--pc); border:1.5px solid var(--pc); background:rgba(0,0,0,0.45); box-shadow:0 0 12px color-mix(in srgb, var(--pc) 60%, transparent);}
+  @media (prefers-reduced-motion: reduce){ .perso-aura, .perso-ring, .perso-floor{animation:none;} }
 </style>
 </head>
 <body>
@@ -1109,7 +1121,7 @@
 <script>
 /* ========================= STORAGE (Claude artifact OR standalone phone) ========================= */
 const STORAGE_KEY = 'sl-tracker-state-v1';
-const APP_VERSION = '72';
+const APP_VERSION = '74';
 const hasClaudeStorage = () => (typeof window.storage !== 'undefined' && window.storage && typeof window.storage.get === 'function');
 
 async function storeGet(key){
@@ -2516,7 +2528,7 @@ const RANK_BADGE_STYLE = {
   S:{hi:'#ffe9a3', mid:'#c9971a', lo:'#140606', accent:'#ff2d3d', leaf:'#ffd970', glow:'rgba(255,45,61,0.5)', n:12, wings:1, laurel:1, gems:1, rays:1, crown:1, flames:1},
 };
 const RANK_BADGE_SPOTS = [[40,120],[292,140],[30,300],[306,280],[120,40],[228,34],[20,210],[318,200],[92,420],[250,428],[160,4],[300,380]];
-function buildRankBadge(rankLabel, width){
+function buildRankBadge(rankLabel, width, allowPerso){
   const b = RANK_BADGE_STYLE[rankLabel] || RANK_BADGE_STYLE.E;
   const k = 'rb' + rankLabel;
   const pct = (v, total) => (v/total*100).toFixed(2) + '%';
@@ -2526,8 +2538,9 @@ function buildRankBadge(rankLabel, width){
     const s = (i%3)+3;
     return `<span class="rb-p" style="left:${pct(x,340)}; top:${pct(y,440)}; width:${s}px; height:${s}px; background:${b.accent}; box-shadow:0 0 10px 2px ${b.accent}; animation-delay:${(i*0.23).toFixed(2)}s;"></span>`;
   }).join('');
-  // Le portail évolutif garde toujours l'emblème : le personnage perso s'affiche dans
-  // l'en-tête (heroAvatar), pas dans le portail (demande de Moustapha, build 72).
+  // Le portail garde toujours l'emblème. Version admin : dans l'onglet Stats, le personnage
+  // remplace le portail (persoStageHtml) — un sprite pixel art dans un cadre vectoriel
+  // détonnait (retour de Moustapha, build 74).
   const usePerso = false;
   const sigil = buildSigil(rankLabel, AVATAR_CONFIG[rankLabel] || AVATAR_CONFIG.E);
   return `<div class="rank-badge-frame" style="width:${width}px;" aria-label="Rang ${rankLabel}">
@@ -2571,6 +2584,30 @@ function heroAvatar(rankLabel){
   if(!STATE.settings.personalAvatar) return sigil;
   // Personnage perso (réglage admin) ; si avatars/ a été supprimé, l'emblème reprend sa place.
   return `<div class="hero-sigil" style="display:none;">${buildSigil(rankLabel, cfg)}</div><img class="hero-img" src="avatars/${rankLabel}.webp" alt="" onerror="this.style.display='none'; this.previousElementSibling.style.display='block';">`;
+}
+// Onglet Stats (version admin) : le personnage à la place du portail, comme un sprite de
+// jeu sur son cercle d'invocation — halo, sol lumineux et particules aux couleurs du rang,
+// sans cadre. Si l'image manque (avatars/ supprimé), le portail avec l'emblème revient.
+function persoStageHtml(rankLabel){
+  const cfg = AVATAR_CONFIG[rankLabel] || AVATAR_CONFIG.E;
+  const tier = ['E','D','C','B','A','S'].indexOf(rankLabel);
+  const parts = Array.from({length: cfg.particles}).map((_,i)=>{
+    const left = 8 + (i*37)%84, top = 6 + (i*29)%62, sz = 3 + (i%3);
+    return `<span class="rb-p" style="left:${left}%; top:${top}%; width:${sz}px; height:${sz}px; background:${cfg.aura1}; box-shadow:0 0 8px 2px ${cfg.aura1}; animation-delay:${(i*0.27).toFixed(2)}s;"></span>`;
+  }).join('');
+  const ring = tier >= 3 ? `<span class="perso-ring"></span>` : '';
+  return `<div class="perso-stage" style="--pc:${cfg.aura1};">
+    <span class="perso-aura"></span>
+    ${ring}
+    <svg class="perso-floor" viewBox="0 0 200 50" aria-hidden="true">
+      <ellipse cx="100" cy="25" rx="92" ry="19" fill="none" stroke="${cfg.aura1}" stroke-opacity=".55" stroke-width="1.5"/>
+      <ellipse cx="100" cy="25" rx="70" ry="13" fill="none" stroke="${cfg.aura1}" stroke-opacity=".8" stroke-width="1.2" stroke-dasharray="4 5"/>
+      <ellipse cx="100" cy="25" rx="48" ry="8" fill="${cfg.aura1}" fill-opacity=".35"/>
+    </svg>
+    ${parts}
+    <img src="avatars/${rankLabel}.webp" alt="Ton personnage, rang ${rankLabel}" onerror="const st=this.closest('.perso-stage'); st.style.display='none'; st.nextElementSibling.style.display='';">
+    <span class="perso-rank">${rankLabel}</span>
+  </div>`;
 }
 function heroTools(){
   return `<div class="hero-tools">
@@ -4315,10 +4352,10 @@ function modalGeneralSettings(){
       <p ${p}>${escapeHtml((VISUAL_THEMES.find(t=>t.id===currentThemeId())||{}).desc||'')} Change instantanément, sans rien perdre.</p>
       ${isAdminDevice() ? `
       <div class="field-row" style="justify-content:space-between;">
-        <label style="font-family:var(--font-mono); font-size:10px; color:var(--text-faint); width:auto;">Mon personnage dans l'en-tête</label>
+        <label style="font-family:var(--font-mono); font-size:10px; color:var(--text-faint); width:auto;">Mon personnage (en-tête + Stats)</label>
         <div class="mini-switch ${STATE.settings.personalAvatar?'on':''}" id="personalAvatarSwitch" onclick="togglePersonalAvatarPref()" role="button" aria-label="Afficher mon personnage dans le badge de rang"></div>
       </div>
-      <p ${p}>Version perso (visible seulement sur un appareil admin) : ton personnage dans l'en-tête d'« Aujourd'hui » (styles Monarque, Système, Manhwa, Donjon, Épuré) au lieu de l'emblème. Le portail évolutif de l'onglet Stats garde toujours l'emblème. Pour la version publique, supprimer le dossier avatars/ du dépôt suffit : l'emblème revient tout seul.</p>` : ''}
+      <p ${p}>Version perso (visible seulement sur un appareil admin) : ton personnage dans l'en-tête d'« Aujourd'hui » (styles Monarque, Système, Manhwa, Donjon, Épuré) et dans l'onglet Stats, à la place du portail évolutif (sans le réglage, le portail avec l'emblème est affiché). Pour la version publique, supprimer le dossier avatars/ du dépôt suffit : l'emblème revient tout seul.</p>` : ''}
       <div class="field-row" style="justify-content:space-between;">
         <label style="font-family:var(--font-mono); font-size:10px; color:var(--text-faint); width:auto;">En-tête complet sur tous les écrans</label>
         <div class="mini-switch ${STATE.settings.fullHeaderEverywhere?'on':''}" id="fullHeaderSwitch" onclick="toggleFullHeaderPref()" role="button" aria-label="Afficher l'en-tête complet sur tous les écrans"></div>
@@ -4877,7 +4914,8 @@ function tabStats(hRank, cfg, nextRankLabel, nextRankLevel){
       <div class="c-tl"></div><div class="c-br"></div>
       <div class="eyebrow">CHARACTER</div>
       <div class="avatar-panel">
-        <div class="avatar-box">${buildRankBadge(hRank.label, 170)}</div>
+        ${STATE.settings.personalAvatar ? persoStageHtml(hRank.label) : ''}
+        <div class="avatar-box" style="${STATE.settings.personalAvatar ? 'display:none;' : ''}">${buildRankBadge(hRank.label, 170)}</div>
         <div class="avatar-info">
           <div class="avatar-title" style="color:${hRank.color}">${cfg.title}</div>
           <div class="avatar-rank-line">RANG ${hRank.label} · SE TRANSFORME AVEC TON NIVEAU DE CHASSEUR</div>

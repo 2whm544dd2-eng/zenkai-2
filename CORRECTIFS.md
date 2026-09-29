@@ -1,4 +1,4 @@
-# Correctifs appliqués — 28/09/2026, révisé le 29/09/2026 (build 72)
+# Correctifs appliqués — 28/09/2026, révisé le 29/09/2026 (build 74)
 
 **Rectification du 29/09 (à lire en premier).** Les points 2 à 6 de la première
 version de ce fichier étaient faux. Ils partaient des fonctions serveur contenues
@@ -524,6 +524,23 @@ nulle (`flex:1` dans une colonne flex) — corrigé.
 
 **Vérifié** : 31 + 13 + 13 contrôles Playwright + 2 sur la fenêtre QUÊTE QUOTIDIENNE,
 captures des 7 styles × 4 onglets, zéro erreur JS.
+
+---
+
+## 19. Personnage dans l'onglet Stats (version admin) — builds 73-74
+
+Build 73 : le personnage placé à l'intérieur du portail évolutif. Retour de Moustapha :
+pas harmonieux — un sprite en pixel art dans un cadre vectoriel lisse détonne.
+**Build 74** : avec le réglage admin « Mon personnage (en-tête + Stats) », le personnage
+**remplace** le portail dans l'onglet Stats, présenté comme un sprite de jeu sur son
+cercle d'invocation : halo, sol lumineux, particules et pastille de rang aux couleurs
+du rang (anneau de rayons en plus à partir du rang B). Sans le réglage, et pour tous
+les autres utilisateurs, le portail avec l'emblème reste affiché. Si le dossier
+`avatars/` est supprimé, le portail revient tout seul. Seul `index.html` change.
+
+**Vérifié** : 31 + 13 + 14 + 2 contrôles Playwright (dont « personnage à la place du
+portail » et « le portail revient sans avatars/ »), captures des 6 rangs et de l'onglet
+Stats dans les 5 nouveaux styles, zéro erreur JS.
 
 ---
 
