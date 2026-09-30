@@ -203,7 +203,89 @@
     font-family:var(--font-body); font-size:13px; width:100%;
   }
   select:focus, input:focus{outline:none; border-color:var(--glow);}
+  /* ---------- Build 76 ---------- */
+  .xp-float{position:fixed; z-index:150; transform:translate(-50%,-50%); pointer-events:none; text-align:center; line-height:1; animation:xpFly 1.25s cubic-bezier(.2,.8,.3,1) forwards;}
+  .xp-float b{display:block; font-family:var(--font-display); font-weight:800; font-size:34px; letter-spacing:.5px; color:var(--ok); text-shadow:0 2px 0 rgba(0,0,0,.55), 0 0 18px color-mix(in srgb, var(--ok) 70%, transparent);}
+  .xp-float span{display:block; margin-top:3px; font-family:var(--font-mono); font-size:10px; letter-spacing:2px; color:var(--text-dim); text-shadow:0 1px 0 rgba(0,0,0,.6);}
+  @keyframes xpFly{0%{opacity:0; transform:translate(-50%,-30%) scale(.55);} 14%{opacity:1; transform:translate(-50%,-60%) scale(1.22);} 28%{transform:translate(-50%,-75%) scale(1);} 75%{opacity:1;} 100%{opacity:0; transform:translate(-50%,-190%) scale(.95);}}
+  body.theme-manhwa .xp-float b{color:#111; text-shadow:3px 3px 0 #d7263d;}
+  @media (prefers-reduced-motion: reduce){ .xp-float{animation:xpFade 1.2s ease forwards;} @keyframes xpFade{0%,70%{opacity:1;} 100%{opacity:0;}} }
+  .rk{display:flex; flex-direction:column; align-items:center; justify-content:center; gap:5px; width:100%; height:100%; padding:6px 0; box-sizing:border-box; align-self:stretch;}
+  .rk-ring{position:relative; width:var(--rs); height:var(--rs); flex:none; color:var(--text);}
+  .rk-ring svg{position:absolute; inset:0; width:100%; height:100%; overflow:visible;}
+  .rk-ring .rk-cur{filter:drop-shadow(0 0 3px currentColor);}
+  .rk-mid{position:absolute; inset:0; display:flex; flex-direction:column; align-items:center; justify-content:center; line-height:1; gap:1px;}
+  .rk-lab{font-family:var(--font-mono); font-size:7px; letter-spacing:2px; color:var(--text-dim);}
+  .rk-letter{font-family:var(--font-display); font-weight:700; font-size:calc(var(--rs) * 0.4); color:var(--rc); text-shadow:0 0 14px color-mix(in srgb, var(--rc) 60%, transparent);}
+  .rk-next{font-family:var(--font-mono); font-size:9px; color:var(--text-dim); white-space:nowrap;} .rk-next b{color:var(--nc); font-weight:700;}
+  .mo-portrait .rk{padding:8px 0 6px;}
+  .mh-portrait .rk{padding:10px 0; background:rgba(255,255,255,0.6);}
+  body.theme-manhwa .rk-letter{text-shadow:none;} body.theme-manhwa .rk-next{color:#111; font-weight:700;}
+  .dj-portrait .rk{padding-top:14px;}
+  .ep-rank{flex:none; width:78px;} .ep-rank .rk{padding:0;}
+  .mo-chip.ok{color:var(--ok); background:color-mix(in srgb, var(--ok) 12%, transparent);}
+  .sy-ok{color:#6be3a0;}
+  .mh-xp span, .dj-xp span{color:var(--ok); font-weight:700;}
+  .rank-badge-img{position:relative; aspect-ratio:340/600; flex-shrink:0;}
+  .rank-badge-img img{position:relative; z-index:1; width:100%; height:100%; display:block; user-select:none; animation:rbiFloat 5s ease-in-out infinite; filter:drop-shadow(0 0 10px color-mix(in srgb, var(--g) 55%, transparent));}
+  .rank-badge-img .rbi-glow{position:absolute; inset:18% 8%; border-radius:50%; background:radial-gradient(circle, color-mix(in srgb, var(--g) 35%, transparent), transparent 70%); animation:rbiPulse 3.2s ease-in-out infinite;}
+  @keyframes rbiFloat{0%,100%{transform:translateY(0);} 50%{transform:translateY(-4px);}}
+  @keyframes rbiPulse{0%,100%{opacity:.55; transform:scale(.95);} 50%{opacity:1; transform:scale(1.05);}}
+  body.theme-manhwa .rank-badge-img{background:#0b0816; border-radius:14px; box-shadow:4px 4px 0 #111;}
+  @media (prefers-reduced-motion: reduce){ .rank-badge-img img, .rank-badge-img .rbi-glow{animation:none;} }
+
+  .stats-share-row{display:flex; gap:8px; flex-wrap:wrap; margin-top:12px;}
+  #fxOverlay{display:none;}
+  #fxOverlay.on{display:flex; position:fixed; inset:0; z-index:190; align-items:center; justify-content:center; background:rgba(2,3,8,0.94); animation:ruFade .35s ease; --rc:var(--cyan);}
+  #fxOverlay.out{animation:ruOut .45s ease forwards;}
+  .aw-scan{position:absolute; inset:0; background:repeating-linear-gradient(0deg, rgba(90,170,255,0.05) 0 1px, transparent 1px 4px); pointer-events:none;}
+  .aw-win{position:relative; width:min(92vw, 420px); padding:26px 22px 22px; border:1px solid #3fa9ff; background:rgba(6,20,43,0.92); box-shadow:0 0 30px rgba(63,169,255,0.45), inset 0 0 30px rgba(63,169,255,0.15); animation:awIn .6s cubic-bezier(.2,1.2,.3,1);}
+  @keyframes awIn{0%{transform:scaleY(0.02); opacity:.4;} 60%{transform:scaleY(1.03); opacity:1;} 100%{transform:scaleY(1);}}
+  .aw-lines{min-height:210px; font-family:var(--font-mono); font-size:14px; line-height:1.7; color:#d9ecff;}
+  .aw-line.sys{text-align:center; color:#7fd4ff; letter-spacing:4px; margin-bottom:10px; text-shadow:0 0 10px #3fa9ff;}
+  .aw-line.dim{color:#7d9cc0;} .aw-line.warn{color:#ff6b7a;} .aw-line.strong{color:#fff; font-weight:700; margin-top:6px;}
+  .aw-actions{display:flex; gap:10px; justify-content:center; align-items:center; margin-top:16px; opacity:0; transform:translateY(8px); transition:.4s;} .aw-actions.show{opacity:1; transform:none;}
+  .rp-stage{text-align:center; font-family:var(--font-display); width:min(92vw,420px);}
+  .rp-top{font-family:var(--font-mono); font-size:12px; letter-spacing:6px; color:var(--rc); text-shadow:0 0 12px var(--rc);}
+  .rp-badge{display:flex; justify-content:center; margin:10px 0 4px; min-height:284px;}
+  .rp-lvl{font-size:22px; letter-spacing:4px; color:var(--text-dim);} .rp-lvl b{font-size:64px; color:#fff; display:block; line-height:1; text-shadow:0 0 24px var(--rc);}
+  .rp-rank{font-size:16px; letter-spacing:4px; font-weight:700; margin-top:6px;}
+  .rp-days{font-family:var(--font-mono); font-size:11px; color:var(--text-faint); margin-top:10px; letter-spacing:2px;}
+  .rp-bar{height:6px; border-radius:999px; background:rgba(255,255,255,0.08); margin:10px 20px 0; overflow:hidden;} .rp-bar div{height:100%; width:0; background:var(--rc); box-shadow:0 0 10px var(--rc);}
+  .rp-actions{display:flex; gap:10px; justify-content:center; flex-wrap:wrap; margin-top:20px; opacity:0; transition:.4s;} .rp-actions.show{opacity:1;}
+  #fxOverlay.flash::after{content:''; position:absolute; inset:0; background:#fff; pointer-events:none; animation:rpFlash .45s ease forwards;}
+  @keyframes rpFlash{0%{opacity:.85;} 100%{opacity:0;}}
+  .card-preview{display:flex; justify-content:center; margin:6px 0 4px;} .card-preview img{width:min(62vw, 250px); border-radius:12px; box-shadow:0 10px 30px rgba(0,0,0,0.5);}
+  .card-loading{font-family:var(--font-mono); font-size:11px; color:var(--text-dim); padding:40px 0;}
   .pomo-count{text-align:center; font-family:var(--font-mono); font-size:10.5px; color:var(--text-faint); margin-top:4px;}
+  .pomo-intent{margin:0 auto 12px; max-width:320px;}
+  .pomo-quest{margin:14px 0 18px; padding:12px 14px 13px; border-radius:14px; text-align:left;
+    background:linear-gradient(135deg, rgba(47,184,255,0.10), rgba(162,107,255,0.08)); border:1px solid rgba(47,184,255,0.28);}
+  .pomo-quest .pq-top{display:flex; align-items:center; justify-content:space-between;}
+  .pomo-quest .pq-label{font-family:var(--font-mono); font-size:10px; letter-spacing:2px; color:var(--cyan);}
+  .pomo-quest .pq-x{background:none; border:none; color:var(--text-dim); font-size:14px; cursor:pointer; padding:2px 4px; line-height:1;}
+  .pomo-quest .pq-name{font-size:17px; font-weight:700; color:var(--text); margin:4px 0 7px; line-height:1.25;}
+  .pomo-quest .pq-meta{display:flex; flex-wrap:wrap; gap:8px; align-items:center; font-size:11px; color:var(--text-dim);}
+  .pomo-quest .pq-chip{padding:2px 8px; border-radius:20px; border:1px solid rgba(47,184,255,0.35); color:var(--cyan); letter-spacing:.5px;}
+  .pq-ico{width:17px; height:17px; fill:none; stroke:currentColor; stroke-width:1.9; stroke-linecap:round; stroke-linejoin:round; display:block;}
+  .pomo-intent input{text-align:center; font-size:13px;}
+  .pomo-intent-show{text-align:center; font-size:14px; color:var(--text); margin:-4px auto 12px; max-width:340px; line-height:1.4;}
+  .pomo-combo{text-align:center; font-family:var(--font-mono); font-size:10px; letter-spacing:1.5px; color:var(--text-faint); margin:0 0 14px;}
+  .pomo-combo.on{color:var(--gold, #ffd166); text-shadow:0 0 10px rgba(255,209,102,0.45); font-size:11px;}
+  .pomo-review{margin:0 0 14px; padding:10px 12px; border:1px solid var(--line); border-radius:var(--radius); background:rgba(47,184,255,0.05);}
+  .pomo-review-q{font-size:12.5px; margin-bottom:8px; text-align:center;}
+  .pomo-review-btns{display:flex; gap:6px; justify-content:center; align-items:center; flex-wrap:wrap;}
+  .pomo-push-hint{font-family:var(--font-mono); font-size:9.5px; color:var(--text-faint); text-align:center; line-height:1.5; margin-top:10px;}
+  /* Plein écran : le minuteur occupe tout l'écran, le reste de l'app est masqué. */
+  body .panel.pomo-panel.pomo-full{position:fixed; inset:0; z-index:70; max-width:none; margin:0; border-radius:0; border:none;
+    display:flex; flex-direction:column; justify-content:center; align-items:stretch; padding:max(24px, env(safe-area-inset-top)) 20px max(24px, env(safe-area-inset-bottom));
+    background:var(--bg) !important; box-shadow:none !important; backdrop-filter:none; -webkit-backdrop-filter:none; transform:none; overflow:auto;}
+  .pomo-panel.pomo-full .pomo-hide-fs{display:none !important;}
+  .pomo-panel.pomo-full .pomo-timer{font-size:clamp(84px, 24vw, 200px); line-height:1; margin:10px 0 18px;}
+  .pomo-panel.pomo-full .pomo-mode{font-size:13px; margin-bottom:8px;}
+  .pomo-panel.pomo-full .pomo-intent-show{font-size:17px;}
+  .pomo-panel.pomo-full .pomo-goal-track{max-width:360px; width:100%; margin:16px auto 0;}
+  .pomo-panel.pomo-full .c-tl, .pomo-panel.pomo-full .c-br{display:none;}
   .radio-group{display:flex; gap:8px; width:100%;}
   .radio-opt{flex:1; text-align:center; padding:8px; border:1px solid var(--line); border-radius:var(--radius); font-family:var(--font-mono); font-size:11px; cursor:pointer; color:var(--text-dim); transition:.15s;}
   .radio-opt.active{border-color:var(--glow); color:var(--cyan); background:rgba(47,184,255,0.08);}
@@ -1111,6 +1193,7 @@
   <div id="loading">CONNEXION AU SYSTÈME…</div>
 </div>
 <div id="toastZone"></div>
+<div id="fxOverlay"></div>
 <div id="rankUp" onclick="closeRankUp()"></div>
 
 <div class="overlay" id="overlay">
@@ -1121,7 +1204,10 @@
 <script>
 /* ========================= STORAGE (Claude artifact OR standalone phone) ========================= */
 const STORAGE_KEY = 'sl-tracker-state-v1';
-const APP_VERSION = '74';
+const APP_VERSION = '77';
+// Pomodoro : XP fixe par minute de focus et bornes de durée (voir pomoSessionXP).
+const POMO_XP_PER_MIN = 0.8;
+const POMO_MIN_WORK = 10, POMO_MAX_WORK = 90;
 const hasClaudeStorage = () => (typeof window.storage !== 'undefined' && window.storage && typeof window.storage.get === 'function');
 
 async function storeGet(key){
@@ -1154,9 +1240,9 @@ const DEFAULT_STATE = () => ({
   ],
   tasks: [],
   goals: [],
-  pomo: {workMin:25, breakMin:5, skill:'focus', xpPerSession:20, completedToday:0, lastPomoDate:null, dailyGoal:4, dailyGoalRewarded:false},
+  pomo: {workMin:25, breakMin:5, skill:'focus', completedToday:0, lastPomoDate:null, dailyGoal:4, dailyGoalRewarded:false, combo:{count:0, lastAt:0}, log:[]},
   water: {goalMl:3000, currentMl:0, skill:'nutrition', xpOnGoal:30, goalRewarded:false, lastDate:null},
-  settings: {soundOn:true, penaltiesEnabled:true, notificationsOn:false, pomoPenaltyEnabled:false, identityTitlesEnabled:true, fullHeaderEverywhere:false, visualTheme:'monarch', monarchPreviewDone:true, welcomeDismissed:false, personalAvatar:false},
+  settings: {soundOn:true, penaltiesEnabled:true, notificationsOn:false, pomoPenaltyEnabled:false, identityTitlesEnabled:true, fullHeaderEverywhere:false, visualTheme:'monarch', monarchPreviewDone:true, welcomeDismissed:false, personalAvatar:false, awakeningDone:false},
   todayStats: {date:null, xpGained:0, routinesDone:0, tasksDone:0, goalsDone:0, focusMinutes:0, tasksAbandoned:0, xpBySkill:{}},
   history: [],
   stats: {
@@ -1263,7 +1349,7 @@ function checkDayRollover(){
         notifyIfEnabled('PÉNALITÉ // Hunter Log', `-${penalty} XP — Objectif hydratation raté`, 'hunter-log-penalty-water');
       }
       if(STATE.settings.penaltiesEnabled && STATE.settings.pomoPenaltyEnabled && pomoDatePrev === STATE.todayStats.date && pomoCompletedPrev < pomoGoalPrev){
-        const penalty = Math.max(8, Math.round(STATE.pomo.xpPerSession*0.75));
+        const penalty = Math.max(8, Math.round(pomoSessionXP()*0.75));
         const s = STATE.skills[STATE.pomo.skill];
         if(s) s.xp = Math.max(0, s.xp - penalty);
         histEntry.xpGained -= penalty;
@@ -1316,6 +1402,12 @@ function migrateState(){
   if(!STATE.pomo) STATE.pomo = d.pomo;
   if(STATE.pomo.dailyGoal===undefined) STATE.pomo.dailyGoal = 4;
   if(STATE.pomo.dailyGoalRewarded===undefined) STATE.pomo.dailyGoalRewarded = false;
+  // Build 75 : l'XP pomodoro n'est plus réglable (anti-triche) → durée ramenée dans 10–90 min.
+  delete STATE.pomo.xpPerSession;
+  STATE.pomo.workMin = Math.min(POMO_MAX_WORK, Math.max(POMO_MIN_WORK, parseInt(STATE.pomo.workMin)||25));
+  STATE.pomo.breakMin = Math.min(30, Math.max(1, parseInt(STATE.pomo.breakMin)||5));
+  if(!STATE.pomo.combo) STATE.pomo.combo = {count:0, lastAt:0};
+  if(!Array.isArray(STATE.pomo.log)) STATE.pomo.log = [];
   if(!STATE.goals) STATE.goals = [];
   if(!STATE.water) STATE.water = d.water;
   if(!STATE.settings) STATE.settings = d.settings;
@@ -1325,6 +1417,8 @@ function migrateState(){
   if(STATE.settings.fullHeaderEverywhere===undefined) STATE.settings.fullHeaderEverywhere = false;
   if(STATE.settings.visualTheme===undefined) STATE.settings.visualTheme = 'modern';
   if(STATE.settings.personalAvatar===undefined) STATE.settings.personalAvatar = false;
+  // Build 76 : l'éveil n'est montré qu'aux nouveaux joueurs.
+  if(STATE.settings.awakeningDone===undefined) STATE.settings.awakeningDone = (STATE.stats && STATE.stats.lifetimeXP||0) > 0;
   // Aperçu de la refonte « Monarque » : activée une seule fois pour les joueurs existants,
   // avec un message pour revenir en arrière (Réglages → Affichage). Jamais réimposée ensuite.
   if(!STATE.settings.monarchPreviewDone){
@@ -1429,6 +1523,7 @@ async function loadSyncMeta(){
   syncCode = await storeGet(SYNC_CODE_KEY);
   const ts = await storeGet(SYNC_TS_KEY);
   localStateTs = ts ? parseInt(ts, 10) || 0 : 0;
+  try{ const b = await storeGet(SYNC_BASE_KEY); syncBase = b ? JSON.parse(b) : null; }catch(e){ syncBase = null; }
   adminSecret = (await storeGet(ADMIN_SECRET_KEY)) || null;
   if(syncCode) startSyncWatcher();
 }
@@ -1438,14 +1533,59 @@ function randomSyncCode(){
   for(let i=0;i<8;i++) code += alphabet[Math.floor(Math.random()*alphabet.length)];
   return code;
 }
+// localStateTs = horodatage SERVEUR de la version dont descend l'état local (jamais l'horloge
+// de l'appareil). syncDirty = il y a des changements locaux que le serveur n'a pas encore acceptés.
+// Chaque envoi porte baseTs : si le serveur a reçu entre-temps une version plus récente (autre
+// appareil), il refuse (409) au lieu d'écraser, et l'appareil charge cette version.
+// C'était la cause du bug « j'allume le PC et il remet une vieille version par-dessus mes
+// changements du téléphone » : au réveil, un minuteur (changement de jour, rappels…) enregistrait
+// avant que la synchro ait récupéré la version du téléphone, et la vieille version gagnait.
+let syncDirty = false, syncRev = 0;
+const SYNC_BACKUP_KEY = STORAGE_KEY + '-sync-backup';
+// Copie de la dernière version échangée avec le serveur : sert de point de départ commun pour
+// fusionner quand les deux appareils ont changé des choses chacun de leur côté.
+const SYNC_BASE_KEY = STORAGE_KEY + '-sync-base';
+let syncBase = null;
+function rememberSyncBase(state){ try{ syncBase = JSON.parse(JSON.stringify(state)); storeSet(SYNC_BASE_KEY, JSON.stringify(syncBase)); }catch(e){} }
+const _same = (a, b) => JSON.stringify(a) === JSON.stringify(b);
+const _isObj = x => x && typeof x === 'object' && !Array.isArray(x);
+function _keyOf(x){ return _isObj(x) ? (x.id != null ? 'id:' + x.id : (x.date != null ? 'date:' + x.date : null)) : null; }
+// Fusion à trois voies : pour chaque champ, on garde le côté qui a changé depuis la base commune.
+// Si les deux ont changé la même valeur, c'est la version de CET appareil qui l'emporte.
+// Les listes d'objets (quêtes, routines, objectifs, historique…) sont fusionnées élément par élément.
+function mergeStates(base, local, server){
+  if(_same(local, server)) return local;
+  if(base !== undefined && _same(base, local)) return server;
+  if(base !== undefined && _same(base, server)) return local;
+  if(_isObj(local) && _isObj(server)){
+    const b = _isObj(base) ? base : {}, out = {};
+    for(const k of new Set([...Object.keys(server), ...Object.keys(local)])){
+      const inL = k in local, inS = k in server, inB = k in b;
+      if(inL && inS) out[k] = mergeStates(inB ? b[k] : undefined, local[k], server[k]);
+      else if(inL){ if(!inB || !_same(b[k], local[k])) out[k] = local[k]; }
+      else { if(!inB || !_same(b[k], server[k])) out[k] = server[k]; }
+    }
+    return out;
+  }
+  if(Array.isArray(local) && Array.isArray(server) && local.length + server.length > 0 && [...local, ...server].every(x => _keyOf(x))){
+    const bm = new Map((Array.isArray(base) ? base : []).filter(_keyOf).map(x => [_keyOf(x), x]));
+    const lm = new Map(local.map(x => [_keyOf(x), x])), sm = new Map(server.map(x => [_keyOf(x), x]));
+    const order = [...server.map(_keyOf), ...local.map(_keyOf).filter(k => !sm.has(k))];
+    const out = [];
+    for(const k of order){
+      const l = lm.get(k), sv = sm.get(k), bs = bm.get(k);
+      if(l && sv) out.push(mergeStates(bs, l, sv));
+      else if(l){ if(!bs || !_same(bs, l)) out.push(l); }       // supprimé sur l'autre appareil et pas modifié ici → supprimé
+      else if(sv){ if(!bs || !_same(bs, sv)) out.push(sv); }
+    }
+    if(out.length && out[0].date && !out[0].id) out.sort((x, y) => x.date < y.date ? -1 : x.date > y.date ? 1 : 0);
+    return out;
+  }
+  return local;
+}
 function queueSyncPush(immediate){
   if(!syncCode) return;
-  // On avance l'horloge locale tout de suite (pas seulement au moment de l'envoi réel) :
-  // sinon, un pull concurrent (tick des 20s, retour au premier plan) pouvait voir une
-  // version serveur plus ancienne comme "plus récente" que ce changement encore en
-  // attente, et l'écraser — c'était la cause du bug "ma coche/mon eau redescend toute seule".
-  localStateTs = Date.now();
-  storeSet(SYNC_TS_KEY, String(localStateTs));
+  syncDirty = true; syncRev++;
   clearTimeout(syncPushTimer);
   if(immediate){ pushStateToServer(); return; }
   syncPushTimer = setTimeout(pushStateToServer, 1500);
@@ -1453,12 +1593,21 @@ function queueSyncPush(immediate){
 async function pushStateToServer(){
   if(!syncCode) return;
   try{
+    const rev = syncRev;
+    const sentBody = JSON.stringify({code: syncCode, state: STATE, baseTs: localStateTs});
     const res = await fetch('/.netlify/functions/sync-state', {
-      method:'POST', headers:{'Content-Type':'application/json'},
-      body: JSON.stringify({code: syncCode, state: STATE}),
+      method:'POST', headers:{'Content-Type':'application/json'}, body: sentBody,
     });
     if(res.status === 403){ handleAccessRevoked(await syncErrorCode(res)); return; }
+    if(res.status === 409){
+      lastSyncOkAt = Date.now();
+      const data = await res.json().catch(()=>null);
+      if(data && data.state && data.updatedAt) await adoptServerState(data.state, data.updatedAt, true);
+      return;
+    }
     if(res.ok){
+      if(rev === syncRev) syncDirty = false;
+      rememberSyncBase(JSON.parse(sentBody).state);
       lastSyncOkAt = Date.now();
       const data = await res.json();
       // On adopte l'horodatage renvoyé par le SERVEUR (jamais l'horloge locale) comme
@@ -1479,7 +1628,7 @@ async function pushStateToServer(){
 // pas de lire la réponse : le vrai horodatage serveur ne sera récupéré qu'au prochain pull).
 function flushSyncPushBeacon(){
   if(!syncCode) return;
-  const payload = JSON.stringify({code: syncCode, state: STATE});
+  const payload = JSON.stringify({code: syncCode, state: STATE, baseTs: localStateTs});
   try{
     if(navigator.sendBeacon){
       const blob = new Blob([payload], {type:'application/json'});
@@ -1498,16 +1647,32 @@ async function pullStateFromServer(){
     if(res.ok){
       const data = await res.json();
       if(data && data.updatedAt > localStateTs && data.state){
-        STATE = data.state;
-        migrateState();
-        localStateTs = data.updatedAt;
-        await storeSet(SYNC_TS_KEY, String(localStateTs));
-        await storeSet(STORAGE_KEY, JSON.stringify(STATE));
-        render();
+        await adoptServerState(data.state, data.updatedAt, syncDirty);
       }
     }
   }catch(e){ /* offline ou fonction indisponible : réessaiera au prochain tick */ }
   syncInFlight = false;
+}
+// Charge la version du serveur (plus récente, venue d'un autre appareil). Si cet appareil avait
+// des changements pas encore envoyés, ils sont gardés à part (SYNC_BACKUP_KEY) au lieu d'être perdus.
+async function adoptServerState(state, ts, hadLocalChanges){
+  clearTimeout(syncPushTimer);
+  let merged = state;
+  if(hadLocalChanges){
+    // Les deux appareils ont changé des choses : on fusionne au lieu de jeter l'un des deux.
+    try{ await storeSet(SYNC_BACKUP_KEY, JSON.stringify({savedAt: Date.now(), state: STATE})); }catch(e){}
+    // sans base connue (premier conflit après la mise à jour) : la version du serveur l'emporte
+    if(syncBase !== null){ try{ merged = mergeStates(syncBase, STATE, state); }catch(e){ merged = state; } }
+  }
+  rememberSyncBase(state);
+  STATE = merged;
+  migrateState();
+  localStateTs = ts; syncDirty = false;
+  await storeSet(SYNC_TS_KEY, String(localStateTs));
+  await storeSet(STORAGE_KEY, JSON.stringify(STATE));
+  try{ checkDayRollover(); }catch(e){}
+  if(hadLocalChanges && !_same(merged, state)) queueSyncPush();   // renvoie la fusion
+  render();
 }
 // Appelé quand le serveur répond 403 (accès désactivé, ex: membre qui a arrêté de payer) —
 // on arrête simplement d'essayer de synchroniser, sans effacer les données locales déjà là.
@@ -1532,6 +1697,8 @@ function startSyncWatcher(){
   syncWatcherStarted = true;
   setInterval(pullStateFromServer, 20000);
   document.addEventListener('visibilitychange', ()=>{ if(document.visibilityState==='visible') pullStateFromServer(); });
+  window.addEventListener('online', ()=> pullStateFromServer());
+  window.addEventListener('pageshow', e => { if(e.persisted) pullStateFromServer(); });
 }
 async function generateSyncCode(){
   accessRevokedNotified = false;
@@ -1581,6 +1748,7 @@ async function joinSyncCode(){
     migrateState();
     syncCode = code;
     localStateTs = data.updatedAt;
+    rememberSyncBase(STATE);
     await storeSet(SYNC_CODE_KEY, syncCode);
     await storeSet(SYNC_TS_KEY, String(localStateTs));
     await storeSet(STORAGE_KEY, JSON.stringify(STATE));
@@ -2306,8 +2474,236 @@ function addSkillXP(key, amount, rewardText){
   checkAchievements();
   queueSave();
   render();
+  if(amount > 0) xpFloat(amount, s.name);
 }
 
+/* « +20 XP » qui s'envole depuis l'endroit où l'on vient de toucher (build 76). */
+let lastTapPoint = null, lastXpFloatAt = 0, xpFloatStack = 0;
+document.addEventListener('pointerdown', e=>{ lastTapPoint = {x:e.clientX, y:e.clientY, t:Date.now()}; }, true);
+function xpFloat(amount, skillName){
+  try{
+    const now = Date.now();
+    const p = (lastTapPoint && now - lastTapPoint.t < 1500) ? lastTapPoint : {x: window.innerWidth/2, y: window.innerHeight*0.42};
+    xpFloatStack = (now - lastXpFloatAt < 450) ? xpFloatStack + 1 : 0;
+    lastXpFloatAt = now;
+    const el = document.createElement('div');
+    el.className = 'xp-float';
+    el.innerHTML = `<b>+${amount} XP</b>${skillName ? `<span>${escapeHtml(String(skillName).toUpperCase())}</span>` : ''}`;
+    const x = Math.min(Math.max(p.x, 95), window.innerWidth - 95);
+    el.style.left = x + 'px';
+    el.style.top = (p.y - 20 - xpFloatStack*44) + 'px';
+    document.body.appendChild(el);
+    setTimeout(()=>el.remove(), 1300);
+  }catch(e){ /* purement visuel */ }
+}
+
+
+
+/* ========================= BUILD 76 — ÉVEIL, PROGRESSION, CARTE ========================= */
+
+/* ---------- Éveil : premier lancement ---------- */
+const AWAKEN_LINES = [
+  ['[ SYSTÈME ]', 'sys'],
+  ['Un nouveau chasseur a été détecté.', ''],
+  ['Rang : E. Niveau : 1.', 'dim'],
+  ['Chaque habitude tenue te rendra plus fort.', ''],
+  ['Chaque jour manqué aura un prix.', 'warn'],
+  ['Ta première quête t\'attend.', 'strong'],
+];
+let awakenTimers = [];
+function showAwakening(){
+  const el = document.getElementById('fxOverlay'); if(!el) return;
+  awakenTimers.forEach(clearTimeout); awakenTimers = [];
+  el.className = 'on awaken';
+  el.innerHTML = `<div class="aw-scan"></div><div class="aw-win"><div class="aw-lines" id="awLines"></div>
+    <div class="aw-actions" id="awActions"><button class="btn" onclick="finishAwakening(true)">ACCEPTER</button>
+    <button class="btn ghost small" onclick="finishAwakening(false)">Passer</button></div></div>`;
+  const box = document.getElementById('awLines');
+  let t = 500;
+  AWAKEN_LINES.forEach(([txt, cls], li)=>{
+    const line = document.createElement('div'); line.className = 'aw-line ' + cls;
+    awakenTimers.push(setTimeout(()=>{ box.appendChild(line); }, t));
+    for(let i=1;i<=txt.length;i++){
+      awakenTimers.push(setTimeout(()=>{
+        line.textContent = txt.slice(0, i);
+        if(i % 3 === 0 && STATE.settings.soundOn) playTone(1400 + (i%5)*40, 0.018, 'square', 0.02, 0);
+      }, t + i*28));
+    }
+    t += txt.length*28 + (li===0 ? 500 : 380);
+  });
+  awakenTimers.push(setTimeout(()=>{ const a = document.getElementById('awActions'); if(a) a.classList.add('show'); if(STATE.settings.soundOn) sfxLevelUp(); }, t + 150));
+}
+function finishAwakening(accepted){
+  awakenTimers.forEach(clearTimeout); awakenTimers = [];
+  STATE.settings.awakeningDone = true;
+  queueSave();
+  const el = document.getElementById('fxOverlay');
+  if(el){ el.classList.add('out'); setTimeout(()=>{ el.className=''; el.innerHTML=''; }, 450); }
+  if(accepted){ currentTab = 'today'; render(); showToast('QUÊTE REÇUE', 'Valide ta première routine', '+XP · rang E → D au niveau 5', 'reward'); }
+}
+
+/* ---------- Progression en accéléré ---------- */
+let replayRaf = null;
+function showProgressReplay(){
+  const el = document.getElementById('fxOverlay'); if(!el) return;
+  cancelAnimationFrame(replayRaf);
+  const target = STATE.hunterLevel;
+  const start = STATE.firstUseDate ? new Date(STATE.firstUseDate+'T00:00:00') : new Date();
+  const days = Math.max(1, Math.round((new Date(todayStr()+'T00:00:00') - start) / 86400000) + 1);
+  RANK_ORDER.forEach(L=>{ const im = new Image(); im.src = `badges/${L}.webp`; });   // préchargement
+  el.className = 'on replay';
+  el.innerHTML = `<div class="rp-stage">
+      <div class="rp-top">MA PROGRESSION</div>
+      <div class="rp-badge" id="rpBadge"></div>
+      <div class="rp-lvl">NIVEAU <b id="rpLvl">1</b></div>
+      <div class="rp-rank" id="rpRank">RANG E</div>
+      <div class="rp-days"><span id="rpDay">JOUR 1</span> / ${days}</div>
+      <div class="rp-bar"><div id="rpFill"></div></div>
+      <div class="rp-actions" id="rpActions"><button class="btn" onclick="closeFx(); openHunterCard();">Ma carte de chasseur</button><button class="btn ghost small" onclick="closeFx()">Fermer</button></div>
+    </div>`;
+  const DUR = Math.min(7000, 2500 + target*120);
+  let lastRank = null;
+  const t0 = performance.now();
+  const step = (now)=>{
+    const p = Math.min(1, (now - t0) / DUR);
+    const e = p < 0.5 ? 2*p*p : 1 - Math.pow(-2*p+2, 2)/2;
+    const lvl = Math.max(1, Math.round(1 + (target-1)*e));
+    const r = rankForLevel(lvl);
+    const lvEl = document.getElementById('rpLvl'); if(!lvEl) return;
+    lvEl.textContent = lvl;
+    document.getElementById('rpDay').textContent = 'JOUR ' + Math.max(1, Math.round(days*e));
+    document.getElementById('rpFill').style.width = (e*100).toFixed(1) + '%';
+    if(r.label !== lastRank){
+      document.getElementById('rpBadge').innerHTML = buildRankBadge(r.label, 160);
+      const cfg = AVATAR_CONFIG[r.label] || AVATAR_CONFIG.E;
+      const rr = document.getElementById('rpRank'); rr.textContent = `RANG ${r.label} · ${cfg.title.toUpperCase()}`; rr.style.color = r.color;
+      el.style.setProperty('--rc', r.color);
+      if(lastRank !== null){ el.classList.remove('flash'); void el.offsetWidth; el.classList.add('flash'); if(STATE.settings.soundOn) sfxTransform(); }
+      lastRank = r.label;
+    }
+    if(p < 1) replayRaf = requestAnimationFrame(step);
+    else { document.getElementById('rpActions').classList.add('show'); if(STATE.settings.soundOn) sfxLevelUp(); }
+  };
+  replayRaf = requestAnimationFrame(step);
+}
+function closeFx(){
+  cancelAnimationFrame(replayRaf);
+  const el = document.getElementById('fxOverlay'); if(!el) return;
+  el.classList.add('out'); setTimeout(()=>{ el.className=''; el.innerHTML=''; el.style.removeProperty('--rc'); }, 400);
+}
+
+/* ---------- Carte de chasseur (image 1080×1920 à partager) ---------- */
+function svgToImage(svgEl, w, h){
+  const clone = svgEl.cloneNode(true);
+  clone.setAttribute('xmlns', 'http://www.w3.org/2000/svg');
+  clone.setAttribute('width', w); clone.setAttribute('height', h);
+  clone.removeAttribute('style');
+  const src = 'data:image/svg+xml;charset=utf-8,' + encodeURIComponent(new XMLSerializer().serializeToString(clone));
+  return new Promise((res)=>{ const im = new Image(); im.onload = ()=>res(im); im.onerror = ()=>res(null); im.src = src; });
+}
+function roundRect(ctx, x, y, w, h, r){ ctx.beginPath(); ctx.moveTo(x+r,y); ctx.arcTo(x+w,y,x+w,y+h,r); ctx.arcTo(x+w,y+h,x,y+h,r); ctx.arcTo(x,y+h,x,y,r); ctx.arcTo(x,y,x+w,y,r); ctx.closePath(); }
+async function buildHunterCardCanvas(){
+  const W = 1080, H = 1920;
+  const cv = document.createElement('canvas'); cv.width = W; cv.height = H;
+  const ctx = cv.getContext('2d');
+  const hRank = rankForLevel(STATE.hunterLevel);
+  const cfg = AVATAR_CONFIG[hRank.label] || AVATAR_CONFIG.E;
+  const accent = (RANK_BADGE_STYLE[hRank.label] || RANK_BADGE_STYLE.E).accent;
+  const serif = '"Cinzel", Georgia, serif', sans = '"Sora", "Inter", Arial, sans-serif';
+  try{ await Promise.all([document.fonts.load(`700 60px Cinzel`), document.fonts.load(`600 40px Sora`), document.fonts.load(`400 30px Sora`)]); }catch(e){}
+  // fond
+  const g = ctx.createLinearGradient(0,0,0,H); g.addColorStop(0,'#0a0714'); g.addColorStop(1,'#1d1034');
+  ctx.fillStyle = g; ctx.fillRect(0,0,W,H);
+  const rg = ctx.createRadialGradient(W/2, 640, 40, W/2, 640, 620); rg.addColorStop(0, accent + '55'); rg.addColorStop(1, 'transparent');
+  ctx.fillStyle = rg; ctx.fillRect(0,0,W,H);
+  ctx.strokeStyle = accent + '66'; ctx.lineWidth = 3; roundRect(ctx, 40, 40, W-80, H-80, 36); ctx.stroke();
+  // titre
+  ctx.textAlign = 'center'; ctx.fillStyle = 'rgba(255,255,255,0.55)'; ctx.font = `600 30px ${sans}`;
+  ctx.fillText('CARTE DE CHASSEUR', W/2, 130);
+  ctx.fillStyle = '#fff'; ctx.font = `700 64px ${serif}`;
+  ctx.fillText('ZENKAI', W/2, 205);
+  // badge
+  const bw = 380, bh = bw*600/340, bx = (W-bw)/2, by = 215;
+  const bimg = await new Promise(res=>{ const im = new Image(); im.onload = ()=>res(im); im.onerror = ()=>res(null); im.src = `badges/${hRank.label}.webp`; });
+  if(bimg){ ctx.save(); ctx.shadowColor = RANK_BADGE_GLOW[hRank.label] || accent; ctx.shadowBlur = 40; ctx.drawImage(bimg, bx, by, bw, bh); ctx.restore(); }
+  else {
+    const tmp = document.createElement('div'); tmp.innerHTML = buildRankBadgeSvg(hRank.label, 340);
+    const frameSvg = tmp.querySelector('svg');
+    const fi = frameSvg ? await svgToImage(frameSvg, 340, 440) : null;
+    if(fi) ctx.drawImage(fi, bx, by + 60, bw, bw*440/340);
+  }
+  // identité
+  const name = (STATE.oath && STATE.oath.displayName) || 'Chasseur';
+  ctx.fillStyle = '#fff'; ctx.font = `700 72px ${serif}`; ctx.fillText(name.slice(0,18), W/2, by + bh + 95);
+  ctx.fillStyle = hRank.color.startsWith('var') ? accent : hRank.color; ctx.font = `600 36px ${sans}`;
+  ctx.fillStyle = accent;
+  ctx.fillText(`RANG ${hRank.label} · ${cfg.title.toUpperCase()} · NIVEAU ${STATE.hunterLevel}`, W/2, by + bh + 150);
+  // chiffres
+  const streak = Math.max(0, ...STATE.routines.map(r=> routineStreakAlive(r) ? r.streak : 0), 0);
+  const stats = [
+    [String(streak), 'JOURS DE SÉRIE'],
+    [fmtCount(STATE.stats.lifetimeXP||0), 'XP TOTALE'],
+    [String((STATE.stats.totalTasksDone||0) + (STATE.stats.totalRoutinesDone||0)), 'QUÊTES'],
+    [String(Math.round((STATE.stats.totalFocusMinutes||0)/60)) + ' h', 'DE FOCUS'],
+  ];
+  const sy = by + bh + 200, cw = (W-160)/2;
+  stats.forEach(([v,l], i)=>{
+    const x = 80 + (i%2)*cw, y = sy + Math.floor(i/2)*150;
+    ctx.fillStyle = 'rgba(255,255,255,0.05)'; roundRect(ctx, x+10, y, cw-20, 130, 22); ctx.fill();
+    ctx.fillStyle = '#fff'; ctx.font = `700 54px ${sans}`; ctx.fillText(v, x + cw/2, y + 66);
+    ctx.fillStyle = 'rgba(255,255,255,0.5)'; ctx.font = `600 22px ${sans}`; ctx.fillText(l, x + cw/2, y + 104);
+  });
+  // compétences (barres)
+  const skills = Object.keys(STATE.skills).slice(0,5).map(k=>STATE.skills[k]);
+  const maxL = Math.max(10, ...skills.map(s=>s.level));
+  let ky = sy + 330;
+  ctx.textAlign = 'left';
+  skills.forEach(s=>{
+    ctx.fillStyle = 'rgba(255,255,255,0.75)'; ctx.font = `600 26px ${sans}`; ctx.fillText(s.name.toUpperCase().slice(0,14), 110, ky + 22);
+    ctx.fillStyle = 'rgba(255,255,255,0.08)'; roundRect(ctx, 400, ky, 480, 26, 13); ctx.fill();
+    ctx.fillStyle = accent; roundRect(ctx, 400, ky, Math.max(26, 480*s.level/maxL), 26, 13); ctx.fill();
+    ctx.fillStyle = '#fff'; ctx.font = `700 26px ${sans}`; ctx.textAlign = 'right'; ctx.fillText('NIV ' + s.level, 970, ky + 22); ctx.textAlign = 'left';
+    ky += 50;
+  });
+  ctx.textAlign = 'center';
+  // serment
+  if(STATE.oath && STATE.oath.text){
+    ctx.fillStyle = 'rgba(255,255,255,0.8)'; ctx.font = `italic 400 30px ${sans}`;
+    const words = ('« ' + STATE.oath.text + ' »').split(' '); let line = '', lines = [];
+    words.forEach(w=>{ const t = line ? line + ' ' + w : w; if(ctx.measureText(t).width > 860){ lines.push(line); line = w; } else line = t; });
+    lines.push(line);
+    lines.slice(0,2).forEach((l,i)=>ctx.fillText(l, W/2, ky + 50 + i*42));
+  }
+  ctx.fillStyle = 'rgba(255,255,255,0.45)'; ctx.font = `600 26px ${sans}`;
+  ctx.fillText(location.host ? `Rejoins la chasse · ${location.host}` : 'Rejoins la chasse · ZENKAI', W/2, H - 90);
+  return cv;
+}
+let hunterCardBlob = null;
+async function openHunterCard(){
+  openModal(`<h3>CARTE DE CHASSEUR</h3><div class="card-preview" id="cardPreview"><div class="card-loading">Génération…</div></div>
+    <div class="modal-actions"><button class="btn ghost" onclick="closeModal()">Fermer</button><button class="btn ghost" onclick="downloadHunterCard()">Télécharger</button><button class="btn" id="cardShareBtn" onclick="shareHunterCard()">Partager</button></div>`);
+  try{
+    const cv = await buildHunterCardCanvas();
+    hunterCardBlob = await new Promise(r=>cv.toBlob(r, 'image/png'));
+    const prev = document.getElementById('cardPreview');
+    if(prev){ prev.innerHTML = ''; const img = new Image(); img.src = URL.createObjectURL(hunterCardBlob); img.alt = 'Carte de chasseur'; prev.appendChild(img); }
+    const canShare = navigator.canShare && navigator.canShare({files:[new File([hunterCardBlob], 'carte.png', {type:'image/png'})]});
+    const sb = document.getElementById('cardShareBtn'); if(sb && !canShare) sb.style.display = 'none';
+  }catch(e){
+    const prev = document.getElementById('cardPreview'); if(prev) prev.innerHTML = '<div class="card-loading">Impossible de générer la carte sur cet appareil.</div>';
+  }
+}
+function downloadHunterCard(){
+  if(!hunterCardBlob) return;
+  const a = document.createElement('a'); a.href = URL.createObjectURL(hunterCardBlob); a.download = `carte-chasseur-niv${STATE.hunterLevel}.png`;
+  document.body.appendChild(a); a.click(); a.remove();
+}
+async function shareHunterCard(){
+  if(!hunterCardBlob) return;
+  const file = new File([hunterCardBlob], `carte-chasseur-niv${STATE.hunterLevel}.png`, {type:'image/png'});
+  try{ await navigator.share({files:[file], title:'Ma carte de chasseur', text:`Rang ${rankForLevel(STATE.hunterLevel).label} · niveau ${STATE.hunterLevel} sur ZENKAI`}); }
+  catch(e){ /* partage annulé */ }
+}
 
 /* ========================= RANK-UP CINEMATIC ========================= */
 let rankUpTimer = null;
@@ -2528,7 +2924,17 @@ const RANK_BADGE_STYLE = {
   S:{hi:'#ffe9a3', mid:'#c9971a', lo:'#140606', accent:'#ff2d3d', leaf:'#ffd970', glow:'rgba(255,45,61,0.5)', n:12, wings:1, laurel:1, gems:1, rays:1, crown:1, flames:1},
 };
 const RANK_BADGE_SPOTS = [[40,120],[292,140],[30,300],[306,280],[120,40],[228,34],[20,210],[318,200],[92,420],[250,428],[160,4],[300,380]];
+/* Badges de rang illustrés (build 76) : images fournies par Moustapha (dossier badges/),
+   fond noir retiré. Si l'image manque, on retombe sur l'ancien badge dessiné en SVG. */
+const RANK_BADGE_GLOW = {E:'#8fd3ff', D:'#57e389', C:'#39b8ff', B:'#a26bff', A:'#ff4a3d', S:'#ffc94d'};
 function buildRankBadge(rankLabel, width, allowPerso){
+  const L = RANK_BADGE_GLOW[rankLabel] ? rankLabel : 'E';
+  return `<div class="rank-badge-img" style="width:${width}px; --g:${RANK_BADGE_GLOW[L]};" aria-label="Rang ${L}">
+    <span class="rbi-glow"></span>
+    <img src="badges/${L}.webp" alt="" draggable="false" onerror="this.parentNode.outerHTML = buildRankBadgeSvg('${L}', ${Math.round(width*0.8)})">
+  </div>`;
+}
+function buildRankBadgeSvg(rankLabel, width, allowPerso){
   const b = RANK_BADGE_STYLE[rankLabel] || RANK_BADGE_STYLE.E;
   const k = 'rb' + rankLabel;
   const pct = (v, total) => (v/total*100).toFixed(2) + '%';
@@ -2578,6 +2984,40 @@ function buildRankBadge(rankLabel, width, allowPerso){
    clé/valeur ; Manhwa = case de BD + étoile de rang ; Donjon = portrait en arche + sceau
    de cire ; Épuré = salutation + anneau d'XP + 3 grands chiffres. Les styles Système ·
    Moderne et Système · Classique gardent l'en-tête d'origine (retourne null). */
+/* Module de rang de l'en-tête (build 76) : un anneau en 6 segments, un par rang (E → S).
+   Les rangs passés sont pleins dans leur couleur, le rang en cours se remplit selon les
+   niveaux déjà faits, les suivants restent en creux. Au centre la lettre, dessous le
+   prochain palier (« B dans 8 niv. ») : on voit d'un coup d'œil où on en est et ce qu'il reste. */
+function rankProgress(lvl){
+  const cur = rankForLevel(lvl);
+  const idx = RANK_ORDER.indexOf(cur.label);
+  if(idx >= RANK_ORDER.length-1) return {cur, idx, next:null, left:0, p:1};
+  const next = RANK_ORDER[idx+1];
+  const a = RANK_THRESHOLDS[cur.label], b = RANK_THRESHOLDS[next];
+  return {cur, idx, next, left: b - lvl, p: Math.max(0, Math.min(1, (lvl - a) / (b - a)))};
+}
+function rankRingHtml(lvl, size, withNext){
+  const rp = rankProgress(lvl);
+  const R = 40, C = 2*Math.PI*R, seg = C/6, gap = 7;
+  const arcs = RANK_ORDER.map((L, i)=>{
+    const col = rankForLevel(RANK_THRESHOLDS[L]).color;
+    const rot = -90 + i*60 + (gap/C*360)/2;
+    const len = seg - gap;
+    const track = `<circle cx="50" cy="50" r="${R}" fill="none" stroke="currentColor" stroke-opacity=".12" stroke-width="7" stroke-dasharray="${len.toFixed(2)} ${C.toFixed(2)}" transform="rotate(${rot.toFixed(2)} 50 50)"/>`;
+    const fill = i < rp.idx ? 1 : i === rp.idx ? Math.max(0.06, rp.p) : 0;
+    const f = fill ? `<circle class="${i===rp.idx?'rk-cur':''}" cx="50" cy="50" r="${R}" fill="none" stroke="${col}" stroke-width="7" stroke-linecap="butt" stroke-dasharray="${(len*fill).toFixed(2)} ${C.toFixed(2)}" transform="rotate(${rot.toFixed(2)} 50 50)" style="color:${col};"/>` : '';
+    return track + f;
+  }).join('');
+  const nextCol = rp.next ? rankForLevel(RANK_THRESHOLDS[rp.next]).color : rp.cur.color;
+  return `<div class="rk" style="--rc:${rp.cur.color}; --nc:${nextCol}; --rs:${size}px;" aria-label="Rang ${rp.cur.label}${rp.next ? `, rang ${rp.next} dans ${rp.left} niveaux` : ''}">
+    <div class="rk-ring"><svg viewBox="0 0 100 100" aria-hidden="true">${arcs}</svg>
+      <div class="rk-mid"><span class="rk-lab">RANG</span><span class="rk-letter">${rp.cur.label}</span></div></div>
+    ${withNext ? `<div class="rk-next">${rp.next ? `<b>${rp.next}</b> dans ${rp.left} niv.` : '<b>RANG MAX</b>'}</div>` : ''}
+  </div>`;
+}
+function heroRank(rankLabel, lvl, size){
+  return STATE.settings.personalAvatar ? heroAvatar(rankLabel) : rankRingHtml(lvl, size, true);
+}
 function heroAvatar(rankLabel){
   const cfg = AVATAR_CONFIG[rankLabel] || AVATAR_CONFIG.E;
   const sigil = `<div class="hero-sigil">${buildSigil(rankLabel, cfg)}</div>`;
@@ -2618,17 +3058,18 @@ function heroTools(){
 function themeHeaderHtml(ctx){
   const id = currentThemeId();
   const {rank, lvl, xp, next, pct, streak, goals, quests} = ctx;
+  const todayXp = Math.max(0, (STATE.todayStats && STATE.todayStats.xpGained) || 0);
   const title = (AVATAR_CONFIG[rank.label] || AVATAR_CONFIG.E).title;
   const bar = `<div class="xp-track"><div class="xp-fill" style="width:${pct}%"></div></div>`;
   if(id === 'monarch') return `
     <div class="panel head hero hero-mo">
       ${heroTools()}
       <div class="mo-row">
-        <div class="mo-portrait" style="--rc:${rank.color};">${heroAvatar(rank.label)}<span class="mo-tab">${rank.label}</span></div>
+        <div class="mo-portrait" style="--rc:${rank.color};">${heroRank(rank.label, lvl, 70)}${STATE.settings.personalAvatar ? `<span class="mo-tab">${rank.label}</span>` : ''}</div>
         <div class="mo-info">
           <div class="mo-eyebrow">${escapeHtml(title.toUpperCase())} · RANG ${rank.label}</div>
           <div class="mo-name">Chasseur</div>
-          <div class="mo-chips"><span class="mo-chip">Niv. <b>${lvl}</b></span><span class="mo-chip gold">${streak} j de série</span></div>
+          <div class="mo-chips"><span class="mo-chip">Niv. <b>${lvl}</b></span><span class="mo-chip gold">${streak} j de série</span>${todayXp > 0 ? `<span class="mo-chip ok">+${todayXp} XP auj.</span>` : ''}</div>
           ${bar}
           <div class="mo-xp">${xp} / ${next} XP · ${goals} objectif${goals>1?'s':''} · ${quests} quête${quests>1?'s':''}</div>
         </div>
@@ -2638,13 +3079,14 @@ function themeHeaderHtml(ctx){
     <div class="panel head hero hero-sy">
       <div class="sy-tag">[ STATUT ]</div>
       <div class="sy-row">
-        <div class="sy-portrait"><span class="sy-c1"></span><span class="sy-c2"></span>${heroAvatar(rank.label)}</div>
+        <div class="sy-portrait"><span class="sy-c1"></span><span class="sy-c2"></span>${heroRank(rank.label, lvl, 74)}</div>
         <div class="sy-kv">
           <div><span>NOM</span><span>CHASSEUR</span></div>
           <div><span>NIVEAU</span><span class="sy-big">${lvl}</span></div>
           <div><span>RANG</span><span class="sy-rank">${rank.label} · ${escapeHtml(title.toUpperCase())}</span></div>
           <div><span>SÉRIE</span><span class="sy-gold">${streak} JOUR${streak>1?'S':''}</span></div>
           <div><span>QUÊTES</span><span>${quests} · OBJ. ${goals}</span></div>
+          <div><span>AUJOURD'HUI</span><span class="sy-ok">+${todayXp} XP</span></div>
           <div class="sy-xp"><div><span>XP</span><span>${xp}/${next}</span></div>${bar}</div>
         </div>
       </div>
@@ -2652,13 +3094,13 @@ function themeHeaderHtml(ctx){
     </div>`;
   if(id === 'manhwa') return `
     <div class="panel head hero hero-mh">
-      <div class="mh-portrait"><span class="mh-burst">${rank.label}</span>${heroAvatar(rank.label)}</div>
+      <div class="mh-portrait">${STATE.settings.personalAvatar ? `<span class="mh-burst">${rank.label}</span>` : ''}${heroRank(rank.label, lvl, 88)}</div>
       <div class="mh-info">
         <div class="mh-name">CHASSEUR</div>
         <div class="mh-tag">RANG ${rank.label} · ${escapeHtml(title.toUpperCase())}</div>
         <div class="mh-line">Niveau ${lvl} · <span>${streak} jour${streak>1?'s':''} de série</span></div>
         ${bar}
-        <div class="mh-xp">${xp} / ${next} XP</div>
+        <div class="mh-xp">${xp} / ${next} XP${todayXp > 0 ? ` · <span>+${todayXp} aujourd'hui</span>` : ''}</div>
         ${heroTools()}
       </div>
     </div>`;
@@ -2666,13 +3108,13 @@ function themeHeaderHtml(ctx){
     <div class="panel head hero hero-dj">
       <span class="dj-seal">${rank.label}</span>
       <div class="dj-row">
-        <div class="dj-portrait">${heroAvatar(rank.label)}</div>
+        <div class="dj-portrait">${heroRank(rank.label, lvl, 74)}</div>
         <div class="dj-info">
           <div class="dj-eyebrow">RANG ${rank.label} — ${escapeHtml(title.toUpperCase())}</div>
           <div class="dj-name">Chasseur</div>
           <div class="dj-line">Niveau ${lvl} · <span>${streak} jour${streak>1?'s':''} sans faillir</span></div>
           ${bar}
-          <div class="dj-xp">${xp} / ${next} XP</div>
+          <div class="dj-xp">${xp} / ${next} XP${todayXp > 0 ? ` · <span>+${todayXp} aujourd'hui</span>` : ''}</div>
         </div>
       </div>
       ${heroTools()}
@@ -2688,11 +3130,7 @@ function themeHeaderHtml(ctx){
           <div class="ep-hello">Bonjour, Chasseur</div>
           ${heroTools()}
         </div>
-        <div class="ep-ring">
-          <svg viewBox="0 0 62 62" aria-hidden="true"><circle cx="31" cy="31" r="28" fill="none" stroke="#23262c" stroke-width="4"/><circle cx="31" cy="31" r="28" fill="none" stroke="var(--glow)" stroke-width="4" stroke-linecap="round" stroke-dasharray="${C}" stroke-dashoffset="${(C*(1-pct/100)).toFixed(1)}" transform="rotate(-90 31 31)"/></svg>
-          <div class="ep-face">${heroAvatar(rank.label)}</div>
-          <span class="ep-chip">${rank.label}</span>
-        </div>
+        <div class="ep-rank">${heroRank(rank.label, lvl, 66)}</div>
       </div>
       <div class="ep-tiles">
         <div><b>${lvl}</b><span>niveau</span></div>
@@ -2736,16 +3174,82 @@ let pomoWakeLock = null; // référence au Wake Lock actif
 let pomoLinkedTaskId = null; // quête à laquelle la session en cours est liée (XP + temps de focus redirigés dessus)
 function startPomoForTask(taskId){
   pomoLinkedTaskId = taskId;
-  currentTab = 'pomo';
-  render();
+  const t = STATE.tasks.find(x=>x.id===taskId);
+  if(t) pomoIntent = t.name.slice(0, 80);
+  pomoPersist();
+  // switchTab (et pas seulement currentTab) : remonte en haut de page. Sinon, lancé depuis le
+  // bas d'une longue liste de quêtes, l'écran restait plus bas que le minuteur → page vide.
+  switchTab('pomodoro');
+  window.scrollTo(0, 0);
 }
 function unlinkPomoTask(){
+  const t = pomoLinkedTaskId ? STATE.tasks.find(x=>x.id===pomoLinkedTaskId) : null;
+  if(t && pomoIntent === t.name.slice(0, 80) && !(pomoRunning && pomoMode==='work')) pomoIntent = '';
   pomoLinkedTaskId = null;
+  pomoPersist();
   render();
 }
+
+/* ---- XP : fixe, proportionnelle à la durée (anti-triche) ----
+   Avant : « XP/session » réglable jusqu'à 500 et focus réglable dès 1 min → des milliers
+   d'XP en quelques minutes. Désormais 0,8 XP par minute de focus (25 min = 20 XP,
+   comme avant par défaut) et une session dure au moins 10 min. */
+function pomoSessionXP(){ return Math.max(1, Math.round(STATE.pomo.workMin * POMO_XP_PER_MIN)); }
+
+/* ---- Combo de focus ----
+   Chaque session terminée peu après la précédente (pause + 15 min de marge) fait monter
+   le combo : XP ×1,1 au 2e, ×1,2 au 3e… jusqu'à ×1,5. Abandonner une session entamée
+   (RESET après plus d'une minute) remet le combo à zéro, sans autre pénalité. */
+function pomoComboMult(count){ return count > 1 ? Math.min(1.5, 1 + 0.1*(count-1)) : 1; }
+function pomoComboAlive(){
+  const c = STATE.pomo.combo;
+  if(!c || !c.count || !c.lastAt) return false;
+  return Date.now() - c.lastAt <= (STATE.pomo.workMin + STATE.pomo.breakMin + 15) * 60000 || (pomoRunning && pomoMode==='work');
+}
+
+let pomoIntent = '';          // ce que l'utilisateur compte faire pendant la session (optionnel)
+let pomoReview = null;        // {intent} : session terminée, en attente de « fait / à moitié / pas fait »
+let pomoFocusMode = false;    // affichage plein écran
 
 function pomoInit(){ pomoRemaining = STATE.pomo.workMin*60; }
 
+/* ---- Minuteur conservé si l'app est fermée ----
+   Avant : fermer l'app (ou le téléphone qui la tue en arrière-plan) effaçait la session en
+   cours — pas d'XP, alors que la notification de fin arrivait quand même. L'état du minuteur
+   est gardé sur l'appareil ; au retour, la session terminée entre-temps est créditée. */
+const POMO_RUN_KEY = 'hunter-log-pomo-run';
+function pomoPersist(){
+  try{
+    const full = (pomoMode==='work' ? STATE.pomo.workMin : STATE.pomo.breakMin) * 60;
+    const idle = !pomoRunning && pomoMode==='work' && pomoRemaining >= full;
+    if(idle && !pomoLinkedTaskId && !pomoIntent){ localStorage.removeItem(POMO_RUN_KEY); return; }
+    localStorage.setItem(POMO_RUN_KEY, JSON.stringify({
+      running: pomoRunning, mode: pomoMode, endAt: pomoEndAt, remaining: pomoRemaining,
+      task: pomoLinkedTaskId, intent: pomoIntent,
+    }));
+  }catch(e){ /* stockage indisponible : le minuteur ne survivra pas à une fermeture */ }
+}
+function pomoRestore(){
+  pomoInit();
+  let r = null;
+  try{ r = JSON.parse(localStorage.getItem(POMO_RUN_KEY) || 'null'); }catch(e){ r = null; }
+  if(!r || typeof r !== 'object') return;
+  if(r.task && STATE.tasks.some(t=>t.id===r.task)) pomoLinkedTaskId = r.task;
+  if(typeof r.intent === 'string') pomoIntent = r.intent.slice(0, 80);
+  pomoMode = r.mode === 'break' ? 'break' : 'work';
+  const full = (pomoMode==='work' ? STATE.pomo.workMin : STATE.pomo.breakMin) * 60;
+  if(r.running && typeof r.endAt === 'number' && r.endAt - Date.now() <= full*1000 + 5000){
+    pomoRunning = true;
+    pomoEndAt = r.endAt;
+    pomoRemaining = Math.max(0, Math.round((pomoEndAt - Date.now())/1000));
+    pomoInterval = setInterval(pomoTick, 1000);
+  }else if(typeof r.remaining === 'number' && r.remaining > 0){
+    pomoRemaining = Math.min(Math.round(r.remaining), full);
+  }else{
+    pomoMode = 'work';
+    pomoRemaining = STATE.pomo.workMin*60;
+  }
+}
 async function pomoRequestWakeLock(){
   try{
     if('wakeLock' in navigator){
@@ -2765,60 +3269,156 @@ function pomoToggle(){
     pomoEndAt = null;
     pomoReleaseWakeLock();
   }else{
+    const it = document.getElementById('pomoIntentInput');
+    if(it) pomoIntent = it.value.trim().slice(0, 80);
     pomoRunning = true;
     pomoEndAt = Date.now() + pomoRemaining*1000;
     pomoInterval = setInterval(pomoTick, 1000);
     pomoRequestWakeLock();
   }
-  renderPomo();
+  syncPomoPush();
+  render();
+}
+// Une session de focus arrivée à son terme (à l'heure `endedAt`, même si on s'en rend
+// compte plus tard en revenant sur l'app).
+function pomoCompleteWork(endedAt){
+  const linkedTask = pomoLinkedTaskId ? STATE.tasks.find(x=>x.id===pomoLinkedTaskId) : null;
+  const targetSkill = linkedTask ? linkedTask.skill : STATE.pomo.skill;
+  const c = STATE.pomo.combo || (STATE.pomo.combo = {count:0, lastAt:0});
+  const gapMax = (STATE.pomo.workMin + STATE.pomo.breakMin + 15) * 60000;
+  c.count = (c.lastAt && endedAt - c.lastAt <= gapMax) ? c.count + 1 : 1;
+  c.lastAt = endedAt;
+  const mult = pomoComboMult(c.count);
+  const xp = Math.round(pomoSessionXP() * mult);
+  if(linkedTask) linkedTask.focusMinutes = (linkedTask.focusMinutes||0) + STATE.pomo.workMin;
+  addSkillXP(targetSkill, xp);
+  STATE.pomo.completedToday++;
+  STATE.pomo.lastPomoDate = todayStr();
+  STATE.stats.totalFocusMinutes += STATE.pomo.workMin;
+  STATE.stats.totalPomoSessions = (STATE.stats.totalPomoSessions||0) + 1;
+  STATE.stats.bestPomoCombo = Math.max(STATE.stats.bestPomoCombo||0, c.count);
+  STATE.todayStats.focusMinutes += STATE.pomo.workMin;
+  if(STATE.pomo.completedToday >= STATE.pomo.dailyGoal && !STATE.pomo.dailyGoalRewarded){
+    STATE.pomo.dailyGoalRewarded = true;
+    STATE.stats.pomoGoalHitCount++;
+    addSkillXP(targetSkill, Math.round(pomoSessionXP()*0.5), 'Objectif pomodoro du jour atteint');
+  }
+  if(pomoIntent) pomoReview = {intent: pomoIntent};
+  checkAchievements();
+  queueSave();
+  showToast('POMODORO TERMINÉ', `+${xp} XP`, c.count > 1 ? `COMBO ×${c.count} · XP ×${mult.toFixed(1).replace('.', ',')}` : (linkedTask ? linkedTask.name : ''));
+  sfxPomodoroDone();
+  refreshQuantifiedGoals();
+  if(document.visibilityState !== 'visible' && STATE.settings.notificationsOn && typeof Notification!=='undefined' && Notification.permission==='granted'){
+    fireNotification('SYSTEM // Hunter Log', `Session terminée — pause de ${STATE.pomo.breakMin} min`, 'hunter-log-pomo', {pomoAt: endedAt});
+  }
 }
 function pomoTick(){
   if(!pomoRunning || pomoEndAt == null) return;
-  // On recalcule toujours à partir du timestamp réel, jamais par simple décrément,
-  // pour rester juste même si les ticks ont été retardés/suspendus (veille, onglet en arrière-plan).
-  pomoRemaining = Math.max(0, Math.round((pomoEndAt - Date.now())/1000));
-
-  if(pomoRemaining <= 0){
+  // Toujours recalculé depuis l'heure réelle : juste même après une mise en veille.
+  if(Date.now() >= pomoEndAt){
     if(pomoMode === 'work'){
-      const linkedTask = pomoLinkedTaskId ? STATE.tasks.find(x=>x.id===pomoLinkedTaskId) : null;
-      const targetSkill = linkedTask ? linkedTask.skill : STATE.pomo.skill;
-      if(linkedTask) linkedTask.focusMinutes = (linkedTask.focusMinutes||0) + STATE.pomo.workMin;
-      addSkillXP(targetSkill, STATE.pomo.xpPerSession);
-      STATE.pomo.completedToday++;
-      STATE.pomo.lastPomoDate = todayStr();
-      STATE.stats.totalFocusMinutes += STATE.pomo.workMin;
-      STATE.stats.totalPomoSessions = (STATE.stats.totalPomoSessions||0) + 1;
-      STATE.todayStats.focusMinutes += STATE.pomo.workMin;
-      if(STATE.pomo.completedToday >= STATE.pomo.dailyGoal && !STATE.pomo.dailyGoalRewarded){
-        STATE.pomo.dailyGoalRewarded = true;
-        STATE.stats.pomoGoalHitCount++;
-        addSkillXP(targetSkill, Math.round(STATE.pomo.xpPerSession*0.5), 'Objectif pomodoro du jour atteint');
-      }
-      checkAchievements();
-      queueSave();
+      const endedAt = pomoEndAt;
+      pomoCompleteWork(endedAt);
       pomoMode = 'break';
-      pomoRemaining = STATE.pomo.breakMin*60;
-      showToast('POMODORO TERMINÉ', `+${STATE.pomo.xpPerSession} XP`, linkedTask ? linkedTask.name : '');
-      sfxPomodoroDone();
-      refreshQuantifiedGoals();
-      if(document.visibilityState !== 'visible' && STATE.settings.notificationsOn && typeof Notification!=='undefined' && Notification.permission==='granted'){
-        fireNotification('SYSTEM // Hunter Log', 'Pomodoro terminé — direction la pause !', 'hunter-log-pomo-done');
+      pomoEndAt = endedAt + STATE.pomo.breakMin*60000;   // la pause part de la fin réelle de la session
+      if(Date.now() < pomoEndAt){
+        pomoRemaining = Math.max(0, Math.round((pomoEndAt - Date.now())/1000));
+        syncPomoPush();   // retire du serveur la notification de fin de session (déjà affichée ici)
+        render();
+        return;
       }
-    }else{
+    }
+    if(pomoMode === 'break' && Date.now() >= pomoEndAt){
+      // Fin de pause : on s'arrête et on attend l'utilisateur. Avant, le cycle repartait tout
+      // seul — laisser tourner l'app pendant des heures aurait crédité des sessions fantômes.
+      pomoRunning = false;
+      clearInterval(pomoInterval);
+      pomoEndAt = null;
+      pomoReleaseWakeLock();
       pomoMode = 'work';
       pomoRemaining = STATE.pomo.workMin*60;
+      showToast('PAUSE TERMINÉE', 'Lance la session suivante', pomoComboAlive() ? `prochaine session : XP ×${pomoComboMult(STATE.pomo.combo.count + 1).toFixed(1).replace('.', ',')} (combo)` : '');
+      syncPomoPush();
+      render();
+      return;
     }
-    // On repart sur un nouveau timestamp cible pour la phase suivante
-    if(pomoRunning) pomoEndAt = Date.now() + pomoRemaining*1000;
   }
+  pomoRemaining = Math.max(0, Math.round((pomoEndAt - Date.now())/1000));
   renderPomo();
 }
 function pomoReset(){
+  const elapsed = STATE.pomo.workMin*60 - pomoRemaining;
+  if(pomoMode === 'work' && elapsed > 60 && STATE.pomo.combo && STATE.pomo.combo.count > 0){
+    STATE.pomo.combo.count = 0;
+    queueSave();
+    showToast('COMBO PERDU', 'Session abandonnée', 'aucune autre pénalité', 'penalty');
+  }
   pomoRunning = false; clearInterval(pomoInterval);
   pomoEndAt = null;
   pomoReleaseWakeLock();
   pomoMode = 'work'; pomoRemaining = STATE.pomo.workMin*60;
-  renderPomo();
+  syncPomoPush();
+  render();
+}
+function pomoSetReview(result){
+  if(!pomoReview) return;
+  STATE.pomo.log = (STATE.pomo.log || []).concat([{d: todayStr(), intent: pomoReview.intent, result, min: STATE.pomo.workMin}]).slice(-100);
+  queueSave();
+  pomoReview = null;
+  pomoIntent = '';
+  pomoPersist();
+  render();
+}
+function pomoSkipReview(){ pomoReview = null; render(); }
+// Fin d'une session liée à une quête : « Quête validée » coche la quête (XP de la quête) et la détache.
+function pomoFinishLinkedTask(){
+  const id = pomoLinkedTaskId;
+  pomoSetReview('fait');
+  if(id){ pomoLinkedTaskId = null; pomoPersist(); const t = STATE.tasks.find(x=>x.id===id); if(t && !t.done) toggleTask(id); }
+  render();
+}
+
+/* ---- Plein écran ---- */
+function togglePomoFocusMode(){
+  pomoFocusMode = !pomoFocusMode;
+  try{
+    if(pomoFocusMode && document.documentElement.requestFullscreen && !document.fullscreenElement) document.documentElement.requestFullscreen().catch(()=>{});
+    if(!pomoFocusMode && document.fullscreenElement && document.exitFullscreen) document.exitFullscreen().catch(()=>{});
+  }catch(e){ /* iPhone : pas d'API plein écran, l'affichage couvre quand même l'écran */ }
+  render();
+}
+document.addEventListener('fullscreenchange', ()=>{
+  if(!document.fullscreenElement && pomoFocusMode){ pomoFocusMode = false; render(); }
+});
+
+/* ---- Notification de fin même app fermée (push serveur) ----
+   Le téléphone met l'app en pause quand l'écran s'éteint : elle ne peut pas sonner
+   elle-même. On confie donc au serveur l'heure de fin de la session et de la pause
+   (fonction pomo-timer) ; une tâche planifiée (pomo-notify, chaque minute) envoie le
+   push. Nécessite d'avoir activé les notifications (Réglages → Notifs). */
+async function syncPomoPush(){
+  pomoPersist();
+  if(!('serviceWorker' in navigator) || !('PushManager' in window)) return;
+  if(!(STATE.settings.notificationsOn && typeof Notification!=='undefined' && Notification.permission==='granted')) return;
+  try{
+    const reg = await navigator.serviceWorker.ready;
+    const sub = await reg.pushManager.getSubscription();
+    if(!sub) return;
+    const events = [];
+    if(pomoRunning && pomoEndAt){
+      if(pomoMode === 'work'){
+        events.push({at: pomoEndAt, body: `⏱ Session terminée${pomoIntent ? ` — ${pomoIntent.slice(0, 60)}` : ''}. Pause de ${STATE.pomo.breakMin} min.`});
+        events.push({at: pomoEndAt + STATE.pomo.breakMin*60000, body: '☕ Pause terminée — relance une session pour garder ton combo.'});
+      }else{
+        events.push({at: pomoEndAt, body: '☕ Pause terminée — relance une session pour garder ton combo.'});
+      }
+    }
+    fetch('/.netlify/functions/pomo-timer', {
+      method:'POST', headers:{'Content-Type':'application/json'},
+      body: JSON.stringify({subscription: sub.toJSON ? sub.toJSON() : sub, events}),
+    }).catch(()=>{});
+  }catch(e){ /* sans push, l'app sonne quand même si elle est ouverte */ }
 }
 
 // Quand l'onglet redevient visible (retour de veille / changement d'app),
@@ -2953,6 +3553,7 @@ function renderPomo(){
   mode.textContent = pomoMode==='work' ? 'SESSION DE FOCUS' : 'PAUSE';
   mode.className = 'pomo-mode' + (pomoMode==='break' ? ' break' : '');
   document.getElementById('pomoToggleBtn').textContent = pomoRunning ? 'PAUSE' : 'DÉMARRER';
+  if(pomoFocusMode) document.title = `${fmtTime(pomoRemaining)} · ${pomoMode==='work' ? 'Focus' : 'Pause'}`;
   const cnt = document.getElementById('pomoCount');
   if(cnt) cnt.textContent = `SESSIONS AUJOURD'HUI : ${STATE.pomo.completedToday} / ${STATE.pomo.dailyGoal}`;
   const wk = document.getElementById('pomoWeekTotal');
@@ -3046,13 +3647,33 @@ function urlBase64ToUint8Array(base64String){
   for(let i=0;i<raw.length;i++) arr[i] = raw.charCodeAt(i);
   return arr;
 }
+// Clé publique VAPID : celle configurée sur Netlify (fonction vapid-key) si elle existe,
+// sinon celle en dur ci-dessus. Si l'abonnement existant a été fait avec une autre clé
+// (paire régénérée), on se réabonne : sinon le serveur ne pourrait jamais le joindre.
+async function currentVapidKey(){
+  try{
+    const r = await fetch('/.netlify/functions/vapid-key', {cache:'no-store'});
+    if(r.ok){ const d = await r.json(); if(d && typeof d.key === 'string' && d.key.length > 40) return d.key; }
+  }catch(e){ /* hors ligne : clé en dur */ }
+  return PUSH_VAPID_PUBLIC_KEY;
+}
+function sameKey(buf, b64){
+  if(!buf) return true;   // navigateur qui n'expose pas la clé : on ne touche à rien
+  const a = new Uint8Array(buf), b = urlBase64ToUint8Array(b64);
+  return a.length === b.length && a.every((v,i)=>v===b[i]);
+}
 async function subscribeToPush(){
   if(!('serviceWorker' in navigator) || !('PushManager' in window)) return;
   try{
     const reg = await navigator.serviceWorker.ready;
+    const key = await currentVapidKey();
     let sub = await reg.pushManager.getSubscription();
+    if(sub && !sameKey(sub.options && sub.options.applicationServerKey, key)){
+      await sub.unsubscribe().catch(()=>{});
+      sub = null;
+    }
     if(!sub){
-      sub = await reg.pushManager.subscribe({userVisibleOnly:true, applicationServerKey: urlBase64ToUint8Array(PUSH_VAPID_PUBLIC_KEY)});
+      sub = await reg.pushManager.subscribe({userVisibleOnly:true, applicationServerKey: urlBase64ToUint8Array(key)});
     }
     await syncPushState(sub);
   }catch(e){ /* pas grave : les notifs locales (app ouverte) continuent de fonctionner */ }
@@ -3091,12 +3712,12 @@ function startNotificationWatcher(){
     notifVisibilityBound = true;
   }
 }
-function fireNotification(title, body, tag){
+function fireNotification(title, body, tag, data){
   // Priorité au Service Worker : la notification reste fiable tant que le
   // navigateur tourne en arrière-plan, pas seulement onglet au premier plan.
   if('serviceWorker' in navigator && navigator.serviceWorker.ready){
     navigator.serviceWorker.ready.then(reg=>{
-      reg.showNotification(title, {body, tag, renotify:true, vibrate:[30,40,30]});
+      reg.showNotification(title, {body, tag, renotify:true, vibrate:[30,40,30], data: data || {}});
     }).catch(()=>{
       try{ new Notification(title, {body}); }catch(e){ /* ignore */ }
     });
@@ -3930,10 +4551,13 @@ function goalProgressFieldsHtml(g){
   return `
     <div class="field-row"><label>Type</label>
       <div class="radio-group">
-        <div class="radio-opt ${!isQ?'active':''}" id="progBinaire" onclick="setGoalProgressType('binaire')">BINAIRE</div>
-        <div class="radio-opt ${isQ?'active':''}" id="progQuantifie" onclick="setGoalProgressType('quantifie')">QUANTIFIÉ</div>
+        <div class="radio-opt ${!isQ?'active':''}" id="progBinaire" onclick="setGoalProgressType('binaire')">EN %</div>
+        <div class="radio-opt ${isQ?'active':''}" id="progQuantifie" onclick="setGoalProgressType('quantifie')">CHIFFRÉ</div>
       </div>
     </div>
+    <p style="font-family:var(--font-mono); font-size:9.5px; color:var(--text-faint); line-height:1.5; margin:-4px 0 10px;">
+      <b>En %</b> : tu estimes toi-même ton avancement (curseur ou sous-tâches). <b>Chiffré</b> : une cible précise (ex. 20 séances, 100 km), comptée à la main ou automatiquement depuis tes séances, ton focus ou ton eau.
+    </p>
     <input type="hidden" id="mProgressType" value="${isQ?'quantifie':'binaire'}">
     <div id="quantifiedFields" style="display:${isQ?'block':'none'};">
       <div class="field-row"><label>Source</label>
@@ -4283,28 +4907,36 @@ function modalQuickAdd(){
 function modalPomoSettings(){
   openModal(`
     <h3>RÉGLAGES POMODORO</h3>
-    <div class="field-row"><label>Focus (min)</label><input type="number" id="mWork" value="${STATE.pomo.workMin}" min="1" max="120"></div>
-    <div class="field-row"><label>Pause (min)</label><input type="number" id="mBreak" value="${STATE.pomo.breakMin}" min="1" max="60"></div>
+    <div style="display:flex; gap:6px; flex-wrap:wrap; margin-bottom:12px;">
+      <button class="tab-btn small" onclick="document.getElementById('mWork').value=25; document.getElementById('mBreak').value=5; updatePomoXpPreview();">25 / 5</button>
+      <button class="tab-btn small" onclick="document.getElementById('mWork').value=50; document.getElementById('mBreak').value=10; updatePomoXpPreview();">50 / 10</button>
+      <button class="tab-btn small" onclick="document.getElementById('mWork').value=90; document.getElementById('mBreak').value=20; updatePomoXpPreview();">90 / 20</button>
+    </div>
+    <div class="field-row"><label>Focus (min)</label><input type="number" id="mWork" value="${STATE.pomo.workMin}" min="${POMO_MIN_WORK}" max="${POMO_MAX_WORK}" oninput="updatePomoXpPreview()"></div>
+    <div class="field-row"><label>Pause (min)</label><input type="number" id="mBreak" value="${STATE.pomo.breakMin}" min="1" max="30"></div>
     <div class="field-row"><label>Compétence</label><select id="mSkill">${skillOptions(STATE.pomo.skill)}</select></div>
-    <div class="field-row"><label>XP/session</label><input type="number" id="mXP" value="${STATE.pomo.xpPerSession}" min="1" max="500"></div>
+    <div class="field-row"><label>XP/session</label><span id="mXpPreview" style="font-family:var(--font-mono); font-size:12px; color:var(--cyan);">${pomoSessionXP()} XP (fixe)</span></div>
     <div class="field-row"><label>Objectif/jour</label><input type="number" id="mGoal" value="${STATE.pomo.dailyGoal}" min="1" max="20"></div>
+    <p style="font-family:var(--font-mono); font-size:9.5px; color:var(--text-faint); line-height:1.5; margin:2px 0 10px;">
+      L'XP n'est plus réglable : ${String(POMO_XP_PER_MIN).replace('.', ',')} XP par minute de focus (25 min = 20 XP), sessions de ${POMO_MIN_WORK} à ${POMO_MAX_WORK} min.
+      Combo : chaque session enchaînée (dans la pause + 15 min) multiplie l'XP, jusqu'à ×1,5. Abandonner une session entamée remet le combo à zéro.
+    </p>
     <div class="field-row" style="justify-content:space-between;">
       <label style="font-family:var(--font-mono); font-size:10px; color:var(--text-faint);">Pénalité si objectif manqué</label>
-      <div class="mini-switch ${STATE.settings.pomoPenaltyEnabled?'on':''}" id="pomoPenaltySwitch" onclick="togglePomoPenaltyPref()" role="button" aria-label="Activer ou désactiver la pénalité si l'objectif pomodoro quotidien n'est pas atteint"></div>
+      <div class="mini-switch ${STATE.settings.pomoPenaltyEnabled?'on':''}" id="pomoPenaltySwitch" onclick="togglePomoPenaltyPref()" role="button" aria-label="Activer ou désactiver la pénalité si l'objectif pomodoro est manqué"></div>
     </div>
     <div class="modal-actions"><button class="btn ghost" onclick="closeModal()">Annuler</button><button class="btn" onclick="submitPomoSettings()">Valider</button></div>
   `);
 }
-function togglePomoPenaltyPref(){
-  STATE.settings.pomoPenaltyEnabled = !STATE.settings.pomoPenaltyEnabled;
-  queueSave();
-  document.getElementById('pomoPenaltySwitch').classList.toggle('on', STATE.settings.pomoPenaltyEnabled);
+function updatePomoXpPreview(){
+  const w = Math.min(POMO_MAX_WORK, Math.max(POMO_MIN_WORK, parseInt(document.getElementById('mWork').value)||25));
+  const el = document.getElementById('mXpPreview');
+  if(el) el.textContent = `${Math.max(1, Math.round(w*POMO_XP_PER_MIN))} XP (fixe)`;
 }
 function submitPomoSettings(){
-  STATE.pomo.workMin = Math.max(1, parseInt(document.getElementById('mWork').value)||25);
-  STATE.pomo.breakMin = Math.max(1, parseInt(document.getElementById('mBreak').value)||5);
+  STATE.pomo.workMin = Math.min(POMO_MAX_WORK, Math.max(POMO_MIN_WORK, parseInt(document.getElementById('mWork').value)||25));
+  STATE.pomo.breakMin = Math.min(30, Math.max(1, parseInt(document.getElementById('mBreak').value)||5));
   STATE.pomo.skill = document.getElementById('mSkill').value;
-  STATE.pomo.xpPerSession = Math.max(1, parseInt(document.getElementById('mXP').value)||20);
   STATE.pomo.dailyGoal = Math.max(1, parseInt(document.getElementById('mGoal').value)||4);
   queueSave(); closeModal(); pomoReset(); render();
 }
@@ -4366,6 +4998,10 @@ function modalGeneralSettings(){
         <div class="mini-switch ${STATE.settings.identityTitlesEnabled?'on':''}" id="identityTitlesSwitch" onclick="toggleIdentityTitlesPref()" role="button" aria-label="Afficher ou masquer les titres d'identité par compétence"></div>
       </div>
       <p ${p}>Affiche un titre narratif (Novice, Vétéran, Légende...) sous chaque compétence en fonction de son niveau.</p>
+      <div class="field-row" style="justify-content:space-between;">
+        <label style="font-family:var(--font-mono); font-size:10px; color:var(--text-faint); width:auto;">Écran d'éveil du premier lancement</label>
+        <button class="btn small ghost" onclick="closeModal(); showAwakening();">Revoir</button>
+      </div>
     `;
   } else if(settingsTab==='gameplay'){
     body = `
@@ -4600,7 +5236,7 @@ function renderTasksList(){
         </div>
         ${subList}
       </div>
-      ${(!t.done && t.type!=='repetable') ? `<button class="icon-btn" title="Lancer un Pomodoro sur cette quête" aria-label="Lancer un Pomodoro sur cette quête" onclick="startPomoForTask('${t.id}')">🍅</button>` : ''}
+      ${(!t.done && t.type!=='repetable') ? `<button class="icon-btn" title="Faire un pomodoro sur cette quête" aria-label="Faire un pomodoro sur cette quête" onclick="startPomoForTask('${t.id}')"><svg class="pq-ico" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="13.2" r="7.3"/><path d="M12 13.2V9.2M10 3h4M12 3v2.9"/></svg></button>` : ''}
       ${(!t.done && t.type==='limitee') ? `<button class="icon-btn" title="Reporter" aria-label="Reporter" onclick="reporterTask('${t.id}')">⏭</button>` : ''}
       <button class="icon-btn" title="Modifier" aria-label="Modifier" onclick="modalEditTask('${t.id}')">✎</button>
       <button class="icon-btn danger" title="Supprimer" aria-label="Supprimer" onclick="deleteTask('${t.id}')">✕</button>
@@ -4915,12 +5551,16 @@ function tabStats(hRank, cfg, nextRankLabel, nextRankLevel){
       <div class="eyebrow">CHARACTER</div>
       <div class="avatar-panel">
         ${STATE.settings.personalAvatar ? persoStageHtml(hRank.label) : ''}
-        <div class="avatar-box" style="${STATE.settings.personalAvatar ? 'display:none;' : ''}">${buildRankBadge(hRank.label, 170)}</div>
+        <div class="avatar-box" style="${STATE.settings.personalAvatar ? 'display:none;' : ''}">${buildRankBadge(hRank.label, 150)}</div>
         <div class="avatar-info">
           <div class="avatar-title" style="color:${hRank.color}">${cfg.title}</div>
           <div class="avatar-rank-line">RANG ${hRank.label} · SE TRANSFORME AVEC TON NIVEAU DE CHASSEUR</div>
           ${hRank.label!=='S' ? `<div class="avatar-rank-line">PROCHAINE FORME — RANG ${nextRankLabel} À PARTIR DU NIVEAU ${nextRankLevel}</div>` : `<div class="avatar-rank-line">FORME MAXIMALE ATTEINTE</div>`}
           <div class="rank-track">${RANK_ORDER.map(r=>`<div class="rank-seg ${RANK_ORDER.indexOf(r)<=hRank.idx?'filled':''}"></div>`).join('')}</div>
+          <div class="stats-share-row">
+            <button class="btn small" onclick="showProgressReplay()">▶ Ma progression</button>
+            <button class="btn small ghost" onclick="openHunterCard()">Ma carte de chasseur</button>
+          </div>
         </div>
       </div>
     </div>
@@ -5039,32 +5679,66 @@ function tabCalendar(){
 }
 
 function tabPomodoro(){
+  const linked = pomoLinkedTaskId ? STATE.tasks.find(x=>x.id===pomoLinkedTaskId) : null;
+  const comboOn = pomoComboAlive();
+  const combo = comboOn ? STATE.pomo.combo.count : 0;
+  const nextMult = pomoComboMult(combo + 1);
+  const pendingTasks = STATE.tasks.filter(t=>!t.done).slice(0, 20);
+  const pushReady = STATE.settings.notificationsOn && typeof Notification!=='undefined' && Notification.permission==='granted';
+  const intentBlock = (pomoRunning && pomoMode==='work')
+    ? (pomoIntent ? `<div class="pomo-intent-show">🎯 ${escapeHtml(pomoIntent)}</div>` : '')
+    : linked ? '' : `<div class="pomo-intent">
+        <input type="text" id="pomoIntentInput" list="pomoIntentList" maxlength="80" placeholder="Cette session, je vais… (optionnel)" value="${escapeHtml(pomoIntent)}" oninput="pomoIntent=this.value">
+        <datalist id="pomoIntentList">${pendingTasks.map(t=>`<option value="${escapeHtml(t.name)}"></option>`).join('')}</datalist>
+      </div>`;
+  const review = (pomoReview && linked && !linked.done) ? `
+    <div class="pomo-review">
+      <div class="pomo-review-q">Session terminée. « ${escapeHtml(linked.name)} », c'est fini ?</div>
+      <div class="pomo-review-btns">
+        <button class="btn small" onclick="pomoFinishLinkedTask()">Quête validée ✓</button>
+        <button class="btn small ghost" onclick="pomoSetReview('moitie')">Pas encore</button>
+      </div>
+    </div>` : pomoReview ? `
+    <div class="pomo-review">
+      <div class="pomo-review-q">Session terminée — « ${escapeHtml(pomoReview.intent)} » :</div>
+      <div class="pomo-review-btns">
+        <button class="btn small" onclick="pomoSetReview('fait')">Fait</button>
+        <button class="btn small ghost" onclick="pomoSetReview('moitie')">À moitié</button>
+        <button class="btn small ghost" onclick="pomoSetReview('pas')">Pas fait</button>
+        <button class="icon-btn" title="Passer" aria-label="Passer" onclick="pomoSkipReview()">✕</button>
+      </div>
+    </div>` : '';
   return `
-    <div class="panel full" style="max-width:420px; margin:0 auto;">
+    <div class="panel full pomo-panel ${pomoFocusMode ? 'pomo-full' : ''}" style="${pomoFocusMode ? '' : 'max-width:420px; margin:0 auto;'}">
       <div class="c-tl"></div><div class="c-br"></div>
-      <div class="eyebrow">TRAINING</div>
-      <h2>Pomodoro</h2>
-      <div class="sub">SESSION LIÉE : <span style="color:var(--cyan)">${escapeHtml(STATE.skills[STATE.pomo.skill]?.name || '—')}</span></div>
-      ${(()=>{
-        const linked = pomoLinkedTaskId ? STATE.tasks.find(x=>x.id===pomoLinkedTaskId) : null;
-        if(!linked) return '';
-        return `<div class="item" style="margin-top:8px; background:rgba(47,184,255,0.06);">
-          <div class="item-body"><div class="item-name" style="font-size:12px;">🎯 Quête liée : ${escapeHtml(linked.name)}</div></div>
-          <button class="icon-btn" title="Délier" aria-label="Délier la quête" onclick="unlinkPomoTask()">✕</button>
-        </div>`;
-      })()}
+      <div class="eyebrow pomo-hide-fs">TRAINING</div>
+      <h2 class="pomo-hide-fs">Pomodoro</h2>
+      <div class="sub pomo-hide-fs">XP VERS : <span style="color:var(--cyan)">${escapeHtml(STATE.skills[linked ? linked.skill : STATE.pomo.skill]?.name || '—')}</span> · ${pomoSessionXP()} XP / SESSION</div>
+      ${linked ? `<div class="pomo-quest pomo-hide-fs">
+          <div class="pq-top"><span class="pq-label">QUÊTE EN COURS</span>
+            <button class="pq-x" title="Détacher la quête" aria-label="Détacher la quête" onclick="unlinkPomoTask()">✕</button></div>
+          <div class="pq-name">${escapeHtml(linked.name)}</div>
+          <div class="pq-meta"><span class="pq-chip">${escapeHtml(STATE.skills[linked.skill]?.name || '')}</span>${linked.focusMinutes ? `<span>⏱ ${fmtHoursMin(linked.focusMinutes)} déjà faites</span>` : '<span>1re session sur cette quête</span>'}</div>
+        </div>` : ''}
       <div class="pomo-mode" id="pomoMode">SESSION DE FOCUS</div>
       <div class="pomo-timer" id="pomoTimer">00:00</div>
+      ${intentBlock}
+      <div class="pomo-combo ${comboOn ? 'on' : ''}" id="pomoCombo">${comboOn
+        ? `COMBO ×${combo} · prochaine session XP ×${nextMult.toFixed(1).replace('.', ',')}`
+        : 'COMBO : enchaîne les sessions pour multiplier l\'XP'}</div>
       <div class="pomo-controls">
         <button class="btn" id="pomoToggleBtn" onclick="pomoToggle()">DÉMARRER</button>
         <button class="btn ghost" onclick="pomoReset()">RESET</button>
-        <button class="btn ghost" onclick="modalPomoSettings()">⚙</button>
+        <button class="btn ghost" onclick="togglePomoFocusMode()" title="${pomoFocusMode ? 'Quitter le plein écran' : 'Plein écran'}" aria-label="${pomoFocusMode ? 'Quitter le plein écran' : 'Plein écran'}">${pomoFocusMode ? '✕' : '⛶'}</button>
+        <button class="btn ghost pomo-hide-fs" onclick="modalPomoSettings()" aria-label="Réglages du pomodoro">⚙</button>
       </div>
+      ${review}
       <div class="pomo-count" id="pomoCount"></div>
       <div class="pomo-goal-track">
         ${Array.from({length:STATE.pomo.dailyGoal}).map((_,i)=>`<div class="pomo-goal-seg ${i<STATE.pomo.completedToday?'filled':''}"></div>`).join('')}
       </div>
-      <div style="display:flex; gap:10px; margin-top:16px;">
+      ${!pushReady ? `<div class="pomo-push-hint pomo-hide-fs">Pour être prévenu à la fin de la session même app fermée : Réglages ⚙ → Notifs → ACTIVER.</div>` : ''}
+      <div class="pomo-hide-fs" style="display:flex; gap:10px; margin-top:16px;">
         <div style="flex:1; text-align:center; padding:10px 6px; border:1px solid rgba(47,184,255,0.25); border-radius:8px; background:rgba(47,184,255,0.05);">
           <div style="font-size:11px; letter-spacing:1px; opacity:0.65;">CETTE SEMAINE</div>
           <div id="pomoWeekTotal" style="font-family:'Rajdhani',sans-serif; font-weight:700; font-size:20px; color:var(--cyan);">${fmtHoursMin(focusMinutesThisWeek())}</div>
@@ -5076,7 +5750,6 @@ function tabPomodoro(){
       </div>
     </div>`;
 }
-
 function tabHistory(){
   const fullHistory = [...STATE.history].reverse();
   const historyRowsHtml = fullHistory.length ? fullHistory.map(h=>`
@@ -5427,8 +6100,10 @@ function setupPWA(){
   await loadSyncMeta();
   if(syncCode) await pullStateFromServer();
   checkDayRollover();
-  pomoInit();
+  pomoRestore();
   render();
+  if(pomoRunning){ pomoTick(); pomoRequestWakeLock(); }
+  if(!STATE.settings.awakeningDone && !window.__skipAwaken) setTimeout(showAwakening, 350);   // __skipAwaken : tests automatiques
   setupPWA();
   if(STATE.settings.notificationsOn && typeof Notification!=='undefined' && Notification.permission==='granted'){
     startNotificationWatcher();

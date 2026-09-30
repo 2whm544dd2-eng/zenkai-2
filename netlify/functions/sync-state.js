@@ -7,7 +7,7 @@
 //
 // Contrat (identique à ce que index.html envoie) :
 //   GET  ?code=XXXXXXXX   -> 200 { state, updatedAt } | 404 (rien encore sauvegardé)
-//   POST { code, state }  -> 200 { ok:true, updatedAt }
+//   POST { code, state, baseTs? } -> 200 { ok:true, updatedAt } | 409 { error:"conflict", state, updatedAt }
 //   403 { error:"disabled" }   : code désactivé (abonnement annulé)
 //   403 { error:"not_member" } : seulement si SYNC_MEMBERS_ONLY=true (voir plus bas)
 //
@@ -69,6 +69,16 @@ exports.handler = async (event) => {
     const access = await checkAccess(store, code);
     if (!access.ok) return json(403, { error: access.error });
 
+    // Anti-écrasement : l'app envoie baseTs = version serveur dont descend son état. Si le serveur
+    // a reçu depuis une version plus récente (autre appareil), on refuse et on renvoie cette
+    // version : l'appareil en retard la charge au lieu d'écraser les changements de l'autre.
+    // Les anciennes versions de l'app (sans baseTs) gardent l'ancien comportement.
+    if (typeof payload.baseTs === 'number') {
+      const current = await store.get(code, { type: 'json' }).catch(() => null);
+      if (current && current.updatedAt > payload.baseTs) {
+        return json(409, { error: 'conflict', state: current.state, updatedAt: current.updatedAt });
+      }
+    }
     const updatedAt = Date.now(); // le serveur est la seule horloge de référence
     await store.setJSON(code, { state, updatedAt });
     return json(200, { ok: true, updatedAt });

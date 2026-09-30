@@ -1,4 +1,4 @@
-# Correctifs appliqués — 28/09/2026, révisé le 29/09/2026 (build 74)
+# Correctifs appliqués — 28/09/2026, révisé le 29/09/2026 (build 76)
 
 **Rectification du 29/09 (à lire en premier).** Les points 2 à 6 de la première
 version de ce fichier étaient faux. Ils partaient des fonctions serveur contenues
@@ -544,21 +544,140 @@ Stats dans les 5 nouveaux styles, zéro erreur JS.
 
 ---
 
+## 20. Pomodoro : anti-triche, combo, intention, plein écran, notif app fermée — build 75
+
+### Triche corrigée
+- L'XP par session n'est plus réglable (avant : jusqu'à 500 XP, avec une session de
+  1 min). Elle vaut 0,8 XP par minute de focus : 25 min = 20 XP (comme avant par défaut),
+  50 min = 40, 90 min = 72. La durée de focus est bornée à 10–90 min, la pause à 1–30 min.
+  Les anciens réglages sont ramenés dans ces bornes au premier lancement.
+- Le cycle ne repart plus tout seul après la pause : il s'arrête et attend « DÉMARRER ».
+  Avant, laisser l'app ouverte des heures créditait des sessions sans personne devant.
+- La pénalité « objectif manqué » suit la même XP (75 % d'une session, minimum 8).
+- Limite connue : les données vivent sur l'appareil. Quelqu'un qui modifie le stockage du
+  navigateur à la main peut toujours tricher ; ce correctif ferme la triche *dans l'app*.
+
+### Combo de focus
+- Chaque session terminée dans la foulée de la précédente (pause + 15 min de marge) fait
+  monter le combo : XP ×1,1 au 2e, ×1,2 au 3e… plafonné à ×1,5 (6e session).
+- Abandonner une session entamée (RESET après plus d'une minute) remet le combo à zéro,
+  sans autre pénalité. Un RESET dans la première minute ne coûte rien.
+- Meilleur combo gardé dans les stats (`bestPomoCombo`).
+
+### Intention de session (optionnelle)
+- Champ « Cette session, je vais… » avec tes quêtes en suggestion ; pré-rempli quand tu
+  lances un pomodoro depuis une quête. Affiché pendant la session.
+- À la fin : « Fait / À moitié / Pas fait » (ou ✕ pour passer). Gardé dans
+  `STATE.pomo.log` (100 dernières). Aucune XP liée à ce bilan déclaratif.
+
+### Plein écran
+- Bouton ⛶ : minuteur géant, tout le reste masqué (vrai plein écran sur Android/PC,
+  affichage couvrant sur iPhone où Safari n'autorise pas le plein écran). ✕ pour sortir.
+
+### Notification de fin même app fermée
+- Un téléphone suspend l'app écran éteint : elle ne peut pas sonner elle-même. L'app confie
+  maintenant l'heure de fin (session puis pause) au serveur (`pomo-timer`), et une fonction
+  planifiée (`pomo-notify`, chaque minute) envoie le push. Jusqu'à ~1 min de retard.
+- Si l'app est à l'écran ou a déjà affiché la notif, le push arrive en silence (pas de
+  double sonnerie).
+- **Nécessite** les notifications activées dans l'app ET les variables Netlify
+  `VAPID_PUBLIC_KEY` / `VAPID_PRIVATE_KEY` (voir « À surveiller »).
+- Le minuteur survit à la fermeture de l'app : en rouvrant, la session finie entre-temps
+  est créditée (avant : fermer l'app effaçait la session en cours).
+
+### Bug corrigé au passage
+- « ▶ Pomodoro » depuis une quête ouvrait un onglet inexistant (`'pomo'` au lieu de
+  `'pomodoro'`) : écran vide.
+
+### Coût Netlify estimé
+- `pomo-notify` tourne 43 200 fois par mois ; sans minuteur en cours il s'arrête après une
+  seule lecture. Estimation : 10 à 25 crédits/mois (confiance moyenne : dépend de la façon
+  dont Netlify compte les exécutions planifiées). Pour diviser par deux : `schedule =
+  "*/2 * * * *"` dans `netlify.toml` (retard max 2 min).
+
+## 21. Éveil, progression en accéléré, carte de chasseur — build 76
+
+### Éveil (premier lancement)
+- Fenêtre « système » qui s'écrit lettre par lettre, puis ACCEPTER / Passer. Montrée une
+  seule fois aux nouveaux joueurs (pas aux joueurs existants). Réglages → Affichage → Revoir.
+
+### Ma progression (onglet Stats)
+- Animation plein écran : niveau 1 → ton niveau, emblème qui évolue à chaque rang (flash),
+  jour 1 → aujourd'hui. Fin : bouton vers la carte.
+
+### Carte de chasseur (onglet Stats)
+- Image 1080×1920 : emblème, nom (celui du Serment), rang, niveau, série, XP totale,
+  quêtes, heures de focus, compétences, serment, adresse du site. Partager (menu de
+  partage du téléphone) ou Télécharger.
+
+### Nouveaux badges de rang (images de Moustapha)
+- Les 6 badges E → S viennent de l'illustration fournie par Moustapha : découpés, fond noir
+  retiré, dossier `badges/` (6 fichiers .webp, 670 Ko au total ; seul le badge du rang
+  affiché est chargé). Légère lévitation et halo qui pulse. Utilisés dans Stats,
+  « Ma progression » et la carte de chasseur. Si une image manque, l'ancien badge dessiné
+  revient tout seul.
+- En-tête d'« Aujourd'hui » (5 styles) : le portrait devient un module de rang, un anneau
+  en 6 segments (un par rang E → S : passés pleins, rang en cours rempli selon les niveaux
+  faits), la lettre au centre et le prochain palier dessous (« B dans 8 niv. »). Ajout de
+  l'XP gagnée aujourd'hui dans l'en-tête. Le badge illustré reste dans l'onglet Stats.
+- Objectifs : les types « BINAIRE / QUANTIFIÉ » deviennent « EN % / CHIFFRÉ », avec une
+  ligne d'explication (les données enregistrées ne changent pas).
+- Résolution de départ : environ 340 × 600 px par badge, un peu juste sur les écrans très
+  denses. Des versions 1024 px séparées sur fond noir amélioreraient la netteté.
+
+### XP qui s'envole
+- Quand une quête, une routine ou un objectif donne de l'XP, un « +N XP » avec le nom de la
+  compétence s'envole depuis l'endroit touché (comme LifeChapter).
+
+### Retirés à la demande de Moustapha
+- Boss de la semaine et attributs (codés puis retirés avant mise en ligne : les compétences
+  montent déjà avec les actions, les attributs faisaient doublon).
+
+### Tests
+- `window.__skipAwaken` : seulement pour les tests automatiques (saute l'éveil).
+
+## 22. Synchro PC ↔ téléphone fiable, pomodoro des quêtes refait — build 77
+
+### Synchro : le PC n'écrase plus les changements du téléphone
+- Bug : changements faits sur le téléphone PC éteint/en veille → au réveil du PC, une
+  ancienne version revenait. Cause : au réveil, un minuteur du PC (changement de jour,
+  rappels…) enregistrait AVANT d'avoir récupéré la version du téléphone ; l'app comparait
+  alors l'horloge du PC à celle du serveur et la vieille version gagnait, puis était envoyée.
+  Même chose si le Wi-Fi n'était pas encore connecté à l'allumage.
+- Correctif serveur (`sync-state.js`) : chaque envoi dit de quelle version il part. Si le
+  serveur a reçu entre-temps une version plus récente (autre appareil), il refuse (409) et
+  renvoie cette version au lieu d'écraser. Les anciennes versions de l'app gardent l'ancien
+  comportement tant qu'elles ne sont pas rechargées.
+- Correctif app : sur refus, fusion champ par champ (le côté qui a changé depuis la
+  dernière version commune l'emporte ; quêtes, routines, objectifs, historique fusionnés
+  élément par élément ; si les deux ont changé la même valeur, l'appareil en main
+  l'emporte). L'état d'avant fusion est gardé à part (clé `…-sync-backup`).
+- Resynchro aussi au retour du réseau et au retour sur un onglet mis en veille.
+- Testé à deux appareils simulés : réveil du PC, PC allumé sans réseau, modifications
+  croisées (eau sur le PC + serment sur le téléphone : les deux gardées), ancien client.
+
+### Pomodoro depuis une quête
+- Le bouton 🍅 des quêtes devient le même pictogramme que l'onglet Focus.
+- L'ouverture remonte en haut de page (avant, depuis le bas d'une longue liste, l'écran
+  restait sous le minuteur : page vide ; sur le build 74 en ligne, l'onglet n'existait pas).
+- Carte « QUÊTE EN COURS » (nom, compétence, temps de focus déjà fait) au lieu de la ligne
+  « 🎯 Quête liée ». Le champ « intention » disparaît quand une quête est liée (c'est elle).
+- « XP VERS : compétence » indique où va l'XP (la compétence de la quête liée).
+- Fin de session liée : « c'est fini ? » → « Quête validée ✓ » coche la quête (son XP) et la
+  détache, ou « Pas encore ».
+
 ## À surveiller au moment du transfert (pas un bug de code)
 
-**Clés VAPID** : `index.html` contient la clé publique VAPID **en dur** dans le
-code (`PUSH_VAPID_PUBLIC_KEY`, ligne ~1746). Le guide de transfert te demande de
-générer de *nouvelles* clés VAPID pour le nouveau compte Netlify. Si tu le fais
-sans mettre à jour cette constante dans `index.html` avec la nouvelle clé
-publique, les abonnements push échoueront silencieusement (clé publique
-côté navigateur ≠ clé privée côté serveur). Soit tu réutilises exactement les
-mêmes clés VAPID sur le nouveau compte, soit tu régénères ET tu mets à jour la
-constante dans `index.html` avant de déployer.
+**Clés VAPID** (mis à jour au build 75) : l'app demande désormais la clé publique au
+serveur (fonction `vapid-key`, qui lit `VAPID_PUBLIC_KEY`). Il suffit donc que les
+deux variables Netlify forment une paire valide ; la constante `PUSH_VAPID_PUBLIC_KEY`
+d'`index.html` ne sert plus que de secours hors ligne. Un appareil abonné avec une
+autre clé se réabonne tout seul à la réouverture de l'app.
 
 **Variables Netlify à ajouter** (Site settings → Environment variables) :
 `ADMIN_SECRET` (outils admin et diffusion), `ZAPIER_WEBHOOK_SECRET` (le jour où tu
-branches Skool), `VAPID_PUBLIC_KEY` / `VAPID_PRIVATE_KEY` (rappels push — la
-publique doit être identique à `PUSH_VAPID_PUBLIC_KEY` dans `index.html`).
+branches Skool), `VAPID_PUBLIC_KEY` / `VAPID_PRIVATE_KEY` (rappels push et fin de pomodoro app fermée —
+une paire générée ensemble).
 Ne pas toucher à `NETLIFY_SITE_ID` / `NETLIFY_AUTH_TOKEN`. `SYNC_MEMBERS_ONLY` :
 ne l'ajoute que le jour où la synchro devient payante.
 

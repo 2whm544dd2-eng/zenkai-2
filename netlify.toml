@@ -6,6 +6,11 @@
 [functions."send-reminders"]
   schedule = "*/10 * * * *"
 
+# Notifications de fin de pomodoro quand l'app est fermée (voir pomo-timer / pomo-notify).
+# Quand aucun minuteur n'est en cours, la fonction s'arrête après une seule lecture.
+[functions."pomo-notify"]
+  schedule = "* * * * *"
+
 # index.html et sw.js ne doivent pas rester en cache navigateur : sinon une mise à
 # jour déployée n'arrive sur le téléphone qu'après plusieurs ouvertures de l'app.
 [[headers]]
