@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="robots" content="noindex, nofollow">
+<title>ZENKAI · Admin</title>
+<style>
+  :root{ --bg:#07060f; --panel:#120d22; --line:rgba(167,139,250,0.22); --text:#f2efff; --dim:rgba(242,239,255,0.62); --faint:rgba(242,239,255,0.38);
+    --violet:#8b5cf6; --gold:#ffc94d; --cyan:#39b8ff; --green:#3ddc97; --red:#ff6b6b; --mono:ui-monospace, SFMono-Regular, Menlo, monospace; }
+  *{box-sizing:border-box;}
+  body{margin:0; background:var(--bg); color:var(--text); font-family:system-ui, -apple-system, "Segoe UI", sans-serif; font-size:14px;}
+  main{max-width:760px; margin:0 auto; padding:20px 16px 60px;}
+  h1{font-size:22px; letter-spacing:6px; margin:0;} h1 small{font-size:11px; letter-spacing:3px; color:var(--gold); margin-left:8px;}
+  h2{font-size:12px; letter-spacing:2px; color:var(--dim); font-weight:600; margin:26px 0 10px; text-transform:uppercase;}
+  .panel{background:var(--panel); border:1px solid var(--line); border-radius:14px; padding:14px;}
+  input, select{background:#0b0918; color:var(--text); border:1px solid var(--line); border-radius:10px; padding:10px 12px; font:inherit; min-width:0;}
+  button{font:inherit; cursor:pointer; border-radius:10px; padding:10px 14px; border:1px solid var(--violet); background:var(--violet); color:#fff; font-weight:600;}
+  button.ghost{background:transparent; color:var(--text); border-color:var(--line); font-weight:500;}
+  button.small{padding:6px 10px; font-size:12px;}
+  button.danger{background:transparent; border-color:rgba(255,107,107,0.5); color:var(--red);}
+  .row{display:flex; gap:8px; flex-wrap:wrap; align-items:center;}
+  .row > input{flex:1 1 160px;}
+  .mode{display:inline-flex; gap:8px; align-items:center; margin-top:10px; font-size:12.5px; padding:6px 10px; border-radius:999px; border:1px solid var(--line);}
+  .mode.closed{border-color:rgba(61,220,151,0.5); color:var(--green);} .mode.open{border-color:rgba(255,201,77,0.5); color:var(--gold);}
+  .hint{font-size:12px; color:var(--faint); line-height:1.5; margin-top:8px;}
+  .stats{display:grid; grid-template-columns:repeat(4, 1fr); gap:8px;}
+  .stat{background:var(--panel); border:1px solid var(--line); border-radius:12px; padding:10px; text-align:center;}
+  .stat b{display:block; font-size:22px;} .stat span{font-size:10.5px; letter-spacing:1px; color:var(--dim);}
+  .chips{display:flex; gap:6px; flex-wrap:wrap; margin-bottom:10px;}
+  .chip{padding:6px 12px; border-radius:999px; border:1px solid var(--line); background:transparent; color:var(--dim); font-size:12.5px; font-weight:500;}
+  .chip.on{border-color:var(--cyan); color:var(--text); background:rgba(57,184,255,0.1);}
+  .m{background:var(--panel); border:1px solid var(--line); border-radius:12px; padding:12px; margin-bottom:8px;}
+  .m.off{opacity:.55;}
+  .m-top{display:flex; align-items:center; gap:8px; flex-wrap:wrap;}
+  .m-name{font-weight:700; font-size:15px; flex:1; min-width:0; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;}
+  .badge{font-size:10.5px; letter-spacing:1px; padding:3px 8px; border-radius:999px; font-weight:700; text-transform:uppercase;}
+  .b-beta{background:rgba(255,201,77,0.15); color:var(--gold);} .b-membre{background:rgba(57,184,255,0.15); color:var(--cyan);}
+  .b-invite{background:rgba(167,139,250,0.18); color:#c4b5fd;} .b-admin{background:rgba(255,255,255,0.1); color:var(--text);}
+  .m-meta{display:flex; gap:14px; flex-wrap:wrap; margin:8px 0 10px; font-size:12.5px; color:var(--dim);}
+  .m-meta b{color:var(--text); font-weight:600;}
+  .dot{display:inline-block; width:8px; height:8px; border-radius:50%; margin-right:5px; vertical-align:middle;}
+  .code{font-family:var(--mono); letter-spacing:2px; color:var(--cyan);}
+  .result{margin-top:12px; padding:12px; border-radius:12px; border:1px solid rgba(61,220,151,0.45); background:rgba(61,220,151,0.06);}
+  .result .link{font-family:var(--mono); font-size:12.5px; word-break:break-all; margin:6px 0 10px; color:var(--text);}
+  .toast{position:fixed; left:50%; bottom:22px; transform:translateX(-50%); background:#1d1640; border:1px solid var(--line); padding:10px 16px; border-radius:10px; font-size:13px; display:none;}
+  details summary{cursor:pointer; color:var(--dim); font-size:13px;}
+  .empty{color:var(--faint); text-align:center; padding:24px 0;}
+  @media (max-width:520px){ .stats{grid-template-columns:repeat(2, 1fr);} }
+</style>
+</head>
+<body>
+<main>
+  <h1>ZENKAI<small>ADMIN</small></h1>
+  <div id="login" class="panel" style="margin-top:18px; display:none;">
+    <div style="margin-bottom:10px;">Mot de passe admin (la variable <span class="code" style="letter-spacing:0;">ADMIN_SECRET</span> sur Netlify).</div>
+    <div class="row"><input type="password" id="pw" placeholder="Mot de passe" onkeydown="if(event.key==='Enter') login()"><button onclick="login()">Entrer</button></div>
+    <div class="hint" id="loginErr"></div>
+  </div>
+  <div id="app" style="display:none;">
+    <div id="modeBox"></div>
+
+    <h2>Vue d'ensemble</h2>
+    <div class="stats" id="stats"></div>
+
+    <h2>Inviter quelqu'un</h2>
+    <div class="panel">
+      <div class="row">
+        <input id="invName" placeholder="Prénom ou email" maxlength="80" onkeydown="if(event.key==='Enter') createInvite()">
+        <select id="invType"><option value="beta">Bêta-testeur</option><option value="membre">Membre</option><option value="invite">Invité</option><option value="admin">Admin (toi)</option></select>
+        <button onclick="createInvite()">Créer l'invitation</button>
+      </div>
+      <div id="invResult"></div>
+      <details style="margin-top:12px;"><summary>Ajouter un code qui existe déjà (ex. ton propre code de synchro)</summary>
+        <div class="row" style="margin-top:8px;">
+          <input id="exCode" placeholder="CODE" maxlength="16" style="text-transform:uppercase; letter-spacing:2px; flex:0 1 150px;">
+          <input id="exName" placeholder="Nom" maxlength="80">
+          <select id="exType"><option value="admin">Admin (toi)</option><option value="beta">Bêta-testeur</option><option value="membre">Membre</option><option value="invite">Invité</option></select>
+          <button class="ghost" onclick="addExisting()">Ajouter</button>
+        </div>
+      </details>
+    </div>
+
+    <h2>Personnes</h2>
+    <div class="chips" id="filters"></div>
+    <div id="list"></div>
+    <div class="hint">Tu vois seulement l'usage (dernière activité, jours actifs, niveau, appareils), jamais le contenu des comptes.</div>
+    <div style="margin-top:18px;"><button class="ghost small" onclick="logout()">Se déconnecter de cet appareil</button></div>
+  </div>
+</main>
+<div class="toast" id="toast"></div>
+<script>
+const KEY = 'zenkai-admin-secret';
+const TYPES = {beta:'Bêta', membre:'Membre', invite:'Invité', admin:'Admin'};
+let secret = null, members = [], mode = 'open', filter = 'all', lastInvite = null;
+const $ = id => document.getElementById(id);
+const esc = s => String(s == null ? '' : s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+function toast(t){ const el = $('toast'); el.textContent = t; el.style.display = 'block'; clearTimeout(toast._t); toast._t = setTimeout(()=>{ el.style.display = 'none'; }, 2200); }
+function newCode(){ const a = 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789', r = crypto.getRandomValues(new Uint8Array(8)); return Array.from(r, b => a[b % a.length]).join(''); }
+const inviteLink = code => `${location.origin}/?invite=${code}`;
+function inviteMessage(name, code){
+  const first = String(name || '').split(/[@\s]/)[0];
+  return `Salut${first ? ' ' + first : ''} ! Je te fais tester ZENKAI en avant-première.\n\n1. Ouvre ce lien dans Chrome (Android) ou Safari (iPhone / Mac), pas directement dans Instagram : ${inviteLink(code)}\n2. Pour l'avoir comme une app :\n   • Android : menu ⋮ → Installer l'application ;\n   • iPhone : tu peux rester dans Safari, ou Partager → Sur l'écran d'accueil (icône + notifications), puis ouvre ZENKAI et tape ton code.\n\nTon code personnel : ${code} (ne le partage pas, il marche sur 2 appareils).\nTes données servent uniquement à la synchro entre tes appareils. Je vois quand tu utilises l'app et ton niveau, pas ce que tu écris dedans. Tu peux me demander de tout supprimer quand tu veux.\n\nDans une semaine je te demande ce qui t'a saoulé. Sois cash !`;
+}
+async function api(body){
+  const r = await fetch('/.netlify/functions/members', {method: body ? 'POST' : 'GET', headers:{'Content-Type':'application/json', 'x-admin-secret': secret}, body: body ? JSON.stringify(body) : undefined});
+  if(r.status === 401){ logout(); $('loginErr').textContent = 'Mot de passe incorrect.'; throw new Error('401'); }
+  if(r.status === 500){ const d = await r.json().catch(()=>({})); if(d.error === 'admin_secret_not_configured'){ $('loginErr').textContent = 'ADMIN_SECRET n\'est pas défini sur Netlify.'; logout(); throw new Error('500'); } }
+  return r;
+}
+async function login(){ secret = $('pw').value.trim(); if(!secret) return; try{ localStorage.setItem(KEY, secret); }catch(e){} await load(); }
+function logout(){ secret = null; try{ localStorage.removeItem(KEY); }catch(e){} $('app').style.display = 'none'; $('login').style.display = 'block'; }
+async function load(){
+  try{
+    const r = await api(null); if(!r.ok){ toast('Erreur de chargement'); return; }
+    const d = await r.json(); members = d.members || []; mode = d.mode || 'open';
+    $('login').style.display = 'none'; $('app').style.display = 'block'; $('loginErr').textContent = '';
+    render();
+  }catch(e){}
+}
+function daysSince(day){ if(!day) return null; return Math.round((new Date(new Date().toISOString().slice(0,10)) - new Date(day)) / 864e5); }
+function seenLabel(day){ const n = daysSince(day); return n === null ? 'jamais' : n <= 0 ? "aujourd'hui" : n === 1 ? 'hier' : `il y a ${n} j`; }
+function seenColor(day){ const n = daysSince(day); return n === null ? 'var(--faint)' : n <= 2 ? 'var(--green)' : n <= 6 ? 'var(--gold)' : 'var(--red)'; }
+function render(){
+  $('modeBox').innerHTML = mode === 'closed'
+    ? `<div class="mode closed">● Bêta privée active : un code est obligatoire pour ouvrir l'app</div>`
+    : `<div class="mode open">● Accès ouvert : l'app s'ouvre sans code</div><div class="hint">Pour fermer la bêta : Netlify → Site configuration → Environment variables → ajouter <span class="code" style="letter-spacing:0;">ACCESS_MODE</span> = <span class="code" style="letter-spacing:0;">closed</span>, puis redéployer.</div>`;
+  const active = members.filter(m => m.active), week = active.filter(m => { const n = daysSince(m.lastSeen); return n !== null && n <= 6; });
+  $('stats').innerHTML = [['Personnes', active.length], ['Bêta', active.filter(m => m.type === 'beta').length], ['Membres', active.filter(m => m.type === 'membre').length], ['Actifs 7 j', week.length]]
+    .map(([l, v]) => `<div class="stat"><b>${v}</b><span>${l.toUpperCase()}</span></div>`).join('');
+  const F = [['all','Tous', m => m.active], ['beta','Bêta', m => m.active && m.type === 'beta'], ['membre','Membres', m => m.active && m.type === 'membre'], ['invite','Invités', m => m.active && m.type === 'invite'], ['off','Désactivés', m => !m.active]];
+  $('filters').innerHTML = F.map(([k, l, f]) => `<button class="chip ${filter === k ? 'on' : ''}" onclick="filter='${k}'; render()">${l} · ${members.filter(f).length}</button>`).join('');
+  const list = members.filter(F.find(x => x[0] === filter)[2]).sort((a, b) => (b.lastSeen || '') < (a.lastSeen || '') ? -1 : (b.lastSeen || '') > (a.lastSeen || '') ? 1 : (b.created || 0) - (a.created || 0));
+  $('list').innerHTML = list.length ? list.map(m => {
+    const u = m.usage || {};
+    return `<div class="m ${m.active ? '' : 'off'}">
+      <div class="m-top"><span class="m-name">${esc(m.label)}</span><span class="badge b-${m.type}">${TYPES[m.type] || m.type}</span><span class="code">${m.code}</span></div>
+      <div class="m-meta">
+        <span><i class="dot" style="background:${seenColor(m.lastSeen)}"></i>Vu <b>${seenLabel(m.lastSeen)}</b></span>
+        <span><b>${u.daysActive7 != null ? u.daysActive7 : '–'}/7</b> jours actifs</span>
+        <span>Niv. <b>${u.level || '–'}</b></span>
+        <span><b>${m.devices}/2</b> appareils</span>
+        ${m.active ? '' : '<span style="color:var(--red);">désactivé</span>'}
+      </div>
+      <div class="row">
+        <button class="ghost small" data-c="${m.code}" data-n="${esc(m.label)}" onclick="copy(this.dataset.c, this.dataset.n)">Copier l'invitation</button>
+        <select class="small" style="padding:6px 8px; font-size:12px;" onchange="setType('${m.code}', this.value)">${Object.entries(TYPES).map(([k, l]) => `<option value="${k}" ${m.type === k ? 'selected' : ''}>${l}</option>`).join('')}</select>
+        ${m.devices ? `<button class="ghost small" onclick="resetDevices('${m.code}')">Réinitialiser les appareils</button>` : ''}
+        <button class="${m.active ? 'danger' : 'ghost'} small" onclick="toggle('${m.code}', ${!m.active})">${m.active ? 'Désactiver' : 'Réactiver'}</button>
+      </div></div>`;
+  }).join('') : `<div class="empty">Personne ici pour l'instant.</div>`;
+}
+async function copyText(t){ try{ await navigator.clipboard.writeText(t); toast('Copié'); }catch(e){ prompt('Copie ce texte :', t); } }
+function copy(code, name){ copyText(inviteMessage(name, code)); }
+async function createInvite(){
+  const name = $('invName').value.trim(), type = $('invType').value;
+  if(!name){ $('invName').focus(); return; }
+  let code = newCode(), r = await api({action:'register', code, label:name, type});
+  if(r.status === 409){ code = newCode(); r = await api({action:'register', code, label:name, type}); }
+  if(!r.ok){ toast('Impossible de créer l\'invitation'); return; }
+  $('invName').value = '';
+  lastInvite = {name, code};
+  $('invResult').innerHTML = `<div class="result"><div>Invitation créée pour <b>${esc(name)}</b> · <span class="code">${code}</span></div>
+    <div class="link">${inviteLink(code)}</div>
+    <div class="row"><button class="small" onclick="copyText(inviteMessage(lastInvite.name, lastInvite.code))">Copier le message</button>
+    <button class="ghost small" onclick="copyText(inviteLink(lastInvite.code))">Copier le lien seul</button>
+    ${navigator.share ? `<button class="ghost small" onclick="navigator.share({text: inviteMessage(lastInvite.name, lastInvite.code)}).catch(()=>{})">Partager…</button>` : ''}</div></div>`;
+  await load();
+}
+async function addExisting(){
+  const code = $('exCode').value.replace(/\s+/g, '').toUpperCase(), name = $('exName').value.trim() || code, type = $('exType').value;
+  if(!/^[A-Z0-9]{4,16}$/.test(code)){ toast('Code invalide'); return; }
+  const r = await api({action:'register', code, label:name, type});
+  if(r.status === 409){ toast('Ce code est déjà dans la liste'); return; }
+  if(!r.ok){ toast('Erreur'); return; }
+  $('exCode').value = ''; $('exName').value = ''; toast('Ajouté'); await load();
+}
+async function setType(code, type){ const r = await api({action:'setType', code, type}); toast(r.ok ? 'Type modifié' : 'Erreur'); await load(); }
+async function resetDevices(code){ if(!confirm('Réinitialiser les appareils de ce code ? La personne devra simplement rouvrir l\'app.')) return; const r = await api({action:'resetDevices', code}); toast(r.ok ? 'Appareils réinitialisés' : 'Erreur'); await load(); }
+async function toggle(code, active){
+  if(!active && !confirm('Désactiver ce code ? La personne perd l\'accès (ses données restent sur son téléphone).')) return;
+  const r = await api({action:'toggle', code, active}); toast(r.ok ? (active ? 'Réactivé' : 'Désactivé') : 'Erreur'); await load();
+}
+(function(){ try{ secret = localStorage.getItem(KEY); }catch(e){} if(secret) load(); else $('login').style.display = 'block'; })();
+</script>
+</body>
+</html>

@@ -36,7 +36,13 @@ function secretMatches(given) {
   const b = Buffer.from(expected);
   return a.length === b.length && crypto.timingSafeEqual(a, b);
 }
-const publicShape = (m) => ({ code: m.code, label: m.label || m.email || '(sans nom)', active: m.active !== false });
+const TYPES = ['beta', 'membre', 'invite', 'admin'];
+// build 78 : type, appareils, dernière activité et chiffres d'usage (jamais le contenu de la sauvegarde)
+const publicShape = (m) => ({
+  code: m.code, label: m.label || m.email || '(sans nom)', email: m.email || null, active: m.active !== false,
+  type: TYPES.includes(m.type) ? m.type : 'membre', created: m.created || null,
+  devices: Array.isArray(m.devices) ? m.devices.length : 0, lastSeen: m.lastSeen || null, usage: m.usage || null,
+});
 
 exports.handler = async (event) => {
   connect(event);
@@ -55,7 +61,7 @@ exports.handler = async (event) => {
       if (m) list.push({ ...m, code: m.code || key });
     }
     list.sort((a, b) => (b.created || 0) - (a.created || 0));
-    return json(200, { members: list.map(publicShape) });
+    return json(200, { members: list.map(publicShape), mode: process.env.ACCESS_MODE === 'closed' ? 'closed' : 'open' });
   }
 
   if (event.httpMethod !== 'POST') return json(405, { error: 'method_not_allowed' });
@@ -70,9 +76,21 @@ exports.handler = async (event) => {
     if (await members.getMetadata(code)) return json(409, { error: 'code_exists' });
     const label = String(body.label || '').trim().slice(0, 80) || null;
     const email = String(body.email || (label && label.includes('@') ? label : '')).trim().toLowerCase() || null;
-    await members.setJSON(code, { code, label, email, active: true, created: Date.now() });
+    const type = TYPES.includes(body.type) ? body.type : 'beta';
+    await members.setJSON(code, { code, label, email, type, active: true, created: Date.now(), devices: [] });
     if (email) await emails.set(email, code);
     return json(200, { ok: true, code });
+  }
+
+  if (action === 'setType' || action === 'resetDevices') {
+    if (!CODE_RE.test(code)) return json(400, { error: 'bad_code' });
+    const m = await members.get(code, { type: 'json' });
+    if (!m) return json(404, { error: 'code_not_found' });
+    if (action === 'setType') { if (!TYPES.includes(body.type)) return json(400, { error: 'bad_type' }); m.type = body.type; }
+    else m.devices = [];
+    m.changedAt = Date.now();
+    await members.setJSON(code, m);
+    return json(200, { ok: true, member: publicShape(m) });
   }
 
   if (action === 'toggle' || action === 'enable' || action === 'disable') {

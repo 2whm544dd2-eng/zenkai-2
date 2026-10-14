@@ -6,10 +6,8 @@
 [functions."send-reminders"]
   schedule = "*/10 * * * *"
 
-# Notifications de fin de pomodoro quand l'app est fermée (voir pomo-timer / pomo-notify).
-# Quand aucun minuteur n'est en cours, la fonction s'arrête après une seule lecture.
-[functions."pomo-notify"]
-  schedule = "* * * * *"
+# build 78 : la tâche planifiée pomo-notify (chaque minute) est retirée — plus de notification
+# serveur de fin de pomodoro. Économise ~43 000 exécutions par mois (crédits Netlify).
 
 # index.html et sw.js ne doivent pas rester en cache navigateur : sinon une mise à
 # jour déployée n'arrive sur le téléphone qu'après plusieurs ouvertures de l'app.

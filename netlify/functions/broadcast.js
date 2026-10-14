@@ -39,7 +39,7 @@ exports.handler = async (event) => {
   try { input = JSON.parse(event.body); } catch (e) { return json(400, { error: 'bad_json' }); }
   const body = String((input && input.body) || '').trim();
   if (!body) return json(400, { error: 'missing_body' });
-  const title = String((input && input.title) || 'SYSTEM // Hunter Log');
+  const title = String((input && input.title) || 'SYSTÈME // ZENKAI');
 
   webpush.setVapidDetails(
     process.env.VAPID_SUBJECT || 'mailto:contact@example.com',

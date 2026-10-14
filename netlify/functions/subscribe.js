@@ -33,12 +33,19 @@ exports.handler = async (event) => {
   const store = blobStore('hunter-log-subscribers');
   const existing = (await store.get(deviceId, { type: 'json' }).catch(() => null)) || {};
 
+  // Abonnement remplacé sur le même appareil (nouvelle clé, réinstallation) : on supprime l'ancien,
+  // sinon l'appareil reçoit chaque rappel en double (build 78).
+  const replaces = payload && typeof payload.replaces === 'string' && /^[0-9a-f]{64}$/.test(payload.replaces) ? payload.replaces : null;
+  if (replaces && replaces !== deviceId) await store.delete(replaces).catch(() => {});
+
   await store.setJSON(deviceId, {
     subscription,
     timezone: timezone || existing.timezone || 'Europe/Brussels',
     state: state || existing.state || {},
     // Gérées par send-reminders.js : ne pas les remettre à zéro à chaque mise à jour d'état.
     eveningNotifiedDate: existing.eveningNotifiedDate || null,
+    blockNotified: existing.blockNotified || {},
+    goalNotified: existing.goalNotified || {},
     morningNotifiedDate: existing.morningNotifiedDate || null,
     updatedAt: new Date().toISOString(),
   });

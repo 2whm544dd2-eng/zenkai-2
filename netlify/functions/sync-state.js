@@ -36,14 +36,45 @@ const json = (statusCode, obj) => ({
 const normalizeCode = (code) => (code || '').toString().trim().toUpperCase();
 const CODE_RE = /^[A-Z0-9]{4,16}$/;
 
-async function checkAccess(stateStore, code) {
-  const member = await blobStore('hunter-log-members').get(code, { type: 'json' }).catch(() => null);
+// build 78 : ACCESS_MODE=closed (bêta privée) → seuls les codes membres actifs, sur 2 appareils au plus.
+// Un appareil d'une ancienne version (sans deviceId) n'est pas bloqué : il reçoit la mise à jour au prochain lancement.
+const MAX_DEVICES = 2;
+const DEVICE_RE = /^[a-z0-9]{12,40}$/;
+function registerDevice(m, deviceId) {
+  const day = new Date().toISOString().slice(0, 10);
+  m.devices = Array.isArray(m.devices) ? m.devices : [];
+  const d = m.devices.find((x) => x.id === deviceId);
+  if (d) { if (d.last !== day) { d.last = day; return { ok: true, changed: true }; } return { ok: true, changed: false }; }
+  if (m.devices.length >= MAX_DEVICES) return { ok: false };
+  m.devices.push({ id: deviceId, first: day, last: day });
+  return { ok: true, changed: true };
+}
+async function checkAccess(stateStore, code, deviceId) {
+  const members = blobStore('hunter-log-members');
+  const member = await members.get(code, { type: 'json' }).catch(() => null);
   if (member && member.active === false) return { ok: false, error: 'disabled' };
+  if (process.env.ACCESS_MODE === 'closed' && !member) return { ok: false, error: 'not_member' };
   if (process.env.SYNC_MEMBERS_ONLY === 'true' && !member) {
     const existing = await stateStore.getMetadata(code).catch(() => null);
     if (!existing) return { ok: false, error: 'not_member' };
   }
-  return { ok: true };
+  let changed = false;
+  if (member && deviceId && DEVICE_RE.test(deviceId)) {
+    const r = registerDevice(member, deviceId);
+    if (!r.ok) return { ok: false, error: 'too_many_devices' };
+    changed = r.changed;
+  }
+  return { ok: true, member, members, changed };
+}
+// Suivi d'usage visible dans /admin : uniquement des chiffres (niveau, jours actifs), jamais le contenu.
+function usageOf(state) {
+  const days = new Set(), now = new Date();
+  const from = new Date(now.getTime() - 6 * 864e5).toISOString().slice(0, 10);
+  (Array.isArray(state.history) ? state.history : []).forEach((h) => { if (h && h.date >= from && (h.xpGained || 0) > 0) days.add(h.date); });
+  const t = state.todayStats || {};
+  if (t.date && t.date >= from && (t.xpGained || 0) > 0) days.add(t.date);
+  const all = [...(Array.isArray(state.history) ? state.history : []).filter((h) => h && (h.xpGained || 0) > 0).map((h) => h.date), (t.xpGained || 0) > 0 ? t.date : null].filter(Boolean).sort();
+  return { level: Number(state.hunterLevel) || 1, daysActive7: days.size, lastActive: all.length ? all[all.length - 1] : null };
 }
 
 exports.handler = async (event) => {
@@ -53,8 +84,17 @@ exports.handler = async (event) => {
   if (event.httpMethod === 'GET') {
     const code = normalizeCode(event.queryStringParameters && event.queryStringParameters.code);
     if (!CODE_RE.test(code)) return json(400, { error: 'bad_code' });
-    const access = await checkAccess(store, code);
+    const access = await checkAccess(store, code, String(event.queryStringParameters.device || '').toLowerCase());
     if (!access.ok) return json(403, { error: access.error });
+    if (access.changed) await access.members.setJSON(code, access.member).catch(() => {});
+    // build 78 : ?since=<horodatage connu de l'app> → si rien n'a changé, réponse de quelques octets
+    // (lecture des seules métadonnées) au lieu de renvoyer tout l'état à chaque vérification.
+    const since = Number(event.queryStringParameters && event.queryStringParameters.since) || 0;
+    if (since > 0) {
+      const meta = await store.getMetadata(code).catch(() => null);
+      const mts = meta && meta.metadata && Number(meta.metadata.updatedAt);
+      if (mts && mts <= since) return json(200, { unchanged: true, updatedAt: mts });
+    }
     const record = await store.get(code, { type: 'json' });
     if (!record) return json(404, { error: 'no_state' });
     return json(200, { state: record.state, updatedAt: record.updatedAt });
@@ -66,8 +106,15 @@ exports.handler = async (event) => {
     const code = normalizeCode(payload && payload.code);
     const state = payload && payload.state;
     if (!CODE_RE.test(code) || !state || typeof state !== 'object') return json(400, { error: 'missing_fields' });
-    const access = await checkAccess(store, code);
+    const access = await checkAccess(store, code, String(payload.deviceId || '').toLowerCase());
     if (!access.ok) return json(403, { error: access.error });
+    if (access.member) {   // dernière activité + chiffres d'usage (écrits seulement s'ils changent)
+      const m = access.member, usage = usageOf(state), day = new Date().toISOString().slice(0, 10);
+      if (access.changed || m.lastSeen !== day || JSON.stringify(m.usage) !== JSON.stringify(usage)) {
+        m.lastSeen = day; m.usage = usage;
+        await access.members.setJSON(code, m).catch(() => {});
+      }
+    }
 
     // Anti-écrasement : l'app envoie baseTs = version serveur dont descend son état. Si le serveur
     // a reçu depuis une version plus récente (autre appareil), on refuse et on renvoie cette
@@ -80,7 +127,7 @@ exports.handler = async (event) => {
       }
     }
     const updatedAt = Date.now(); // le serveur est la seule horloge de référence
-    await store.setJSON(code, { state, updatedAt });
+    await store.setJSON(code, { state, updatedAt }, { metadata: { updatedAt } });
     return json(200, { ok: true, updatedAt });
   }
 

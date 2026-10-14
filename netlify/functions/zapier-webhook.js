@@ -68,7 +68,7 @@ exports.handler = async (event) => {
     }
     let code = newCode();
     while (await members.getMetadata(code)) code = newCode();
-    await members.setJSON(code, { code, label: email, email, active: true, created: Date.now() });
+    await members.setJSON(code, { code, label: email, email, type: 'membre', active: true, created: Date.now(), devices: [] });
     await emails.set(email, code);
     return json(200, { ok: true, code, reactivated: false });
   }

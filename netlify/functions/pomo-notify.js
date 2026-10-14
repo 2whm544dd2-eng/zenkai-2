@@ -52,7 +52,7 @@ exports.handler = async (event) => {
       // plus récente est utile.
       const last = due[due.length - 1];
       if (now - last.at <= STALE_MS) {
-        const r = await sendPush(record.subscription, { title: 'SYSTEM // Hunter Log', body: last.body, tag: 'hunter-log-pomo', pomoAt: last.at });
+        const r = await sendPush(record.subscription, { title: 'SYSTÈME // ZENKAI', body: last.body, tag: 'hunter-log-pomo', pomoAt: last.at });
         if (r === null) { await store.delete(key); continue; }
         if (r === false) rest = [last].concat(rest);   // réessai à la prochaine minute
         else sent++;
