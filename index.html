@@ -500,6 +500,9 @@
   .wk-tpl.active{border-color:var(--glow); color:var(--text); background:rgba(139,92,246,0.18);}
   .wk-sec{font-family:var(--font-mono); font-size:10px; letter-spacing:2px; color:var(--text-faint); margin:12px 0 6px;}
   .wk-empty{font-family:var(--font-mono); font-size:10.5px; color:var(--text-faint); line-height:1.5; padding:6px 0;}
+  .rday-row{display:flex; gap:5px;} .rday{flex:1; min-width:0; padding:8px 0; border-radius:8px; border:1px solid var(--line); background:transparent; color:var(--text-dim); font-family:var(--font-display); font-weight:700; font-size:14px; cursor:pointer;}
+  .rday.on{background:rgba(139,92,246,.25); border-color:#8b5cf6; color:#fff;}
+  .rday-pre{font-family:var(--font-mono); font-size:10px; color:var(--text-faint); margin-top:6px;} .rday-pre a{color:var(--cyan);}
   .wk-meta{display:flex; justify-content:space-between; align-items:center; gap:8px; font-size:13px; color:var(--text-dim); padding:8px 10px; border:1px solid var(--border, rgba(255,255,255,.08)); border-radius:8px; margin:6px 0 4px;}
   .wk-meta a{color:var(--cyan); font-size:12px; white-space:nowrap;}
   .wk-goalchips{margin:4px 0 8px;}
@@ -909,6 +912,7 @@
   .foot-row{display:flex; justify-content:space-between; align-items:center; margin-top:22px; flex-wrap:wrap; gap:10px;}
   .foot-note{font-family:var(--font-mono); font-size:10px; color:var(--text-faint); letter-spacing:0.5px;}
   #loading{font-family:var(--font-mono); color:var(--text-dim); text-align:center; padding:80px 20px; letter-spacing:2px; font-size:12px;}
+  #installHint .ih-x{float:right; margin:-4px -6px 0 8px; background:none; border:0; color:inherit; font-size:14px; cursor:pointer; opacity:.7;}
   #installHint{display:none; font-family:var(--font-mono); font-size:10.5px; color:var(--glow); background:rgba(47,184,255,0.06); border:1px solid var(--glow-dim); padding:10px 14px; margin-bottom:16px; text-align:center; letter-spacing:0.5px;}
   .fab{
     position:fixed; right:20px; bottom:max(24px, env(safe-area-inset-bottom)); width:56px; height:56px; border-radius:50%;
@@ -1808,8 +1812,29 @@ function previousPeriodKey(freqTag){
   d.setDate(d.getDate()-1); return periodKey(freqTag, d);
 }
 function routineDone(r){ return r.lastDoneDate === periodKey(r.freqTag||'quotidienne'); }
+/* 14/10 (demande de Samuel, bêta) : routine quotidienne seulement certains jours (ex. « préparer le sac » du lundi au vendredi).
+   r.days = jours prévus, 0 = lundi … 6 = dimanche. Absent (ou les 7) = tous les jours.
+   Un jour non prévu : la routine n'est pas due, pas de pénalité, et la série ne se casse pas. */
+const ROUTINE_DAY_L = ['L','M','M','J','V','S','D'];
+function routineDays(r){ return ((r.freqTag||'quotidienne') === 'quotidienne' && Array.isArray(r.days) && r.days.length && r.days.length < 7) ? r.days : null; }
+function rDayIdx(ds){ return (new Date(ds + 'T00:00:00').getDay() + 6) % 7; }
+function routineDueOn(r, ds){ const d = routineDays(r); return !d || d.includes(rDayIdx(ds)); }
+function routineDueToday(r){ return routineDueOn(r, todayStr()); }
+function rDateStr(d){ return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`; }
+function routinePrevDue(r, ds){   // dernier jour prévu AVANT ds
+  const d = new Date((ds || todayStr()) + 'T00:00:00');
+  for(let i = 0; i < 7; i++){ d.setDate(d.getDate() - 1); const x = rDateStr(d); if(routineDueOn(r, x)) return x; }
+  return null;
+}
+function routineDaysLabel(r){
+  const d = routineDays(r); if(!d) return '';
+  const k = d.slice().sort((a,b)=>a-b).join('');
+  if(k === '01234') return 'LUN-VEN'; if(k === '56') return 'WEEK-END';
+  return d.slice().sort((a,b)=>a-b).map(i=>ROUTINE_DAY_L[i]).join('·');
+}
 function routineStreakAlive(r){
   const f = r.freqTag||'quotidienne';
+  if(routineDays(r)){ const pd = routinePrevDue(r); return r.lastDoneDate === periodKey(f) || !pd || (r.lastDoneDate || '') >= pd; }
   return r.lastDoneDate === periodKey(f) || r.lastDoneDate === previousPeriodKey(f);
 }
 
@@ -1854,7 +1879,9 @@ function checkDayRollover(){
         waterGoalHit: STATE.water.currentMl >= STATE.water.goalMl,
         dayHeld: !!STATE.todayStats.dayHeld,
       };
-      if(!STATE.water.goalRewarded && STATE.settings.penaltiesEnabled && modOn('water') && STATE.water.currentMl < STATE.water.goalMl){
+      // 14/10 : pas de pénalité d'eau pour qui ne suit pas son eau (jamais rien noté) — un nouveau testeur perdait de l'XP chaque nuit sans comprendre
+      const waterTracker = STATE.water.currentMl > 0 || (STATE.history||[]).some(h=>h.waterGoalHit || (h.waterMl||0) > 0);
+      if(!STATE.water.goalRewarded && STATE.settings.penaltiesEnabled && modOn('water') && waterTracker && STATE.water.currentMl < STATE.water.goalMl){
         const penalty = Math.max(5, Math.round(WATER_GOAL_XP*PENALTY_RATE));
         xpPenalty(STATE.water.skill, penalty);
         histEntry.xpGained -= penalty;
@@ -1893,7 +1920,7 @@ function checkDayRollover(){
   // on ne double pas la peine avec la pénalité de série rompue.
   STATE.routines.forEach(r=>{
     if(r.streak>0 && r.lastDoneDate && !routineStreakAlive(r) && r.lastPenaltyDate!==today){
-      const alreadyPenalizedForMiss = r.deadlinePenalty && r.deadlinePenalizedDate && r.deadlinePenalizedDate === previousPeriodKey(r.freqTag||'quotidienne');   // 10/10 : seulement la même occurrence manquée
+      const alreadyPenalizedForMiss = r.deadlinePenalty && r.deadlinePenalizedDate && r.deadlinePenalizedDate === (routineDays(r) ? routinePrevDue(r) : previousPeriodKey(r.freqTag||'quotidienne'));   // 10/10 : seulement la même occurrence manquée
       if(!alreadyPenalizedForMiss) applyRoutinePenalty(r);
       r.streak = 0;
       r.lastPenaltyDate = today;
@@ -2244,8 +2271,21 @@ async function pullStateFromServer(){
 }
 // Charge la version du serveur (plus récente, venue d'un autre appareil). Si cet appareil avait
 // des changements pas encore envoyés, ils sont gardés à part (SYNC_BACKUP_KEY) au lieu d'être perdus.
+// 14/10 : une copie du serveur nettement EN RETARD sur cet appareil (moins d'XP cumulée) vient d'un appareil resté
+// sur une vieille sauvegarde : on ne la prend pas, on renvoie la version de cet appareil (la copie serveur est gardée à part).
+function zkSyncIsStale(server, local){
+  const sx = (server && server.stats && +server.stats.lifetimeXP) || 0, lx = (local && local.stats && +local.stats.lifetimeXP) || 0;
+  return lx - sx > 100 && sx < lx * 0.9;
+}
 async function adoptServerState(state, ts, hadLocalChanges){
   clearTimeout(syncPushTimer);
+  if(zkSyncIsStale(state, STATE)){
+    try{ await storeSet(SYNC_BACKUP_KEY, JSON.stringify({savedAt: Date.now(), state, from:'server'})); }catch(e){}
+    rememberSyncBase(state); localStateTs = ts; await storeSet(SYNC_TS_KEY, String(localStateTs));   // base = version serveur vue → pas de boucle de conflit (409)
+    queueSyncPush();
+    showToast('SYNCHRO', 'Version plus ancienne ignorée', 'tes données de cet appareil sont gardées', '');
+    return;
+  }
   let merged = state;
   if(hadLocalChanges){
     // Les deux appareils ont changé des choses : on fusionne au lieu de jeter l'un des deux.
@@ -2311,7 +2351,7 @@ async function accessMode(){
 }
 async function accessCheck(code){
   try{
-    const r = await accessFetch('/.netlify/functions/access', {method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify({code, deviceId: zkDeviceId()})}, 6000);
+    const r = await accessFetch('/.netlify/functions/access', {method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify({code, deviceId: zkDeviceId(), label: zkDeviceLabel()})}, 6000);
     const d = await r.json().catch(()=>({}));
     if(r.ok && d.ok){
       accessCacheSet({ok:true, mode:d.mode, type:d.type || null, code, at:Date.now()});
@@ -2328,6 +2368,7 @@ async function accessBoot(){
     if(inv){ pendingInvite = inv.replace(/\s+/g,'').toUpperCase(); history.replaceState(null, '', location.pathname); }
   }catch(e){}
   accessInfo = accessCacheGet();
+  if(zkInAppBrowser() && !window.__zkInAppOk && !(accessInfo && accessInfo.ok && accessInfo.mode === 'open')){ showInAppGate(pendingInvite || (accessInfo && accessInfo.code) || ''); return false; }
   if(accessInfo && accessInfo.ok && !pendingInvite){ setTimeout(accessRevalidate, 2500); return true; }   // déjà validé : on n'attend pas le réseau
   const mode = await accessMode();
   if(!mode) return true;                       // pas de serveur joignable
@@ -2336,6 +2377,8 @@ async function accessBoot(){
     if(pendingInvite && pendingInvite !== syncCode) setTimeout(()=>accessRedeemOpen(pendingInvite), 900);
     return true;
   }
+  // 14/10 : lien ouvert dans Instagram / TikTok / Snapchat… : ce navigateur intégré a son propre stockage (= un appareil
+  // de plus, données perdues en le quittant). On propose d'abord d'ouvrir Safari / Chrome, SANS utiliser le code.
   const code = pendingInvite || syncCode;
   // 13/10 : sur iPhone, Safari et l'app de l'écran d'accueil ont deux stockages séparés = deux appareils pour le serveur.
   // Lien d'invitation ouvert dans Safari : on propose d'installer l'app d'abord, sans consommer d'appareil.
@@ -2373,8 +2416,15 @@ async function accessLinkSync(code, hasState){
       const r = await fetch(`/.netlify/functions/sync-state?code=${encodeURIComponent(code)}&device=${zkDeviceId()}`);
       if(r.ok){
         const d = await r.json();
+        if(d && d.state && zkSyncIsStale(d.state, STATE)){
+          // 14/10 : le serveur a une copie PLUS ANCIENNE que cet appareil (ex. code déjà utilisé ailleurs il y a longtemps)
+          // → on garde cet appareil et on l'envoie, au lieu de revenir en arrière
+          try{ await storeSet(SYNC_BACKUP_KEY, JSON.stringify({savedAt: Date.now(), state: d.state, from:'server'})); }catch(e){}
+          syncCode = code; await storeSet(SYNC_CODE_KEY, syncCode); localStateTs = d.updatedAt || Date.now(); await storeSet(SYNC_TS_KEY, String(localStateTs));   // base = version serveur connue → l'envoi est accepté
+          rememberSyncBase(d.state); syncRev++; syncDirty = true; await pushStateToServer(); startSyncWatcher(); return;
+        }
         if(d && d.state){
-          if((STATE.stats && STATE.stats.lifetimeXP) > 0){ try{ await storeSet(SYNC_BACKUP_KEY, JSON.stringify({savedAt: Date.now(), state: STATE})); }catch(e){} }
+          if((STATE.stats && STATE.stats.lifetimeXP) > 0){ try{ await storeSet(SYNC_BACKUP_KEY, JSON.stringify({savedAt: Date.now(), state: STATE, from:'device'})); }catch(e){} }
           STATE = d.state; migrateState(); localStateTs = d.updatedAt; rememberSyncBase(STATE);
           await storeSet(STORAGE_KEY, JSON.stringify(STATE));
         }
@@ -2387,6 +2437,45 @@ async function accessLinkSync(code, hasState){
     await pushStateToServer();
   }
   startSyncWatcher();
+}
+// 14/10 : nom lisible pour l'admin (« iPhone · Instagram », « Android · App installée »…) — aucune donnée perso
+function zkDeviceLabel(){
+  try{
+    const ua = navigator.userAgent || '';
+    const os = /iPhone|iPod/.test(ua) ? 'iPhone' : /iPad/.test(ua) || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1) ? 'iPad' : /Android/.test(ua) ? 'Android' : /Mac/.test(ua) ? 'Mac' : /Windows/.test(ua) ? 'PC Windows' : /Linux|CrOS/.test(ua) ? 'Ordinateur' : 'Appareil';
+    const app = /Instagram/i.test(ua) ? 'Instagram' : /FBAN|FBAV|FB_IAB/i.test(ua) ? 'Facebook' : /musical_ly|TikTok|BytedanceWebview/i.test(ua) ? 'TikTok' : /Snapchat/i.test(ua) ? 'Snapchat'
+      : zkStandalone() ? 'App installée' : /Edg\//.test(ua) ? 'Edge' : /SamsungBrowser/.test(ua) ? 'Samsung Internet' : /Firefox|FxiOS/.test(ua) ? 'Firefox' : /CriOS|Chrome/.test(ua) ? 'Chrome' : /Safari/.test(ua) ? 'Safari' : 'Navigateur';
+    return os + ' · ' + app;
+  }catch(e){ return 'Appareil'; }
+}
+function zkInAppBrowser(){ try{ return /Instagram|FBAN|FBAV|FB_IAB|Snapchat|musical_ly|TikTok|BytedanceWebview|LinkedInApp|Line\//i.test(navigator.userAgent || ''); }catch(e){ return false; } }
+function showInAppGate(code){
+  let el = document.getElementById('accessGate');
+  if(!el){ el = document.createElement('div'); el.id = 'accessGate'; document.body.appendChild(el); }
+  const q = code ? '?invite=' + encodeURIComponent(code) : '';
+  const url = location.origin + '/' + q, android = /Android/i.test(navigator.userAgent || '');
+  const intent = 'intent://' + location.host + '/' + q + '#Intent;scheme=https;package=com.android.chrome;end';
+  el.innerHTML = `<div class="ag-box">
+    <div class="ag-logo">ZENKAI</div><div class="ag-tag">BÊTA PRIVÉE</div>
+    <p>Tu es dans le navigateur ${/Instagram/i.test(navigator.userAgent||'') ? "d'Instagram" : "de l'appli"}. Ici, ZENKAI ne peut pas bien garder ta progression : ouvre-le dans ${android ? 'Chrome' : 'Safari'}.</p>
+    ${android ? `<a class="btn wide" href="${intent}" style="display:block; text-align:center; text-decoration:none;">Ouvrir dans Chrome</a>` : `<p style="margin-top:6px;"><b>Touche ⋯ en haut à droite</b> → « Ouvrir dans le navigateur externe ».</p>`}
+    <p style="margin-top:12px;">Ou copie le lien et colle-le dans ${android ? 'Chrome' : 'Safari'} :</p>
+    <input id="agLink" readonly value="${escapeHtml(url)}" onclick="this.select()" style="width:100%; font-size:13px;">
+    <button class="btn ${android ? 'ghost' : ''} wide" style="margin-top:8px;" onclick="zkCopyLink(this)">Copier le lien</button>
+    <div class="ag-foot">Ton code n'est pas utilisé tant que tu ne l'as pas ouvert dans ${android ? 'Chrome' : 'Safari'}.</div>
+    <div class="ag-foot"><a href="#" style="color:inherit;" onclick="event.preventDefault(); zkInAppContinue()">Continuer ici quand même</a></div></div>`;
+}
+function zkCopyLink(btn){
+  const i = document.getElementById('agLink'); if(!i) return;
+  const done = ()=>{ btn.textContent = 'Lien copié ✓'; };
+  try{ navigator.clipboard.writeText(i.value).then(done, ()=>{ i.select(); try{ document.execCommand('copy'); done(); }catch(e){} }); }
+  catch(e){ i.select(); try{ document.execCommand('copy'); done(); }catch(err){} }
+}
+async function zkInAppContinue(){
+  window.__zkInAppOk = true;
+  const el = document.getElementById('accessGate'); if(el) el.remove();
+  const ok = await accessBoot();
+  if(ok){ const g = document.getElementById('accessGate'); if(g) g.remove(); if(!bootStarted) bootRest(); else render(); }
 }
 function zkIsIOS(){ try{ return /iPad|iPhone|iPod/.test(navigator.userAgent) || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1); }catch(e){ return false; } }
 function zkStandalone(){ try{ return navigator.standalone === true || matchMedia('(display-mode: standalone)').matches; }catch(e){ return false; } }
@@ -3430,7 +3519,7 @@ function updateBestStreak(){
 function checkPerfectDay(){
   const today = todayStr();
   if(STATE.stats.perfectDayCountedDate === today) return;
-  const dailyRoutines = STATE.routines.filter(r=>(r.freqTag||'quotidienne')==='quotidienne');
+  const dailyRoutines = STATE.routines.filter(r=>(r.freqTag||'quotidienne')==='quotidienne' && routineDueToday(r));
   if(dailyRoutines.length===0) return;
   const allDone = dailyRoutines.every(r=>r.lastDoneDate===today);
   if(allDone){ STATE.stats.perfectDays++; STATE.stats.perfectDayCountedDate = today; }
@@ -3522,7 +3611,7 @@ function checkRoutineDeadlines(){
   let changed = false;
   STATE.routines.forEach(r=>{
     if(!r.time || !r.deadlinePenalty) return;
-    if(routineDone(r)) return;
+    if(routineDone(r) || !routineDueToday(r)) return;
     if(hhmm < r.time) return;
     const per = periodKey(r.freqTag||'quotidienne');
     if(r.deadlinePenalizedDate === today || r.deadlinePenalizedDate === per) return;   // une fois par période (hebdo = une fois par semaine)
@@ -3697,7 +3786,8 @@ function awakenRestore(){
     <div class="modal-actions"><button class="btn ghost" onclick="closeModal()">Plus tard</button><button class="btn" onclick="joinSyncCode()">Récupérer</button></div>`), 500);
   setTimeout(()=>document.getElementById('syncJoinInput')?.focus(), 650);
 }
-let installHintText = '';   // gardé hors du DOM : avant, la consigne disparaissait au premier rendu
+let installHintText = '';
+function zkHideInstallHint(){ installHintText = ''; try{ localStorage.setItem('zk-install-hint-off', '1'); }catch(e){} const h = document.getElementById('installHint'); if(h) h.style.display = 'none'; }   // gardé hors du DOM : avant, la consigne disparaissait au premier rendu
 function finishAwakening(accepted){
   awakenTimers.forEach(clearTimeout); awakenTimers = [];
   STATE.settings.awakeningDone = true;
@@ -4568,7 +4658,7 @@ function themeHeaderHtml(ctx){
 /* Style Système : la carte « Il te reste aujourd'hui » devient la fenêtre QUÊTE QUOTIDIENNE
    du manhwa (lignes cliquables, compteurs entre crochets, avertissement de pénalité). */
 function systemeDailyQuestHtml(pendingPlan, waterLeft){
-  const rows = STATE.routines.map(r=>{
+  const rows = STATE.routines.filter(r=>routineDone(r) || routineDueToday(r)).map(r=>{
     const done = routineDone(r);
     return `<button type="button" class="sq-row ${done?'done':''}" onclick="toggleRoutine('${r.id}')"><span>${escapeHtml(r.name)}</span><span>${done?'[TERMINÉ]':'[0/1]'}</span></button>`;
   }).join('');
@@ -5132,6 +5222,7 @@ function planningItems(){
   const today = todayStr();
   STATE.routines.filter(r=>r.time).forEach(r=>{
     const freq = r.freqTag||'quotidienne', done = routineDone(r);
+    if(!done && !routineDueToday(r)) return;   // jour de repos de la routine
     // hebdo / mensuelle : affichée tant qu'elle n'est pas faite sur sa période, ou le jour où elle a été faite
     if(freq !== 'quotidienne' && done && r.lastDoneDay !== today) return;
     items.push({time:r.time, name:r.name, kind:'routine', id:r.id, done, skill:r.skill});
@@ -5678,10 +5769,21 @@ async function maybeAutoBackup(){
   // stockage plein : on garde moins de copies plutôt que rien, et jamais au détriment de la sauvegarde principale
   while(backups.length){ if(await storeSetQuiet(AUTOBACKUP_KEY, JSON.stringify(backups))) return; backups.shift(); }
 }
+async function syncBackupInfo(){ try{ const r = await storeGet(SYNC_BACKUP_KEY); const d = r ? JSON.parse(r) : null; return d && d.state ? d : null; }catch(e){ return null; } }
+async function restoreSyncBackup(){
+  const d = await syncBackupInfo(); if(!d) return;
+  const when = new Date(d.savedAt).toLocaleString('fr-FR',{day:'numeric', month:'short', hour:'2-digit', minute:'2-digit'});
+  if(!(await confirmModal(`Revenir à la version mise de côté par la synchro (${when}, ${d.from === 'server' ? 'copie du serveur' : 'copie de cet appareil'}) ? Les données actuelles seront remplacées.`, {title:'RESTAURER', confirmLabel:'Restaurer'}))) return;
+  try{ STATE = d.state; migrateState(); queueSave(); closeModal(); pomoReset(); render(); showToast('RESTAURATION RÉUSSIE', 'Version d\'avant synchro restaurée'); }
+  catch(e){ showToast('ERREUR', 'Restauration impossible', '', 'penalty'); }
+}
 async function listAutoBackupsHtml(){
-  const backups = await getAutoBackups();
-  if(!backups.length) return `<div class="sub">Aucune sauvegarde automatique pour le moment.</div>`;
-  return backups.slice().reverse().map((b,i)=>{
+  const backups = await getAutoBackups(), sb = await syncBackupInfo();
+  const sbHtml = sb ? `<div style="display:flex; align-items:center; justify-content:space-between; gap:8px; padding:8px 0; border-bottom:1px solid rgba(47,184,255,0.15);">
+      <span>Mise de côté par la synchro · ${new Date(sb.savedAt).toLocaleString('fr-FR',{day:'numeric', month:'short', hour:'2-digit', minute:'2-digit'})} · niveau ${sb.state.hunterLevel || 1}</span>
+      <button class="btn ghost small" onclick="restoreSyncBackup()">Restaurer</button></div>` : '';
+  if(!backups.length) return sbHtml || `<div class="sub">Aucune sauvegarde automatique pour le moment.</div>`;
+  return sbHtml + backups.slice().reverse().map((b,i)=>{
     const realIdx = backups.length-1-i;
     return `<div style="display:flex; align-items:center; justify-content:space-between; padding:8px 0; border-bottom:1px solid rgba(47,184,255,0.15);">
       <span>${b.date}</span>
@@ -5707,7 +5809,7 @@ async function modalAutoBackups(){
   const html = await listAutoBackupsHtml();
   openModal(`
     <h3>SAUVEGARDES AUTOMATIQUES</h3>
-    <div class="sub" style="margin-bottom:10px;">Une sauvegarde locale est prise chaque jour (7 derniers jours conservés). Elle reste sur cet appareil : utilise « Exporter » pour transférer tes données ailleurs.</div>
+    <div class="sub" style="margin-bottom:10px;">Une sauvegarde locale est prise chaque jour (3 derniers jours conservés), plus la version mise de côté lors d'une synchro. Elle reste sur cet appareil : utilise « Exporter » pour transférer tes données ailleurs.</div>
     ${html}
     <div class="modal-actions"><button class="btn ghost" onclick="closeModal()">Fermer</button></div>
   `);
@@ -5906,8 +6008,10 @@ function modalAddRoutine(){
     <input type="hidden" id="mRank" value="${'C'}"><input type="hidden" id="mXP" value="${ROUTINE_XP['C']}">
     <div class="field-row"><label>Heure (planning)</label><input type="time" id="mTime"></div>
     <div class="field-row"><label>Fréquence</label>
-      <select id="mFreq"><option value="quotidienne">Quotidienne</option><option value="hebdomadaire">Hebdomadaire</option><option value="mensuelle">Mensuelle</option></select>
+      <select id="mFreq" onchange="document.getElementById('mDaysRow').style.display = this.value==='quotidienne' ? 'flex' : 'none'"><option value="quotidienne">Quotidienne</option><option value="hebdomadaire">Hebdomadaire</option><option value="mensuelle">Mensuelle</option></select>
     </div>
+    <div class="field-row" id="mDaysRow" style="display:${'flex'};"><label>Jours</label><div style="flex:1; min-width:0;"><div class="rday-row">${ROUTINE_DAY_L.map((l,i)=>`<button type="button" class="rday ${[0,1,2,3,4,5,6].includes(i)?'on':''}" data-d="${i}" onclick="this.classList.toggle('on'); routineDaysSync()">${l}</button>`).join('')}</div><div class="rday-pre"><a href="#" onclick="event.preventDefault(); routineDaysSet([0,1,2,3,4])">Lun-ven</a> · <a href="#" onclick="event.preventDefault(); routineDaysSet([5,6])">Week-end</a> · <a href="#" onclick="event.preventDefault(); routineDaysSet([0,1,2,3,4,5,6])">Tous les jours</a></div></div></div>
+    <input type="hidden" id="mDays" value="${[0,1,2,3,4,5,6].join(',')}">
     <div class="field-row"><label>Matinale</label>
       <div class="radio-group"><div class="radio-opt" id="mMorningYes" onclick="setMorning(true)">🌅 OUI</div><div class="radio-opt active" id="mMorningNo" onclick="setMorning(false)">NON</div></div>
     </div>
@@ -5937,12 +6041,14 @@ function modalEditRoutine(id){
     <input type="hidden" id="mRank" value="${(r.rank||'C')}"><input type="hidden" id="mXP" value="${ROUTINE_XP[(r.rank||'C')]}">
     <div class="field-row"><label>Heure (planning)</label><input type="time" id="mTime" value="${r.time||''}"></div>
     <div class="field-row"><label>Fréquence</label>
-      <select id="mFreq">
+      <select id="mFreq" onchange="document.getElementById('mDaysRow').style.display = this.value==='quotidienne' ? 'flex' : 'none'">
         <option value="quotidienne" ${r.freqTag==='quotidienne'?'selected':''}>Quotidienne</option>
         <option value="hebdomadaire" ${r.freqTag==='hebdomadaire'?'selected':''}>Hebdomadaire</option>
         <option value="mensuelle" ${r.freqTag==='mensuelle'?'selected':''}>Mensuelle</option>
       </select>
     </div>
+    <div class="field-row" id="mDaysRow" style="display:${(r.freqTag||'quotidienne')==='quotidienne' ? 'flex' : 'none'};"><label>Jours</label><div style="flex:1; min-width:0;"><div class="rday-row">${ROUTINE_DAY_L.map((l,i)=>`<button type="button" class="rday ${(routineDays(r) || [0,1,2,3,4,5,6]).includes(i)?'on':''}" data-d="${i}" onclick="this.classList.toggle('on'); routineDaysSync()">${l}</button>`).join('')}</div><div class="rday-pre"><a href="#" onclick="event.preventDefault(); routineDaysSet([0,1,2,3,4])">Lun-ven</a> · <a href="#" onclick="event.preventDefault(); routineDaysSet([5,6])">Week-end</a> · <a href="#" onclick="event.preventDefault(); routineDaysSet([0,1,2,3,4,5,6])">Tous les jours</a></div></div></div>
+    <input type="hidden" id="mDays" value="${(routineDays(r) || [0,1,2,3,4,5,6]).join(',')}">
     <div class="field-row"><label>Matinale</label>
       <div class="radio-group"><div class="radio-opt ${r.morning?'active':''}" id="mMorningYes" onclick="setMorning(true)">🌅 OUI</div><div class="radio-opt ${!r.morning?'active':''}" id="mMorningNo" onclick="setMorning(false)">NON</div></div>
     </div>
@@ -5972,6 +6078,8 @@ function setDeadlinePenalty(v){
   document.getElementById('mDeadlineYes').classList.toggle('active', v);
   document.getElementById('mDeadlineNo').classList.toggle('active', !v);
 }
+function routineDaysSync(){ const h = document.getElementById('mDays'); if(h) h.value = [...document.querySelectorAll('#mDaysRow .rday.on')].map(b=>b.dataset.d).join(','); }
+function routineDaysSet(arr){ document.querySelectorAll('#mDaysRow .rday').forEach(b=>b.classList.toggle('on', arr.includes(+b.dataset.d))); routineDaysSync(); }
 function submitAddRoutine(){
   const name = document.getElementById('mName').value.trim();
   const skill = document.getElementById('mSkill').value;
@@ -5983,16 +6091,20 @@ function submitAddRoutine(){
   const deadlinePenalty = (document.getElementById('mDeadlinePenalty').value === 'true') && !!time;
   const editId = document.getElementById('mEditId')?.value;
   if(!name) return;
+  const daysRaw = String((document.getElementById('mDays')||{}).value||'').split(',').filter(x=>x!=='').map(Number).filter(n=>n>=0 && n<=6);
+  if(freqTag === 'quotidienne' && !daysRaw.length){ showToast('JOURS', 'Choisis au moins un jour', 'ou « Tous les jours »', ''); return; }
+  const days = (freqTag === 'quotidienne' && daysRaw.length < 7) ? [...new Set(daysRaw)].sort((a,b)=>a-b) : null;
   if(editId){
     const r = STATE.routines.find(x=>x.id===editId);
     if(r){
       const freqChanged = r.freqTag !== freqTag;
       Object.assign(r, {name, skill, xp, rank, time, freqTag, morning, deadlinePenalty, editedDate: todayStr()});
       if(!time) r.deadlinePenalty = false;
+      if(days) r.days = days; else delete r.days;
       if(freqChanged){ const wasDone = !!r.awardedXp && r.lastDoneDay === todayStr(); r.streak = wasDone ? 1 : 0; r.lastDoneDate = wasDone ? periodKey(freqTag) : null; r.lastPenaltyDate = null; }   // 10/10 : changer de fréquence ne permet plus de recocher
     }
   }else{
-    STATE.routines.push({id:'r'+Date.now(), editedDate: todayStr(), name, skill, xp, rank, lastDoneDate:null, streak:0, time, lastPenaltyDate:null, notifiedDate:null, morning, freqTag, deadlinePenalty, deadlinePenalizedDate:null});
+    STATE.routines.push({id:'r'+Date.now(), editedDate: todayStr(), name, skill, xp, rank, lastDoneDate:null, streak:0, time, lastPenaltyDate:null, notifiedDate:null, morning, freqTag, deadlinePenalty, deadlinePenalizedDate:null, ...(days ? {days} : {})});
   }
   queueSave(); closeModal(); render();
 }
@@ -6006,7 +6118,8 @@ function toggleRoutine(id){
   if(!r) return;
   const freq = r.freqTag||'quotidienne';
   const period = periodKey(freq);
-  const prevPeriod = previousPeriodKey(freq);
+  const prevPeriod = routineDays(r) ? (routinePrevDue(r) || previousPeriodKey(freq)) : previousPeriodKey(freq);
+  if(r.lastDoneDate !== period && !routineDueToday(r)){ showToast('REPOS', r.name, `prévue ${routineDaysLabel(r).toLowerCase()} seulement`, ''); return; }
   if(r.lastDoneDate === period){
     r.lastDoneDate = (r.streak>1) ? prevPeriod : null;
     r.streak = Math.max(0, r.streak-1);
@@ -8145,7 +8258,7 @@ function modalGeneralSettings(){
       <div class="field-row"><label>Sauvegarde auto</label>
         <button class="btn small ghost" style="flex:1;" onclick="modalAutoBackups()">Voir / restaurer</button>
       </div>
-      <p ${p}>Une sauvegarde automatique est prise chaque jour sur cet appareil (7 derniers jours conservés) — un filet de sécurité en cas d'erreur. Elle ne remplace pas « Exporter », seul moyen de transférer tes données vers un autre appareil.</p>
+      <p ${p}>Une sauvegarde automatique est prise chaque jour sur cet appareil (3 derniers jours conservés) — un filet de sécurité en cas d'erreur. Elle ne remplace pas « Exporter », seul moyen de transférer tes données vers un autre appareil.</p>
       <div class="eyebrow" style="margin-top:20px; color:var(--danger);">ZONE DE DANGER</div>
       <button class="btn danger-outline wide" onclick="confirmResetAll()">Réinitialiser tout</button>
     `;
@@ -8281,16 +8394,16 @@ function sortByPriority(list){
 }
 function renderRoutinesList(onlyPending){
   let list = STATE.routines;
-  if(onlyPending) list = list.filter(r => !routineDone(r));
+  if(onlyPending) list = list.filter(r => !routineDone(r) && routineDueToday(r));
   if(!list.length) return `<div class="empty">${onlyPending ? 'TOUTES LES ROUTINES SONT FAITES 🎉' : 'AUCUNE ROUTINE — AJOUTE-EN UNE'}</div>`;
   return list.map(r=>{
-    const done = routineDone(r);
+    const done = routineDone(r), rest = !done && !routineDueToday(r);
     const displayStreak = routineStreakAlive(r) ? r.streak : 0;
     const sk = STATE.skills[r.skill];
-    const freqLabel = {quotidienne:'QUOT.', hebdomadaire:'HEBDO', mensuelle:'MENS.'}[r.freqTag] || 'QUOT.';
+    const freqLabel = routineDaysLabel(r) || {quotidienne:'QUOT.', hebdomadaire:'HEBDO', mensuelle:'MENS.'}[r.freqTag] || 'QUOT.';
     return `
-    <div class="item">
-      <div class="chk ${done?'done':''}" onclick="toggleRoutine('${r.id}')">${done?'✓':''}</div>
+    <div class="item" style="${rest ? 'opacity:.5;' : ''}">
+      <div class="chk ${done?'done':''}" onclick="toggleRoutine('${r.id}')" title="${rest ? 'Repos aujourd\'hui' : ''}">${done?'✓':rest?'💤':''}</div>
       <div class="item-body">
         <div class="item-name ${done?'done':''}">${r.morning?'🌅 ':''}${escapeHtml(r.name)}</div>
         <div class="item-meta">
@@ -8299,6 +8412,7 @@ function renderRoutinesList(onlyPending){
           <span class="term-chip">${freqLabel}</span>
           ${r.time?`<span>${escapeHtml(r.time)}${r.deadlinePenalty?' ⏰':''}</span>`:''}
           ${displayStreak>0?`<span class="streak">🔥 ${displayStreak}j</span>`:''}
+          ${rest?`<span style="color:var(--text-faint);">repos aujourd'hui</span>`:''}
         </div>
       </div>
       ${onlyPending ? '' : `<button class="icon-btn" onclick="modalEditRoutine('${r.id}')" title="Modifier" aria-label="Modifier">✎</button><button class="icon-btn danger" onclick="deleteRoutine('${r.id}')" title="Supprimer" aria-label="Supprimer">✕</button>`}
@@ -8523,7 +8637,7 @@ function dismissWelcome(){
   queueSave(); render();
 }
 function tabToday(){
-  const pendingRoutines = STATE.routines.filter(r=>!routineDone(r));
+  const pendingRoutines = STATE.routines.filter(r=>!routineDone(r) && routineDueToday(r));
   const pendingPlan = planningItems().filter(p=>!p.done);
   // Avant : la bannière n'apparaissait que si routines, tâches ET objectifs étaient vides —
   // jamais vrai, puisque DEFAULT_STATE() livre deux routines d'exemple. Désormais : tout
@@ -8647,7 +8761,7 @@ function tabQuests(){
         <div class="c-tl"></div><div class="c-br"></div>
         <div class="eyebrow">ROUTINES</div>
         <h2>Routines</h2>
-        <div class="sub">TES HABITUDES QUI REVIENNENT · ${STATE.routines.filter(routineDone).length}/${STATE.routines.length} FAITES</div>
+        <div class="sub">TES HABITUDES QUI REVIENNENT · ${STATE.routines.filter(routineDone).length}/${STATE.routines.filter(r=>routineDone(r) || routineDueToday(r)).length} FAITES</div>
         <div class="skill-track" style="margin-bottom:12px;"><div class="skill-fill" style="width:${STATE.routines.length? Math.round(STATE.routines.filter(routineDone).length/STATE.routines.length*100):0}%"></div></div>
         ${renderRoutinesList(false)}
         <button class="btn wide" onclick="modalAddRoutine()">+ AJOUTER UNE ROUTINE</button>
@@ -9594,7 +9708,7 @@ function render(){
   `;
 
   app.innerHTML = `
-    <div id="installHint" style="${installHintText ? 'display:block' : ''}">${escapeHtml(installHintText)}</div>
+    <div id="installHint" style="${installHintText ? 'display:block' : ''}">${escapeHtml(installHintText)}${installHintText ? '<button type="button" class="ih-x" aria-label="Masquer" onclick="zkHideInstallHint()">✕</button>' : ''}</div>
     ${headBlock}
 
     ${tabBar()}
@@ -9622,25 +9736,26 @@ const APP_ICONS = {
 function generateIcon(size){
   return APP_ICONS[size] || APP_ICONS[192];
 }
-function setupPWA(){
+// 14/10 : icône + manifeste posés DÈS le chargement. Avant, ils ne l'étaient qu'après l'écran du code (bêta fermée) :
+// pendant cet écran, pas de logo (onglet, « Sur l'écran d'accueil » sur iPhone, installation Android).
+let zkIconsSet = false;
+function zkSetIcons(){
+  if(zkIconsSet) return; zkIconsSet = true;
   try{
-    const icon180 = generateIcon(180);
-    const icon192 = generateIcon(192);
-    const icon512 = generateIcon(512);
+    const icon180 = generateIcon(180), icon192 = generateIcon(192), icon512 = generateIcon(512);
     document.getElementById('appleIcon').href = icon180;
     document.getElementById('favIcon').href = icon180;
-
     const manifest = {
-      name: 'ZENKAI',
-      short_name: 'ZENKAI',
-      start_url: '.',
-      display: 'standalone',
-      background_color: '#05070c',
-      theme_color: '#05070c',
+      name: 'ZENKAI', short_name: 'ZENKAI', start_url: '.', display: 'standalone',
+      background_color: '#05070c', theme_color: '#05070c',
       icons: [{src: icon192, sizes:'192x192', type:'image/png'}, {src: icon512, sizes:'512x512', type:'image/png'}],
     };
-    const manifestBlob = new Blob([JSON.stringify(manifest)], {type:'application/json'});
-    document.getElementById('manifestLink').href = URL.createObjectURL(manifestBlob);
+    document.getElementById('manifestLink').href = URL.createObjectURL(new Blob([JSON.stringify(manifest)], {type:'application/json'}));
+  }catch(e){}
+}
+function setupPWA(){
+  try{
+    zkSetIcons();
 
     if('serviceWorker' in navigator && location.protocol.startsWith('http')){
       // sw.js est un fichier statique servi à la racine du site (voir sw.js dans le repo).
@@ -9653,7 +9768,8 @@ function setupPWA(){
     }
 
     const standalone = window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone;
-    if(!standalone && !hasClaudeStorage()){
+    let hintOff = false; try{ hintOff = localStorage.getItem('zk-install-hint-off') === '1'; }catch(e){}
+    if(!standalone && !hasClaudeStorage() && !hintOff){
       const hint = document.getElementById('installHint');
       if(hint){
         hint.style.display = 'block';
@@ -9663,11 +9779,14 @@ function setupPWA(){
         const isIOS = /iPhone|iPad|iPod/i.test(ua) || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
         const isAndroid = /Android/i.test(ua);
         installHintText = isIOS
-          ? "📲 Installe l'app AVANT de commencer : dans Safari, bouton Partager (carré avec flèche) → « Sur l'écran d'accueil ». Sur iPhone, l'app installée ne voit pas ce que tu as fait dans Safari : si tu as déjà commencé, active la synchro (Réglages ⚙ → Synchro) et entre ton code dans l'app installée."
+          ? (syncCode
+              // 14/10 : Safari est un vrai choix (écran d'invitation) — le bandeau ne dit plus « installe AVANT de commencer »
+              ? "📲 Facultatif : pour recevoir les rappels sur iPhone, installe l'app (Safari → Partager, le carré avec la flèche → « Sur l'écran d'accueil »), puis entre ton code dedans : ta progression suit."
+              : "📲 Sur iPhone, les rappels ne marchent que dans l'app installée : Safari → Partager (carré avec flèche) → « Sur l'écran d'accueil ».")
           : isAndroid
             ? "📲 Installe l'app : menu ⋮ du navigateur → « Installer l'application » (ou « Ajouter à l'écran d'accueil »)."
             : "📲 Installe l'app : icône d'installation à droite de la barre d'adresse (Chrome / Edge), ou garde simplement cet onglet en favori.";
-        hint.textContent = installHintText;
+        hint.innerHTML = escapeHtml(installHintText) + '<button type="button" class="ih-x" aria-label="Masquer" onclick="zkHideInstallHint()">✕</button>';
       }
     }
   }catch(e){ /* PWA setup is best-effort */ }
@@ -9675,6 +9794,7 @@ function setupPWA(){
 
 /* ========================= INIT ========================= */
 (async function init(){
+  zkSetIcons();
   await loadState();
   await loadSyncMeta();
   const allowed = await accessBoot();

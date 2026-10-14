@@ -24,3 +24,13 @@
 ## Retour arrière
 - Accès bloqué : retirer ACCESS_MODE et redéployer.
 - Problème dans l'app : renvoyer le zip du build 77 (les sauvegardes v78 restent lisibles par la v77).
+
+## Mise à jour du 14/10 (index.html, admin.html, access.js, members.js)
+- Logo : icône et manifeste posés dès l'ouverture (avant, seulement après l'écran du code et jusqu'à 4 s plus tard → pas de logo sur l'écran du code et pour « Sur l'écran d'accueil »).
+- iPhone : le bandeau ne dit plus « Installe l'app AVANT de commencer » (Safari est un vrai choix) ; bandeau masquable (✕) partout.
+- Synchro : une copie serveur nettement plus ancienne que l'appareil n'écrase plus ses données ; la copie écartée est restaurable (Réglages → Données → Sauvegarde auto).
+- Lien ouvert dans Instagram / TikTok / Snapchat : écran « ouvre-le dans Safari / Chrome » (bouton Chrome sur Android, ⋯ → navigateur externe sur iPhone, copier le lien) AVANT d'utiliser le code — plus d'appareil gaspillé.
+- Lien ouvert dans Instagram alors que l'accès était déjà mémorisé : l'écran « ouvre dans Safari / Chrome » s'affiche aussi (avant, Instagram se réenregistrait en silence et prenait une place).
+- Admin : chaque appareil est listé (« iPhone · Safari », « iPhone · Instagram », « Android · App installée »…) avec un ✕ pour en retirer un seul. Les appareils enregistrés avant cette mise à jour reçoivent leur nom à leur prochaine ouverture.
+- Routine certains jours (demande bêta) : choix des jours L M M J V S D (raccourcis Lun-ven / Week-end) pour une routine quotidienne. Jour non prévu : « repos aujourd'hui », pas de pénalité, la série continue.
+- Eau : plus de pénalité de nuit pour qui n'a jamais noté son eau (un nouveau testeur perdait de l'XP chaque jour sans comprendre).

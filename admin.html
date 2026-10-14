@@ -18,6 +18,10 @@
   button{font:inherit; cursor:pointer; border-radius:10px; padding:10px 14px; border:1px solid var(--violet); background:var(--violet); color:#fff; font-weight:600;}
   button.ghost{background:transparent; color:var(--text); border-color:var(--line); font-weight:500;}
   button.small{padding:6px 10px; font-size:12px;}
+  .devs{display:flex; flex-wrap:wrap; gap:6px; margin:8px 0 2px;}
+  .dev{display:inline-flex; align-items:center; gap:6px; font-size:12px; padding:4px 4px 4px 10px; border:1px solid var(--line); border-radius:20px; color:var(--text);}
+  .dev i{font-style:normal; color:var(--faint);}
+  .dev-x{background:transparent; border:0; color:var(--red); padding:2px 8px; font-size:13px; cursor:pointer;}
   button.danger{background:transparent; border-color:rgba(255,107,107,0.5); color:var(--red);}
   .row{display:flex; gap:8px; flex-wrap:wrap; align-items:center;}
   .row > input{flex:1 1 160px;}
@@ -142,6 +146,7 @@ function render(){
         <span><b>${m.devices}/2</b> appareils</span>
         ${m.active ? '' : '<span style="color:var(--red);">désactivé</span>'}
       </div>
+      ${(m.deviceList || []).length ? `<div class="devs">${m.deviceList.map(d => `<span class="dev">${esc(d.label || 'Appareil (ancienne version)')} <i>· vu ${d.last ? seenLabel(d.last) : '?'}</i><button class="dev-x" title="Retirer cet appareil" onclick="removeDevice('${m.code}','${esc(d.key)}', this.dataset.l)" data-l="${esc(d.label || 'cet appareil')}">✕</button></span>`).join('')}</div>` : ''}
       <div class="row">
         <button class="ghost small" data-c="${m.code}" data-n="${esc(m.label)}" onclick="copy(this.dataset.c, this.dataset.n)">Copier l'invitation</button>
         <select class="small" style="padding:6px 8px; font-size:12px;" onchange="setType('${m.code}', this.value)">${Object.entries(TYPES).map(([k, l]) => `<option value="${k}" ${m.type === k ? 'selected' : ''}>${l}</option>`).join('')}</select>
@@ -176,6 +181,7 @@ async function addExisting(){
   $('exCode').value = ''; $('exName').value = ''; toast('Ajouté'); await load();
 }
 async function setType(code, type){ const r = await api({action:'setType', code, type}); toast(r.ok ? 'Type modifié' : 'Erreur'); await load(); }
+async function removeDevice(code, key, label){ if(!confirm('Retirer « ' + label + ' » ? S\'il est encore utilisé, il reprendra une place à sa prochaine ouverture.')) return; const r = await api({action:'removeDevice', code, key}); toast(r.ok ? 'Appareil retiré' : 'Erreur'); await load(); }
 async function resetDevices(code){ if(!confirm('Réinitialiser les appareils de ce code ? La personne devra simplement rouvrir l\'app.')) return; const r = await api({action:'resetDevices', code}); toast(r.ok ? 'Appareils réinitialisés' : 'Erreur'); await load(); }
 async function toggle(code, active){
   if(!active && !confirm('Désactiver ce code ? La personne perd l\'accès (ses données restent sur son téléphone).')) return;

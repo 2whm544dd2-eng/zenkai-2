@@ -42,6 +42,8 @@ const publicShape = (m) => ({
   code: m.code, label: m.label || m.email || '(sans nom)', email: m.email || null, active: m.active !== false,
   type: TYPES.includes(m.type) ? m.type : 'membre', created: m.created || null,
   devices: Array.isArray(m.devices) ? m.devices.length : 0, lastSeen: m.lastSeen || null, usage: m.usage || null,
+  // 14/10 : détail des appareils (jamais l'identifiant complet : 6 caractères suffisent pour en retirer un)
+  deviceList: Array.isArray(m.devices) ? m.devices.map((d) => ({ key: String(d.id || '').slice(0, 6), label: d.label || null, first: d.first || null, last: d.last || null })) : [],
 });
 
 exports.handler = async (event) => {
@@ -88,6 +90,19 @@ exports.handler = async (event) => {
     if (!m) return json(404, { error: 'code_not_found' });
     if (action === 'setType') { if (!TYPES.includes(body.type)) return json(400, { error: 'bad_type' }); m.type = body.type; }
     else m.devices = [];
+    m.changedAt = Date.now();
+    await members.setJSON(code, m);
+    return json(200, { ok: true, member: publicShape(m) });
+  }
+
+  if (action === 'removeDevice') {
+    const key = String(body.key || '').toLowerCase();
+    if (!CODE_RE.test(code) || !/^[a-z0-9]{6}$/.test(key)) return json(400, { error: 'bad_request' });
+    const m = await members.get(code, { type: 'json' });
+    if (!m) return json(404, { error: 'code_not_found' });
+    const before = Array.isArray(m.devices) ? m.devices.length : 0;
+    m.devices = (m.devices || []).filter((d) => String(d.id || '').slice(0, 6) !== key);
+    if (m.devices.length === before) return json(404, { error: 'device_not_found' });
     m.changedAt = Date.now();
     await members.setJSON(code, m);
     return json(200, { ok: true, member: publicShape(m) });

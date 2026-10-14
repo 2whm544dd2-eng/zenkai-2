@@ -24,13 +24,19 @@ const MAX_DEVICES = 2;
 const accessMode = () => (process.env.ACCESS_MODE === 'closed' ? 'closed' : 'open');
 
 // true = appareil accepté (ajouté si nouveau), false = déjà MAX_DEVICES autres appareils
-function registerDevice(m, deviceId) {
+// 14/10 : label = « iPhone · Safari », « iPhone · Instagram »… (envoyé par l'app, affiché dans /admin.html)
+function registerDevice(m, deviceId, label) {
   const day = new Date().toISOString().slice(0, 10);
   m.devices = Array.isArray(m.devices) ? m.devices : [];
   const d = m.devices.find((x) => x.id === deviceId);
-  if (d) { if (d.last !== day) { d.last = day; return { ok: true, changed: true }; } return { ok: true, changed: false }; }
+  if (d) {
+    let changed = false;
+    if (d.last !== day) { d.last = day; changed = true; }
+    if (label && d.label !== label) { d.label = label; changed = true; }
+    return { ok: true, changed };
+  }
   if (m.devices.length >= MAX_DEVICES) return { ok: false };
-  m.devices.push({ id: deviceId, first: day, last: day });
+  m.devices.push(label ? { id: deviceId, first: day, last: day, label } : { id: deviceId, first: day, last: day });
   return { ok: true, changed: true };
 }
 
@@ -55,7 +61,8 @@ exports.handler = async (event) => {
     return json(200, { ok: true, mode, type: null, hasState });
   }
   if (m.active === false) return json(403, { error: 'disabled' });
-  const r = registerDevice(m, deviceId);
+  const label = String((body && body.label) || '').replace(/[^\p{L}\p{N} ·()\-]/gu, '').trim().slice(0, 40) || null;
+  const r = registerDevice(m, deviceId, label);
   if (!r.ok) return json(403, { error: 'too_many_devices' });
   if (r.changed) { m.lastSeen = new Date().toISOString().slice(0, 10); await members.setJSON(code, m); }
   return json(200, { ok: true, mode, type: m.type || 'membre', hasState });
