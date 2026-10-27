@@ -107,3 +107,15 @@ Rien n'est supprimé, tout est rangé.
 - 22/10 (v99) — Guide de l'app : 28 fonctions en 8 rubriques (journée, routines, quêtes, objectifs, sport, focus, eau/nutrition/agenda, toi et l'app), une phrase chacune et un bouton « Essayer » qui ouvre l'endroit exact ; un module coupé propose « Activer ». Accès : carte « Tout ce que l'app sait faire » sur Jour (une fois, masquable), bouton dans Réglages, et un « ? » à côté des titres (Routines, Quêtes, Objectifs, Séances, Gourde, Pomodoro, Semaine type, Compétences…) qui ouvre la bonne rubrique.
 - 22/10 (v99) — Pomodoro sur une quête : possible aussi pour les quêtes répétables ; le temps passé s'affiche lisiblement (⏱ 1h15).
 - 22/10 (v100) — Boutons « ? » à côté des titres retirés pour l'instant (à remettre plus tard) ; le guide reste accessible par la carte de Jour et le bouton des Réglages.
+- 22/10 (v101) — Boutons « ? » remis à côté des titres (Il te reste aujourd'hui, Routines, Quêtes, Objectifs, Séances, Gourde, Pomodoro, Ma journée / Semaine type, Compétences) : ils ouvrent directement la bonne rubrique du guide.
+- 22/10 (v102) — Lignes d'objectif (Jour et Quêtes) : l'échéance (⏰ J-43) et les boutons ✎ ✕ passent sur la ligne du nom, en plus petit ; la barre, les paliers (départ / cible) et les textes prennent toute la largeur au lieu d'être compressés dans la moitié gauche.
+
+## 25/10 — Ombre et or : chrono du pomodoro invisible
+- Le chrono (et le titre CHASSEUR) apparaissait comme un rectangle clair : la règle Ombre et or utilisait `background:` qui annule le découpage du dégradé sur le texte. Remplacé par `background-image:`.
+
+
+## 27/10 — Fiche de progression par exercice
+- Sport → Historique : touche un record pour ouvrir la fiche de l'exercice. Aussi le bouton 📈 à côté d'un exercice déjà pratiqué, pendant la saisie d'une séance.
+- Séries : record au poids du corps, le plus lourd, courbe des reps au poids du corps, courbe de la charge ajoutée, meilleur résultat à chaque charge, progression sur 4 semaines.
+- Course : tes temps sur 1 km / 5 km / 10 km / semi / marathon (au prorata dans une sortie plus longue), plus longue sortie, meilleure allure. Autres distances : km par séance.
+- Aucune donnée nouvelle : tout est calculé à partir des séances déjà enregistrées.

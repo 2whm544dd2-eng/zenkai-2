@@ -556,6 +556,28 @@
   .pr-chip{font-size:10px; color:var(--gold); font-weight:700;}
   .wk-chart{border:1px solid var(--line); border-radius:var(--radius); padding:10px 10px 4px; margin:4px 0 6px;}
   .wk-chart-h{display:flex; justify-content:space-between; font-family:var(--font-mono); font-size:10px; color:var(--text-faint); letter-spacing:1px; margin-bottom:6px;}
+  .wk-hint-f{font-size:11.5px; color:var(--text-dim); margin:-2px 0 6px;}
+  .wk-rec-f{position:relative; text-align:left; font:inherit; color:inherit; cursor:pointer; padding-right:26px;} .wk-rec-f i{position:absolute; right:7px; top:7px; font-style:normal; font-size:12px; opacity:.8;}
+  #exFiche{position:fixed; inset:0; z-index:85; display:none; align-items:flex-end; justify-content:center; background:rgba(3,3,9,.72); -webkit-backdrop-filter:blur(6px); backdrop-filter:blur(6px); padding:12px;}
+  #exFiche.on{display:flex;}
+  .exf-card{width:100%; max-width:460px; max-height:calc(100vh - 24px); max-height:calc(100dvh - 24px); overflow:auto; border-radius:22px; border:1px solid color-mix(in srgb, var(--glow) 35%, transparent); background:linear-gradient(var(--bg-panel), var(--bg-panel)), var(--bg); padding:16px 16px 18px; box-shadow:0 30px 70px -20px rgba(0,0,0,.9);}
+  @media (min-height:700px){ #exFiche{align-items:center;} }
+  .exf-top{display:flex; justify-content:space-between; gap:10px; align-items:flex-start;} .exf-top h3{margin:2px 0 2px;}
+  .exf-sub{font-size:11.5px; color:var(--text-faint);}
+  .exf-prs{display:grid; grid-template-columns:1fr 1fr; gap:8px; margin:12px 0 2px;}
+  .exf-pr{border:1px solid rgba(255,201,77,0.35); background:rgba(255,201,77,0.06); border-radius:14px; padding:9px 10px; display:flex; flex-direction:column; gap:2px; min-width:0;}
+  .exf-pr span{font-size:10.5px; color:var(--text-dim);} .exf-pr b{font-size:17px; color:var(--gold); font-family:var(--font-mono);} .exf-pr em{font-style:normal; font-size:10px; color:var(--text-faint);}
+  .exf-sec{font-family:var(--font-mono); font-size:10px; letter-spacing:2px; color:var(--text-faint); margin:16px 0 6px;}
+  .exf-svg{display:block; width:100%; height:auto; border:1px solid var(--line); border-radius:14px; background:color-mix(in srgb, var(--glow) 4%, transparent);}
+  .exf-delta{display:inline-block; font-size:12px; font-weight:700; padding:3px 9px; border-radius:999px; margin:0 0 6px; background:rgba(255,255,255,.06); color:var(--text-dim);}
+  .exf-delta.up{background:rgba(52,211,153,.14); color:#4ade80;} .exf-delta.down{background:rgba(251,113,133,.12); color:#fb7185;}
+  .exf-one{font-size:12.5px; color:var(--text-dim); padding:10px 12px; border:1px dashed var(--line); border-radius:12px;}
+  .exf-tab, .exf-list{display:flex; flex-direction:column; border:1px solid var(--line); border-radius:12px; overflow:hidden;}
+  .exf-tab div, .exf-list div{display:flex; justify-content:space-between; gap:10px; padding:7px 11px; font-size:12.5px;} .exf-tab div + div, .exf-list div + div{border-top:1px solid var(--line);}
+  .exf-tab span, .exf-list span{color:var(--text-dim);} .exf-tab b, .exf-list b{font-family:var(--font-mono); font-size:12px; text-align:right;}
+  .exf-chips{display:flex; flex-wrap:wrap; gap:6px; margin-bottom:8px;} .exf-chips button{border:1px solid var(--line); background:transparent; color:var(--text-dim); border-radius:999px; padding:5px 11px; font:600 12px var(--font-body); cursor:pointer;} .exf-chips button.on{border-color:var(--glow); color:var(--text); background:color-mix(in srgb, var(--glow) 18%, transparent);}
+  .exf-best{font-size:13px; margin:0 0 6px;} .exf-best b{color:var(--gold); font-family:var(--font-mono);} .exf-best em{font-style:normal; color:var(--text-faint); font-size:11px;}
+  .exf-note{font-size:10.5px; color:var(--text-faint); margin-top:5px; line-height:1.4;}
   .wk-recs{display:grid; grid-template-columns:1fr 1fr; gap:6px;}
   .wk-rec{border:1px solid rgba(255,201,77,0.35); background:rgba(255,201,77,0.06); border-radius:var(--radius); padding:8px 10px; display:flex; flex-direction:column; gap:2px; min-width:0;}
   .wk-rec b{font-size:12px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;} .wk-rec span{font-family:var(--font-mono); font-size:11px; color:var(--gold);}
@@ -928,7 +950,7 @@
   body.theme-monarch.theme-or{--bg:#0c0a07; --bg-panel:rgba(44,37,24,0.72); --bg-panel-2:rgba(23,19,11,0.82); --line:rgba(239,210,150,0.13); --glow:#efd296; --glow-dim:#caa559; --purple:#f0d190; --text:#f7f3eb; --text-dim:#b4ab98; --text-faint:#766c5a; background-image: radial-gradient(ellipse 80% 45% at 50% -8%, rgba(219,172,76,0.30), transparent 70%), radial-gradient(ellipse 60% 40% at 110% 30%, rgba(137,106,41,0.22), transparent 70%), radial-gradient(ellipse 70% 40% at -10% 85%, rgba(56,189,248,0.07), transparent 70%);}
   body.theme-monarch.theme-or .panel::before{background:linear-gradient(90deg, transparent, rgba(246,227,188,0.45), transparent);}
   body.theme-monarch.theme-or .panel.head{background: radial-gradient(ellipse 70% 90% at 100% 0%, rgba(231,190,107,0.28), transparent 60%), linear-gradient(160deg, rgba(51,42,25,0.85), rgba(21,17,10,0.9)); border-color:rgba(239,210,150,0.22);}
-  body.theme-monarch.theme-or .title{background:linear-gradient(180deg, #ffffff 20%, #f6e3bc);}
+  body.theme-monarch.theme-or .title{background-image:linear-gradient(180deg, #ffffff 20%, #f6e3bc);}   /* 25/10 : background-image (le raccourci background annulait le clip texte → carré à la place du texte) */
   body.theme-monarch.theme-or .mini-switch.on{background:rgba(231,190,107,0.25);}
   body.theme-monarch.theme-or .xp-fill{background:linear-gradient(90deg, #dbac4c, #efd296 60%, #8fd8ff); box-shadow:0 0 16px rgba(239,210,150,0.7);}
   body.theme-monarch.theme-or .icon-btn:hover{background:rgba(239,210,150,0.14);}
@@ -947,7 +969,7 @@
   body.theme-monarch.theme-or .tip-banner, body.theme-monarch.theme-or #installHint{background:rgba(231,190,107,0.08); border:1px solid rgba(239,210,150,0.2);}
   body.theme-monarch.theme-or .skill-fill{background:linear-gradient(90deg, #c7993a, #efd296 70%, #8fd8ff);}
   body.theme-monarch.theme-or .rank-seg.filled, body.theme-monarch.theme-or .pomo-goal-seg.filled{background:linear-gradient(90deg, #e7be6b, #f6e3bc); box-shadow:0 0 10px rgba(231,190,107,0.6);}
-  body.theme-monarch.theme-or .pomo-timer{background:linear-gradient(180deg, #fff 30%, #f6e3bc);}
+  body.theme-monarch.theme-or .pomo-timer{background-image:linear-gradient(180deg, #fff 30%, #f6e3bc);}
   body.theme-monarch.theme-or .cal-day.today{box-shadow:0 0 0 1px var(--glow), 0 0 14px rgba(231,190,107,0.4);}
   body.theme-monarch.theme-or .overlay{background:rgba(11,9,4,0.72);}
   body.theme-monarch.theme-or .modal{border:1px solid rgba(239,210,150,0.22); background:linear-gradient(165deg, rgba(57,48,29,0.97), rgba(24,21,12,0.98)); box-shadow:0 30px 70px -20px rgba(0,0,0,0.9), 0 0 60px -20px rgba(219,172,76,0.5);}
@@ -1010,6 +1032,11 @@
   .zg-card{display:flex; align-items:center; gap:10px; padding:12px 14px; margin:0 0 12px; border-radius:16px; border:1px solid color-mix(in srgb, var(--glow) 35%, transparent); background:color-mix(in srgb, var(--glow) 8%, transparent);}
   .zg-card > div:first-child{flex:1; min-width:0; display:flex; flex-direction:column; gap:3px;} .zg-card b{font-size:13.5px;} .zg-card span{font-size:12px; color:var(--text-dim); line-height:1.4;}
   .zg-card-a{display:flex; align-items:center; gap:6px; flex:0 0 auto;}
+  /* 22/10 : ligne d'objectif — échéance et boutons sur la ligne du nom, la barre et les paliers prennent toute la largeur */
+  .g-head{display:flex; align-items:flex-start; gap:6px; min-width:0;}
+  .g-head .item-name{flex:1; min-width:0; overflow-wrap:anywhere;}
+  .g-head .deadline-badge{flex:0 0 auto; margin:0; padding:2px 7px; font-size:10.5px; white-space:nowrap; align-self:center;}
+  .g-head .icon-btn.g-mini{flex:0 0 auto; width:26px; height:26px; min-width:26px; font-size:11px; padding:0;}
   .ex-ico{width:24px; height:24px; flex:0 0 24px; display:flex; align-items:center; justify-content:center; font-size:17px; margin-top:2px;}
   .nu-ring-k{border-radius:50%; border:8px solid rgba(255,255,255,.06);}
   .nu-bars{flex:1; display:flex; flex-direction:column; gap:10px; min-width:0;}
@@ -8855,17 +8882,17 @@ function wkRecords(excludeId){
       const k = wkKey(e.name); if(!k) return;
       if(wkIsDist(e)){
         if(!(+e.km) || e.int) return;   // le fractionné ne fait pas de record de distance
-        const cand = {name:e.name, mode:'dist', km:+e.km, min:+e.min||0, date:w.date};
+        const cand = {name:e.name, ex:e.name, mode:'dist', km:+e.km, min:+e.min||0, date:w.date};
         if(!rec[k] || (+cand.km) > (+rec[k].km||0)) rec[k] = cand;
         WK_RUN_STD.forEach(sd=>{ const t = wkRunTimeAt(e, sd.d); const rk = '__run|'+sd.d;
-          if(t && (!rec[rk] || t < rec[rk].t)) rec[rk] = {name:`Course · ${sd.l}`, mode:'drec', D:sd.d, label:sd.l, t, km:+e.km, date:w.date}; });
+          if(t && (!rec[rk] || t < rec[rk].t)) rec[rk] = {name:`Course · ${sd.l}`, ex:e.name, mode:'drec', D:sd.d, label:sd.l, t, km:+e.km, date:w.date}; });
         return;
       }
       if(!(+e.reps)) return;
-      const cand = {name:e.name, reps:+e.reps, kg:+e.kg||0, date:w.date};
+      const cand = {name:e.name, ex:e.name, reps:+e.reps, kg:+e.kg||0, date:w.date};
       if(wkBetter(cand, rec[k])) rec[k] = cand;
       // build 78 : record de répétitions au poids du corps, gardé à part (sinon une séance lestée l'écrase)
-      if(!(+e.kg) && (!rec[k+'|reps'] || cand.reps > rec[k+'|reps'].reps)) rec[k+'|reps'] = {name:`${e.name} · poids du corps`, reps:cand.reps, kg:0, date:w.date};
+      if(!(+e.kg) && (!rec[k+'|reps'] || cand.reps > rec[k+'|reps'].reps)) rec[k+'|reps'] = {name:`${e.name} · poids du corps`, ex:e.name, reps:cand.reps, kg:0, date:w.date};
     });
   });
   // record principal déjà au poids du corps → le record de reps fait doublon
@@ -8909,7 +8936,7 @@ function wkDraftHtml(){
     const r = rec[wkKey(e.name)];
     return `<div class="wk-ex">
       <div class="wk-ex-top"><button type="button" class="wk-done ${e.done?'on':''}" aria-label="Exercice fait" title="Fait (facultatif)" onclick="wkDraft[${i}].done=!wkDraft[${i}].done; wkRedraw()">${e.done?'✓':''}</button><input type="text" list="wkNames" class="wk-name" placeholder="Exercice" value="${escapeHtml(e.name)}" maxlength="30" oninput="wkDraft[${i}].name=this.value; wkHint(${i})">
-        <button type="button" class="icon-btn danger" aria-label="Retirer l'exercice" onclick="wkDraft.splice(${i},1); wkRedraw()">✕</button></div>
+        ${wkExHasHist(e.name) ? `<button type="button" class="icon-btn exf-btn" aria-label="Voir mes progrès" title="Mes progrès" onclick="wkFicheOpen(wkDraft[${i}].name)">📈</button>` : ''}<button type="button" class="icon-btn danger" aria-label="Retirer l'exercice" onclick="wkDraft.splice(${i},1); wkRedraw()">✕</button></div>
       <div class="wk-mode"><button type="button" class="${!wkIsDist(e)?'on':''}" onclick="wkDraft[${i}].mode='sets'; wkRedraw()">Séries</button><button type="button" class="${wkIsDist(e)?'on':''}" onclick="wkDraft[${i}].mode='dist'; wkRedraw()">Distance</button></div>
       ${wkIsDist(e) ? `<div class="wk-mode wk-sub"><button type="button" class="${!e.int?'on':''}" onclick="wkSetInt(${i}, false)">Continu</button><button type="button" class="${e.int?'on':''}" onclick="wkSetInt(${i}, true)">Fractionné</button></div>
       ${e.int ? `<div class="wk-ex-nums four">
@@ -9403,10 +9430,125 @@ function wkHistoryBody(){
   const list = STATE.workouts.log.slice(0, 40);
   return `${wkWeeklyChart()}${wkRunKmHtml()}
     <div class="wk-sec">RECORDS PERSONNELS</div>
-    ${rec.length ? `<div class="wk-recs">${rec.map(r=>`<div class="wk-rec"><b>${escapeHtml(r.name)}</b><span>${escapeHtml(wkFmtSet(r))}</span></div>`).join('')}</div>` : `<div class="wk-empty">Ajoute des exercices à tes séances pour suivre tes records.</div>`}
+    ${rec.length ? `<div class="wk-hint-f">Touche un exercice pour voir ta progression.</div><div class="wk-recs">${rec.map(r=>`<button type="button" class="wk-rec wk-rec-f" data-ex="${escapeHtml(r.ex || r.name)}" onclick="wkFicheOpen(this.dataset.ex)"><b>${escapeHtml(r.name)}</b><span>${escapeHtml(wkFmtSet(r))}</span><i aria-hidden="true">📈</i></button>`).join('')}</div>` : `<div class="wk-empty">Ajoute des exercices à tes séances pour suivre tes records.</div>`}
     <div class="wk-sec">SÉANCES</div>
     ${list.length ? list.map(w=>wkSessionItem(w, true)).join('') : `<div class="wk-empty">Aucune séance enregistrée.</div>`}`;
 }
+/* ===================== 27/10 : FICHE EXERCICE — tes progrès sur un exercice, séance après séance =====================
+   Séries : reps au poids du corps, charge lestée, meilleur résultat à chaque charge.
+   Distance : tes temps sur 1 km / 5 km / 10 km… (course), la plus longue sortie, la meilleure allure.
+   Que des chiffres calculés à partir de tes séances, aucun conseil. S'ouvre par-dessus tout (même la saisie de séance). */
+function wkExHist(name){
+  const k = wkKey(name), out = [];
+  STATE.workouts.log.forEach(w=>(w.exercises||[]).forEach(e=>{ if(wkKey(e.name) === k) out.push({date:w.date, e, wid:w.id}); }));
+  return out.sort((a,b)=> a.date < b.date ? -1 : a.date > b.date ? 1 : 0);
+}
+function wkExHasHist(name){ const k = wkKey(name); return !!k && STATE.workouts.log.some(w=>(w.exercises||[]).some(e=>wkKey(e.name) === k)); }
+function wkExUnit(name){ return /\(s\)|gainage|planche|chaise|hollow|l-sit/i.test(name) ? 's' : 'reps'; }
+function wkFicheDate(d, long){ return new Date(d+'T00:00:00').toLocaleDateString('fr-FR', long ? {day:'numeric', month:'long', year:'numeric'} : {day:'numeric', month:'short'}); }
+function wkFicheNum(v){ return String(Math.round(v*10)/10).replace('.', ','); }
+// une valeur par séance (le meilleur de la séance), dans l'ordre des dates
+function wkFicheSeries(rows, pick){
+  const m = new Map();
+  rows.forEach(r=>{ const v = pick(r); if(v == null) return; const cur = m.get(r.date + '|' + r.wid); if(!cur || v.v > cur.v) m.set(r.date + '|' + r.wid, Object.assign({date:r.date}, v)); });
+  return [...m.values()];
+}
+// petite courbe SVG ; lowerIsBetter : la courbe monte quand tu vas plus vite
+function wkFicheChart(pts, fmt, opts){
+  opts = opts || {};
+  if(pts.length < 2) return `<div class="exf-one">${pts.length ? `Une seule séance pour l'instant : ${fmt(pts[0])}. La courbe apparaît dès la 2e.` : ''}</div>`;
+  const W = 300, H = 118, px = 16, top = 20, bot = 22, vs = pts.map(p=>p.v);
+  let lo = Math.min(...vs), hi = Math.max(...vs); if(hi === lo){ hi += 1; lo -= 1; }
+  const x = i=> px + i * (W - 2*px) / (pts.length - 1);
+  const y = v=>{ const t = (v - lo) / (hi - lo); return top + (opts.lowerIsBetter ? t : 1 - t) * (H - top - bot); };
+  const line = pts.map((p,i)=>`${i ? 'L' : 'M'}${x(i).toFixed(1)},${y(p.v).toFixed(1)}`).join(' ');
+  const best = opts.lowerIsBetter ? Math.min(...vs) : Math.max(...vs);
+  const lab = new Set([0, pts.length - 1, vs.indexOf(best)]);
+  return `<svg class="exf-svg" viewBox="0 0 ${W} ${H}" role="img" aria-label="${escapeHtml(opts.aria || 'Progression')}">
+    <path d="${line}" fill="none" stroke="var(--glow)" stroke-width="2.5" stroke-linejoin="round" stroke-linecap="round"/>
+    ${pts.map((p,i)=>`<circle cx="${x(i).toFixed(1)}" cy="${y(p.v).toFixed(1)}" r="${p.v === best ? 4.5 : 3}" fill="${p.v === best ? 'var(--gold)' : 'var(--glow)'}"/>`).join('')}
+    ${[...lab].map(i=>`<text x="${x(i).toFixed(1)}" y="${(y(pts[i].v) - 8).toFixed(1)}" text-anchor="${i === 0 ? 'start' : i === pts.length - 1 ? 'end' : 'middle'}" font-size="10.5" font-weight="700" fill="var(--text)">${escapeHtml(fmt(pts[i]))}</text>`).join('')}
+    <text x="${px}" y="${H - 5}" font-size="9" fill="var(--text-faint)">${wkFicheDate(pts[0].date)}</text>
+    <text x="${W - px}" y="${H - 5}" text-anchor="end" font-size="9" fill="var(--text-faint)">${wkFicheDate(pts[pts.length - 1].date)}</text>
+  </svg>`;
+}
+// « il y a 4 semaines → maintenant » (ou depuis la 1re séance)
+function wkFicheDelta(pts, fmtDiff, lowerIsBetter){
+  if(pts.length < 2) return '';
+  const last = pts[pts.length - 1], lim = new Date(); lim.setDate(lim.getDate() - 28); const ls = wkDateStr(lim);
+  const old = pts.filter(p=>p.date <= ls).pop(), ref = old || pts[0];
+  const d = last.v - ref.v, good = lowerIsBetter ? d < 0 : d > 0;
+  const when = old ? 'en 4 semaines' : `depuis le ${wkFicheDate(ref.date)}`;
+  return `<div class="exf-delta ${good ? 'up' : d === 0 ? '' : 'down'}">${d === 0 ? `Stable ${when}` : `${fmtDiff(d)} ${when}`}</div>`;
+}
+function wkFicheSets(name, rows){
+  const u = wkExUnit(name), bw = rows.filter(r=>!(+r.e.kg)), wt = rows.filter(r=>+r.e.kg > 0);
+  let h = '', cards = [];
+  if(bw.length){
+    const b = bw.reduce((a,r)=> +r.e.reps > +a.e.reps ? r : a);
+    cards.push(`<div class="exf-pr"><span>Record au poids du corps</span><b>${b.e.reps} ${u}</b><em>${wkFicheDate(b.date)}</em></div>`);
+  }
+  if(wt.length){
+    const b = wt.reduce((a,r)=> (+r.e.kg > +a.e.kg || (+r.e.kg === +a.e.kg && +r.e.reps > +a.e.reps)) ? r : a);
+    cards.push(`<div class="exf-pr"><span>Le plus lourd</span><b>+${wkFicheNum(+b.e.kg)} kg × ${b.e.reps}</b><em>${wkFicheDate(b.date)}</em></div>`);
+  }
+  h += `<div class="exf-prs">${cards.join('')}</div>`;
+  if(bw.length){
+    const pts = wkFicheSeries(bw, r=>({v:+r.e.reps}));
+    h += `<div class="exf-sec">${u === 's' ? 'TEMPS TENU' : 'REPS'} AU POIDS DU CORPS</div>${wkFicheDelta(pts, d=>`${d > 0 ? '+' : ''}${d} ${u}`)}${wkFicheChart(pts, p=>`${p.v}`, {aria:'Répétitions au poids du corps'})}`;
+  }
+  if(wt.length){
+    const pts = wkFicheSeries(wt, r=>({v:+r.e.kg, reps:+r.e.reps}));
+    h += `<div class="exf-sec">CHARGE AJOUTÉE (KG)</div>${wkFicheDelta(pts, d=>`${d > 0 ? '+' : ''}${wkFicheNum(d)} kg`)}${wkFicheChart(pts, p=>`+${wkFicheNum(p.v)}kg ×${p.reps}`, {aria:'Charge ajoutée'})}`;
+    const by = new Map(); wt.forEach(r=>{ const kg = +r.e.kg, c = by.get(kg); if(!c || +r.e.reps > c.reps) by.set(kg, {reps:+r.e.reps, date:r.date}); });
+    const lst = [...by.entries()].sort((a,b)=>a[0]-b[0]);
+    if(lst.length > 1 || bw.length) h += `<div class="exf-sec">TON MEILLEUR À CHAQUE CHARGE</div><div class="exf-tab">${bw.length ? `<div><span>Poids du corps</span><b>${Math.max(...bw.map(r=>+r.e.reps))} ${u}</b></div>` : ''}${lst.map(([kg,c])=>`<div><span>+${wkFicheNum(kg)} kg</span><b>${c.reps} ${u}</b></div>`).join('')}</div>`;
+  }
+  return h;
+}
+let wkFicheD = null;
+function wkFicheDist(name, rows){
+  const cont = rows.filter(r=>!r.e.int && +r.e.km > 0), run = wkIsRun(rows[0].e);
+  let h = '', cards = [];
+  if(cont.length){
+    const lg = cont.reduce((a,r)=> +r.e.km > +a.e.km ? r : a);
+    cards.push(`<div class="exf-pr"><span>Plus longue sortie</span><b>${wkFmtKm(lg.e.km)} km</b><em>${wkFicheDate(lg.date)}</em></div>`);
+    const pc = cont.filter(r=>wkPace(r.e)); if(pc.length){ const bp = pc.reduce((a,r)=> wkPace(r.e) < wkPace(a.e) ? r : a); cards.push(`<div class="exf-pr"><span>Meilleure allure</span><b>${wkFmtPace(wkPace(bp.e))}</b><em>${wkFicheDate(bp.date)}</em></div>`); }
+  }
+  h += `<div class="exf-prs">${cards.join('')}</div>`;
+  const dists = run ? WK_RUN_STD.filter(sd=>cont.some(r=>wkRunTimeAt(r.e, sd.d))) : [];
+  if(dists.length){
+    if(!wkFicheD || !dists.some(sd=>sd.d === wkFicheD)) wkFicheD = (dists.find(sd=>sd.d === 5) || dists[0]).d;
+    const sd = dists.find(s=>s.d === wkFicheD);
+    const pts = wkFicheSeries(cont, r=>{ const t = wkRunTimeAt(r.e, sd.d); return t ? {v:-t, t, km:+r.e.km} : null; }).map(p=>Object.assign(p, {v:p.t}));
+    const best = pts.reduce((a,p)=> p.t < a.t ? p : a);
+    h += `<div class="exf-sec">TES TEMPS SUR</div><div class="exf-chips">${dists.map(s=>`<button type="button" class="${s.d === wkFicheD ? 'on' : ''}" onclick="wkFicheD=${s.d}; wkFicheOpen(wkFicheName)">${s.l}</button>`).join('')}</div>
+      <div class="exf-best">Record ${sd.l} : <b>${wkFmtRun(best.t)}</b> · ${wkFicheDate(best.date)}${Math.abs(best.km - sd.d) > 0.1 ? ` <em>(dans une sortie de ${wkFmtKm(best.km)} km)</em>` : ''}</div>
+      ${wkFicheDelta(pts, d=>`${d < 0 ? '−' : '+'}${wkFmtRun(Math.abs(d))}`, true)}${wkFicheChart(pts, p=>wkFmtRun(p.v), {lowerIsBetter:true, aria:'Temps sur ' + sd.l})}
+      <div class="exf-note">Plus la courbe monte, plus tu vas vite. Temps calculé au prorata quand la sortie est plus longue que la distance.</div>`;
+  } else if(cont.length){
+    const pts = wkFicheSeries(cont, r=>({v:+r.e.km}));
+    h += `<div class="exf-sec">DISTANCE PAR SÉANCE (KM)</div>${wkFicheDelta(pts, d=>`${d > 0 ? '+' : ''}${wkFmtKm(d)} km`)}${wkFicheChart(pts, p=>wkFmtKm(p.v), {aria:'Distance par séance'})}`;
+  }
+  return h;
+}
+let wkFicheName = '';
+function wkFicheOpen(name){
+  wkFicheName = name;
+  const rows = wkExHist(name); let el = document.getElementById('exFiche');
+  if(!el){ el = document.createElement('div'); el.id = 'exFiche'; el.addEventListener('click', e=>{ if(e.target.id === 'exFiche') wkFicheClose(); }); document.body.appendChild(el); }
+  const dist = rows.length && wkIsDist(rows[0].e);
+  const body = !rows.length ? `<div class="wk-empty">Pas encore de séance avec cet exercice. Note-en une : ta fiche se remplit toute seule.</div>`
+    : dist ? wkFicheDist(name, rows) : wkFicheSets(name, rows);
+  const last = rows.slice().reverse().slice(0, 10);
+  el.innerHTML = `<div class="exf-card" role="dialog" aria-label="Fiche ${escapeHtml(name)}">
+    <div class="exf-top"><div><div class="eyebrow">FICHE EXERCICE</div><h3>${escapeHtml(name)}</h3><div class="exf-sub">${rows.length} fois · depuis le ${rows.length ? wkFicheDate(rows[0].date, true) : '—'}</div></div><button type="button" class="icon-btn" aria-label="Fermer" onclick="wkFicheClose()">✕</button></div>
+    ${body}
+    ${last.length ? `<div class="exf-sec">DERNIÈRES FOIS</div><div class="exf-list">${last.map(r=>`<div><span>${wkFicheDate(r.date)}</span><b>${escapeHtml(wkIsDist(r.e) ? wkFmtSet(r.e) : `${r.e.sets || 1} × ${wkFmtSet(r.e)}`)}</b></div>`).join('')}</div>` : ''}
+    <button type="button" class="btn" style="width:100%; margin-top:14px;" onclick="wkFicheClose()">Fermer</button></div>`;
+  el.classList.add('on');
+}
+function wkFicheClose(){ const el = document.getElementById('exFiche'); if(el) el.classList.remove('on'); }
 function modalWorkoutHistory(){
   openModal(`<h3>HISTORIQUE SPORT</h3><div id="wkHistBody">${wkHistoryBody()}</div>
     <div class="modal-actions"><button class="btn" onclick="closeModal()">Fermer</button></div>`);
@@ -9664,7 +9806,7 @@ function guideCardHtml(){
   return `<div class="zg-card"><div><b>📖 Tout ce que l'app sait faire</b><span>Modules, pomodoro sur une quête, examens, cycles de focus… en 2 minutes.</span></div>
     <div class="zg-card-a"><button class="btn small" onclick="zkGuideOpen=0; modalGuide()">Ouvrir le guide</button><button class="icon-btn" aria-label="Masquer" onclick="STATE.settings.guideSeen=true; queueSave(); render();">✕</button></div></div>`;
 }
-function zkHelp(si){ return ''; }   // 22/10 : boutons « ? » retirés pour l'instant (retour de Moustapha), à remettre plus tard
+function zkHelp(si){ return `<button type="button" class="zg-q" aria-label="Comment ça marche ?" title="Comment ça marche ?" onclick="event.stopPropagation(); zkGuideOpen=${si}; modalGuide()">?</button>`; }   // « ? » à côté des titres → la bonne rubrique du guide
 function modalGeneralSettings(){
   const notifState = (typeof Notification!=='undefined') ? Notification.permission : 'unsupported';
   const p = 'style="font-family:var(--font-mono); font-size:10px; color:var(--text-faint); line-height:1.5; margin:2px 0 14px;"';
@@ -10044,7 +10186,7 @@ function goalRowHtml(g){
       <div class="pri-dot" style="background:${PRIORITY_COLOR[g.priority]}" title="Priorité ${PRIORITY_LABEL[g.priority]}"></div>
       ${checkboxCell}
       <div class="item-body">
-        <div class="item-name ${g.done?'done':''}" style="cursor:pointer;" onclick="modalGoalDetail('${g.id}')">${escapeHtml(g.name)}</div>
+        <div class="g-head"><div class="item-name ${g.done?'done':''}" style="cursor:pointer;" onclick="modalGoalDetail('${g.id}')">${escapeHtml(g.name)}</div>${deadlineBadge}<button class="icon-btn g-mini" title="Modifier" aria-label="Modifier" onclick="modalEditGoal('${g.id}')">✎</button><button class="icon-btn danger g-mini" title="Supprimer" aria-label="Supprimer" onclick="deleteGoal('${g.id}')">✕</button></div>
         ${!g.done && (hasSubtasks || (isQ && g.targetValue) || !isQ) ? `
         <div style="cursor:pointer;" onclick="modalGoalDetail('${g.id}')">${goalBarHtml(g, pct)}</div>
         ${(hasSubtasks || isExam) ? '' : goalNextPalierHtml(g)}
@@ -10061,9 +10203,6 @@ function goalRowHtml(g){
         </div>
         ${subList}
       </div>
-      ${deadlineBadge}
-      <button class="icon-btn" title="Modifier" aria-label="Modifier" onclick="modalEditGoal('${g.id}')">✎</button>
-      <button class="icon-btn danger" title="Supprimer" aria-label="Supprimer" onclick="deleteGoal('${g.id}')">✕</button>
       ${(hasSubtasks || isExam) && !g.done ? `<div class="zk-gstep-wrap">${goalNextHtml(g)}</div>` : ''}
     </div>`;
   })();
@@ -10563,7 +10702,7 @@ function schedPanelHtml(){
     <div class="panel full">
       <div class="c-tl"></div><div class="c-br"></div>
       <div class="eyebrow">PLANNING</div>
-      <h2>Ma journée</h2>
+      <h2>Ma journée ${zkHelp(6)}</h2>
       <div class="sub">TA SEMAINE TYPE SE RÉPÈTE CHAQUE SEMAINE · TOUCHE UNE PLAGE POUR Y ATTACHER TES QUÊTES</div>
       <div class="sd-week"><button class="icon-btn" aria-label="Semaine précédente" onclick="schedWeekOffset--; render();">‹</button><span>${weekLabel}</span><button class="icon-btn" aria-label="Semaine suivante" onclick="schedWeekOffset++; render();">›</button></div>
       <div class="sd-days">${SCHED_DAYS.map((l,i)=>{ const ds = schedDateFor(i), n = schedBlocksOn(ds).reduce((a,b)=>a + schedAssigned(b, ds).length, 0);
