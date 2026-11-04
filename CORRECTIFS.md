@@ -119,3 +119,27 @@ Rien n'est supprimé, tout est rangé.
 - Séries : record au poids du corps, le plus lourd, courbe des reps au poids du corps, courbe de la charge ajoutée, meilleur résultat à chaque charge, progression sur 4 semaines.
 - Course : tes temps sur 1 km / 5 km / 10 km / semi / marathon (au prorata dans une sortie plus longue), plus longue sortie, meilleure allure. Autres distances : km par séance.
 - Aucune donnée nouvelle : tout est calculé à partir des séances déjà enregistrées.
+
+## 27/10 (3) — Records selon la charge
+- Deux sortes de records sur un exercice en séries : la charge max (le plus lourd jamais soulevé), et plus de reps qu'avant à la même charge (poids du corps compris, ex. « Tractions · à +5 kg », « Développé couché · à 70 kg »).
+- Un record de reps à une charge ne compte que si tu n'as jamais fait autant de reps avec plus lourd. La 1re fois à une charge n'est pas un record.
+- Pendant la saisie : « à +5 kg : 8 reps max » sous l'exercice, et l'annonce du record avant de terminer.
+
+## 27/10 (2) — Exercice déjà fait = tes anciennes perfs
+- Dès que le nom correspond à un exercice déjà fait (tapé ou choisi dans les suggestions du clavier), la ligne vide se remplit avec ta meilleure perf : séries, reps, kg. Pour un exercice fait au poids du corps et lesté, l'app prend la même sorte que ta dernière séance.
+- Rien n'est écrasé : seulement si reps et kg sont vides. Même chose avec les boutons de tes objectifs.
+- Bug corrigé : en tapant « Développé », la ligne passait toute seule en mode Distance (« Dévelo » était lu comme « vélo »).
+
+## 02/11 — Séance guidée : repos
+- La série suivante affichait « ensuite », qui débordait de sa case. Elle affiche maintenant l'objectif en gris (« → 8 »). Les textes des cases ne débordent plus (points de suspension si besoin).
+- Le cercle du repos : la lueur était coupée par des traits droits sur iPhone (filtre CSS rogné par Safari). Elle est maintenant dessinée par le SVG lui-même.
+- Charge en séance guidée : la charge peut être tapée exactement (ex. 17,5 ou 1,25 ; vide = poids du corps). Le pas des boutons − et + se change d'un toucher sur « ± 2,5 kg » sous la charge (1 → 2,5 → 5 kg), retenu pour les séances suivantes.
+- Repos au choix en séance guidée : entre séries (2 min par défaut) et entre exercices (3 min par défaut). Choix 1 min, 1:30, 2 min, 3 min, 4 min directement sur l'écran de repos, retenu pour les séances suivantes. Boutons −30 s / +30 s. Entre deux exercices, l'écran affiche « Puis : <exercice suivant> ».
+
+## 04/11 — Ne rate jamais deux fois
+- Routines : rater UNE occurrence prévue (un jour, un jour prévu, une semaine ou un mois) ne casse plus la série ni ne coûte la pénalité de série rompue. En rater deux d'affilée casse la série (et la pénalité tombe, comme avant).
+- La routine affiche « ⚠ raté la dernière fois : pas deux » le jour où il faut la refaire, et un rappel « Ne rate pas deux fois » s'affiche une fois par jour au lancement.
+- Série de journées tenues : même règle (un jour non tenu toléré, deux d'affilée cassent la série). Le jour raté ne compte pas dans le nombre.
+- Décocher une routine cochée après un raté remet la vraie dernière fois (le raté reste un raté).
+- Journée tenue : la fenêtre explique la règle (« Ne rate jamais deux fois »), et l'affichage dit « série de N j » au lieu de « N j d'affilée ».
+- Notification « Ne rate pas deux fois » (app fermée, via le canal des rappels déjà en place, aucun changement côté serveur) : le jour où il faut rattraper une routine ratée, 1 h avant son heure (07:00 au plus tôt), sinon à 09:00. Routine avant 8 h (ex. se lever) : rappel la veille à 21:00 si elle n'est pas faite. Cocher la routine met le serveur à jour en quelques secondes, donc pas de faux rappel.

@@ -831,6 +831,7 @@
   .term-chip{font-family:var(--font-mono); font-size:9px; padding:1px 6px; border:1px solid var(--text-faint); border-radius:var(--radius); color:var(--text-dim);}
   .term-chip.moyen{border-color:var(--purple); color:var(--purple);}
   .streak{color:var(--gold);}
+  .streak-warn{color:#fb923c; font-weight:600;}
   .empty{font-family:var(--font-mono); font-size:11px; color:var(--text-faint); padding:14px 0; text-align:center; letter-spacing:1px;}
   .plan-time{font-family:var(--font-mono); font-size:12px; color:var(--cyan); width:52px; flex-shrink:0;}
 
@@ -1192,20 +1193,24 @@
   #zkRun .zr-main{flex:1; height:58px; border-radius:20px; border:none; background:linear-gradient(160deg, color-mix(in srgb, var(--glow) 78%, #fff), var(--glow-dim)); color:#fff; font-size:16px; font-weight:600; cursor:pointer; box-shadow:0 10px 30px color-mix(in srgb, var(--glow) 50%, transparent); font-family:var(--font-body);}
   #zkRun .zr-main:active, #zkRun .zr-skip:active{transform:scale(.97);}
   #zkRun .zr-sets{display:grid; grid-template-columns:repeat(var(--n,3), minmax(0,1fr)); gap:8px; margin-top:18px;}
-  #zkRun .zr-sets div{padding:10px; border-radius:14px; border:1px solid rgba(255,255,255,.08); display:flex; flex-direction:column; gap:2px; transition:all .35s;}
-  #zkRun .zr-sets div span{font-size:10px; color:var(--text-dim);} #zkRun .zr-sets div b{font-size:15px;}
+  #zkRun .zr-sets div{padding:10px; border-radius:14px; border:1px solid rgba(255,255,255,.08); display:flex; flex-direction:column; gap:2px; transition:all .35s; min-width:0;}
+  #zkRun .zr-sets div span{font-size:10px; color:var(--text-dim); white-space:nowrap;} #zkRun .zr-sets div b{font-size:15px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;} #zkRun .zr-sets .zr-tgt{font-style:normal; opacity:.5;}
   #zkRun .zr-sets div.ok{background:color-mix(in srgb, var(--glow) 14%, transparent);} #zkRun .zr-sets div.cur{border:1.5px solid var(--glow); box-shadow:0 0 20px color-mix(in srgb, var(--glow) 35%, transparent);}
   #zkRun .zr-sets div.rec b{color:var(--gold);}
   #zkRun .zr-step{margin-top:18px; padding:20px 16px; border-radius:26px; display:flex; align-items:center; justify-content:space-between; background:linear-gradient(160deg, color-mix(in srgb, var(--glow) 18%, transparent), transparent); border:1px solid color-mix(in srgb, var(--glow) 30%, transparent); animation:zkEnter .45s both;}
   #zkRun .zr-step button{width:54px; height:54px; border-radius:50%; border:1px solid color-mix(in srgb, var(--glow) 40%, transparent); background:transparent; color:var(--text); font-size:22px; cursor:pointer;}
   #zkRun .zr-step .v{display:flex; flex-direction:column; align-items:center;} #zkRun .zr-step .v b{font-size:56px; line-height:1; font-variant-numeric:tabular-nums;} #zkRun .zr-step .v span{font-size:12px; color:var(--text-dim);}
   #zkRun .zr-kg{margin-top:10px; display:flex; align-items:center; justify-content:center; gap:14px; font-size:14px; color:var(--text-dim);}
+  #zkRun .zr-kgstep{text-align:center; margin-top:4px;} #zkRun .zr-steplink{background:none; border:none; color:var(--text-faint); font:500 11.5px var(--font-body); padding:4px 8px; cursor:pointer; text-decoration:underline dotted; text-underline-offset:3px;}
+  #zkRun .zr-kgin{width:118px; font-size:15px;} #zkRun .zr-kgin::placeholder{color:var(--text-dim);}
+  #zkRun .zr-steps{display:flex; justify-content:center; align-items:center; gap:6px; margin-top:8px; font-size:11px; color:var(--text-faint);} #zkRun .zr-steps button{border:1px solid rgba(255,255,255,.12); background:transparent; color:var(--text-dim); border-radius:999px; padding:4px 10px; font:600 11.5px var(--font-body); cursor:pointer;} #zkRun .zr-steps button.on{border-color:var(--glow); color:var(--text); background:color-mix(in srgb, var(--glow) 18%, transparent);}
   #zkRun .zr-kg button{width:40px; height:40px; border-radius:12px; border:1px solid rgba(255,255,255,.12); background:transparent; color:var(--text); font-size:16px; cursor:pointer;}
   #zkRun .zr-rec{position:relative; overflow:hidden; margin-top:12px; padding:11px 14px; border-radius:14px; background:color-mix(in srgb, var(--gold) 12%, transparent); border:1px solid color-mix(in srgb, var(--gold) 45%, transparent); color:var(--gold); font-size:13px; font-weight:600; animation:zkPop .55s cubic-bezier(.2,1.2,.4,1) both;}
   #zkRun .zr-rec:after{content:''; position:absolute; top:0; bottom:0; width:60%; background:linear-gradient(100deg, transparent, rgba(255,240,200,.35), transparent); animation:zkShine 1.6s ease-in-out .3s infinite;}
   #zkRun .zr-rest{margin-top:20px; display:flex; flex-direction:column; align-items:center; gap:12px; animation:zkEnter .45s both;}
-  #zkRun .zr-ring{position:relative; width:210px; height:210px;} #zkRun .zr-ring svg{position:absolute; inset:0; transform:rotate(-90deg); overflow:visible; filter:drop-shadow(0 0 8px var(--glow));} #zkRun .zr-ring circle.p{transition:stroke-dashoffset 1s linear;}
+  #zkRun .zr-ring{position:relative; width:210px; height:210px;} #zkRun .zr-ring svg{position:absolute; inset:0; transform:rotate(-90deg); overflow:visible;} #zkRun .zr-ring circle.p{transition:stroke-dashoffset 1s linear;}
   #zkRun .zr-ring .t{position:absolute; inset:0; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:2px;} #zkRun .zr-ring .t b{font-size:52px; font-variant-numeric:tabular-nums; line-height:1;} #zkRun .zr-ring .t span{font-size:12px; color:var(--text-dim);}
+  #zkRun .zr-pills{display:flex; gap:10px; justify-content:center;} #zkRun .zr-reststeps{flex-wrap:wrap; margin-top:12px; row-gap:7px;} #zkRun .zr-reststeps span{flex-basis:100%; text-align:center;}
   #zkRun .zr-pill{height:40px; padding:0 16px; border-radius:999px; border:1px solid rgba(255,255,255,.16); background:transparent; color:var(--text-dim); font-size:13px; cursor:pointer;}
   #zkRun .zr-done{margin:auto 0; position:relative; padding:32px 22px 22px; border-radius:30px; text-align:center; display:flex; flex-direction:column; align-items:center; gap:14px; background:linear-gradient(170deg, color-mix(in srgb, var(--glow) 22%, #120c22), #0e0a1a); border:1px solid color-mix(in srgb, var(--glow) 35%, transparent); box-shadow:0 30px 80px rgba(0,0,0,.6), 0 0 60px color-mix(in srgb, var(--glow) 20%, transparent); animation:zkEnter .5s both;}
   #zkRun .zr-done .zr-main, #zkRun .zr-done .zr-skip{flex:0 0 auto; min-height:56px;}   /* 21/10 : dans l'écran de fin (colonne), le bouton s'écrasait en fine barre */
@@ -2223,10 +2228,24 @@ function routineDaysLabel(r){
   if(k === '01234') return 'LUN-VEN'; if(k === '56') return 'WEEK-END';
   return d.slice().sort((a,b)=>a-b).map(i=>ROUTINE_DAY_L[i]).join('·');
 }
+/* 04/11 : « ne rate jamais deux fois » — rater UNE occurrence prévue ne casse pas la série ; en rater deux d'affilée, si.
+   Occurrence = un jour (quotidienne), un jour prévu (certains jours), une semaine ou un mois. */
+function routinePrevOccs(r, n){   // les n occurrences prévues avant l'actuelle, de la plus récente à la plus ancienne
+  const f = r.freqTag||'quotidienne', out = [];
+  if(routineDays(r)){ let ds = todayStr(); for(let i = 0; i < n; i++){ ds = routinePrevDue(r, ds); if(!ds) break; out.push(ds); } return out; }
+  for(let i = 1; i <= n; i++){ const x = new Date(); if(f === 'mensuelle'){ x.setDate(1); x.setMonth(x.getMonth()-i); } else x.setDate(x.getDate() - (f === 'hebdomadaire' ? 7 : 1)*i); out.push(periodKey(f, x)); }
+  return out;
+}
 function routineStreakAlive(r){
   const f = r.freqTag||'quotidienne';
-  if(routineDays(r)){ const pd = routinePrevDue(r); return r.lastDoneDate === periodKey(f) || !pd || (r.lastDoneDate || '') >= pd; }
-  return r.lastDoneDate === periodKey(f) || r.lastDoneDate === previousPeriodKey(f);
+  if(r.lastDoneDate === periodKey(f)) return true;
+  const p = routinePrevOccs(r, 2); if(!p.length) return true;
+  return (r.lastDoneDate || '') >= p[p.length-1];
+}
+// série encore vivante mais la dernière occurrence a été ratée : c'est le seul « joker »
+function routineJoker(r){
+  if(!r.streak || routineDone(r) || !routineDueToday(r) || !routineStreakAlive(r)) return false;
+  const p = routinePrevOccs(r, 1); return !!p.length && (r.lastDoneDate || '') < p[0];
 }
 
 async function loadState(){
@@ -2325,6 +2344,11 @@ function checkDayRollover(){
     }
   });
 
+  {   // 04/11 : ne rate jamais deux fois — rappel une fois par jour s'il y a un joker en cours
+    const jk = STATE.routines.filter(routineJoker);
+    if(jk.length && STATE.settings.jokerToastDate !== today){ STATE.settings.jokerToastDate = today;
+      setTimeout(()=>showToast('NE RATE PAS DEUX FOIS', jk.length === 1 ? jk[0].name : `${jk.length} routines`, 'raté une fois, ça arrive : ta série tient encore', ''), 1500); }
+  }
   if(STATE.water.lastDate !== today){ STATE.water.currentMl = 0; STATE.water.goalRewarded = false; STATE.water.tiers = 0; STATE.water.lastDate = today; STATE.water.log = []; }
   checkRoutineDeadlines();
   refreshQuantifiedGoals();
@@ -5798,7 +5822,7 @@ async function syncPushState(existingSub){
           .filter(b=>b.kind!=='repos').slice(0, 60).map(b=>{ const l = schedLinkObj(b), k = SCHED_KINDS[b.kind] || SCHED_KINDS.travail;
           const nn = schedAssigned(b, b._date).map(t=>(t.nn?'🌟 ':'⚔ ') + taskName(t)).join(', ');
           return {id:b.id, name:`${k.ico} ${b.name}`.slice(0, 40), start:b.start, date:b._date, link: (nn || (l ? l.name : '')).slice(0, 80) || null}; }),
-        goals: goalRemindersAhead(),
+        goals: goalRemindersAhead().concat(jokerRemindersAhead()).slice(0, 40),   // 04/11 : + rappels « ne rate pas deux fois » (même canal, aucun changement serveur)
       },
     };
     // l'abonnement précédent de CET appareil (s'il a changé) est supprimé côté serveur : sinon les deux reçoivent chaque rappel
@@ -5881,9 +5905,16 @@ function dayHeldMin(){
   return (st && (new Date(todayStr()+'T00:00:00') - new Date(st+'T00:00:00'))/86400000 < 7) ? 2 : 3;
 }
 function dayHeldSkill(){ return STATE.skills.discipline ? 'discipline' : Object.keys(STATE.skills)[0]; }
-function dayHeldStreak(){
+function dayHeldStreak(){   // 04/11 : ne rate jamais deux fois — un jour non tenu est toléré, deux d'affilée cassent la série
   let n = STATE.todayStats && STATE.todayStats.dayHeld ? 1 : 0;
-  for(let i = STATE.history.length-1; i >= 0; i--){ if(STATE.history[i].dayHeld) n++; else break; }
+  const held = {}; let first = null;
+  (STATE.history||[]).forEach(h=>{ if(h && h.date){ held[h.date] = !!h.dayHeld; if(!first || h.date < first) first = h.date; } });
+  if(!first) return n;
+  const d = new Date(todayStr()+'T00:00:00'); let miss = 0;
+  for(let i = 0; i < 800; i++){
+    d.setDate(d.getDate()-1); const ds = wkDateStr(d); if(ds < first) break;
+    if(held[ds]){ n++; miss = 0; } else if(++miss >= 2) break;
+  }
   return n;
 }
 function dayHeldNeedsUpdate(){
@@ -5896,7 +5927,7 @@ function checkDayHeld(){
   if(!t.dayHeld){
     t.dayHeld = true;
     const n = dayHeldStreak();
-    showToast('JOURNÉE TENUE', n > 1 ? `${n} jours tenus d'affilée` : 'Minimum du jour atteint', `+${DAY_HELD_XP} XP`, 'reward');
+    showToast('JOURNÉE TENUE', n > 1 ? `Série de ${n} jours tenus` : 'Minimum du jour atteint', `+${DAY_HELD_XP} XP`, 'reward');
     addSkillXP(dayHeldSkill(), DAY_HELD_XP);
   }else{
     t.dayHeld = false;
@@ -5907,12 +5938,12 @@ function dayHeldHtml(){
   const n = dayActions(), min = dayHeldMin(), ok = !!(STATE.todayStats && STATE.todayStats.dayHeld), streak = dayHeldStreak();
   return `<div class="day-held ${ok?'ok':''}" onclick="modalDayHeld()"><span class="dh-t">${ok ? '✓ JOURNÉE TENUE' : 'JOURNÉE TENUE'}</span>
     <div class="dh-dots">${Array.from({length:min}).map((_,i)=>`<i class="${i<n?'on':''}"></i>`).join('')}</div>
-    <em>${ok ? (streak > 1 ? `🔥 ${streak} j d'affilée` : `+${DAY_HELD_XP} XP`) : `${Math.min(n,min)}/${min} · +${DAY_HELD_XP} XP`}</em></div>`;
+    <em>${ok ? (streak > 1 ? `🔥 série de ${streak} j` : `+${DAY_HELD_XP} XP`) : `${Math.min(n,min)}/${min} · +${DAY_HELD_XP} XP`}</em></div>`;
 }
 function modalDayHeld(){
   const min = dayHeldMin();
   openModal(`<h3>JOURNÉE TENUE</h3>
-    <div style="font-size:13px; color:var(--text-dim); line-height:1.55;">Fais au moins <b>${min} action${min>1?'s':''}</b> dans la journée pour la « tenir » : une routine, une quête, une séance, un pomodoro, ton objectif d'eau… Chaque journée tenue rapporte <b>+${DAY_HELD_XP} XP</b> en ${escapeHtml((STATE.skills[dayHeldSkill()]||{}).name||'')} et allonge ta série.<br><br>Une petite journée tenue vaut mieux qu'une grosse journée suivie de trois jours vides.</div>
+    <div style="font-size:13px; color:var(--text-dim); line-height:1.55;">Fais au moins <b>${min} action${min>1?'s':''}</b> dans la journée pour la « tenir » : une routine, une quête, une séance, un pomodoro, ton objectif d'eau… Chaque journée tenue rapporte <b>+${DAY_HELD_XP} XP</b> en ${escapeHtml((STATE.skills[dayHeldSkill()]||{}).name||'')} et allonge ta série.<br><br>Une petite journée tenue vaut mieux qu'une grosse journée suivie de trois jours vides.<br><br><b>Ne rate jamais deux fois</b> : rater un jour ne casse pas ta série. En rater deux d'affilée, si.</div>
     <div class="field-row" style="margin-top:12px;"><label>Mon minimum</label><select id="mDayMin">${[1,2,3,4,5,6].map(v=>`<option value="${v}" ${v===min?'selected':''}>${v} action${v>1?'s':''}</option>`).join('')}</select></div>
     <div class="modal-actions"><button class="btn ghost" onclick="closeModal()">Fermer</button><button class="btn" onclick="STATE.settings.dayMin = +document.getElementById('mDayMin').value; queueSave(); closeModal(); render();">Enregistrer</button></div>`);
 }
@@ -6070,6 +6101,49 @@ function checkGoalReminders(nowMin, today){
   fireNotification('SYSTÈME // ZENKAI', r.body, `zenkai-goal-${r.g.id}`);
   STATE.goalReminderDate = today; queueSave();
 }
+/* 04/11 : « ne rate pas deux fois » en notification.
+   Le jour où une routine a été ratée la dernière fois, un rappel part : 1 h avant son heure (07:00 au plus tôt), sinon à 09:00.
+   Routine avant 8 h (ex. se lever) : le rappel part la veille à 21:00, si elle n'a pas été faite.
+   Envoyé par le serveur via le canal des rappels d'objectifs (date, heure, texte) ; app ouverte et push inactif : notification locale.
+   On prévoit aussi le prochain jour prévu : si la routine n'est pas faite aujourd'hui, c'est demain qu'il faudra la rattraper. */
+function jokerEarly(r){ if(!r.time) return false; const [h, m] = String(r.time).split(':').map(Number); return h*60 + m < 8*60; }   // routine avant 8 h : on prévient la veille au soir
+function jokerAt(r){
+  if(!r.time) return '09:00';
+  const [h, m] = String(r.time).split(':').map(Number); const t = Math.max(7*60, h*60 + m - 60);
+  return `${String(Math.floor(t/60)).padStart(2,'0')}:${String(t%60).padStart(2,'0')}`;
+}
+function jokerBody(r, eve){ return eve ? `⚠ « ${r.name} » ratée la dernière fois. Demain, pas deux : ta série de ${r.streak} tient encore.` : `⚠ Raté la dernière fois : « ${r.name} ». Une fois, ça arrive. Pas deux : ta série de ${r.streak} tient encore.`; }
+function routineNextDue(r){   // prochain jour prévu après aujourd'hui (quotidienne ou certains jours)
+  const d = new Date(todayStr()+'T00:00:00');
+  for(let i = 0; i < 7; i++){ d.setDate(d.getDate()+1); const ds = wkDateStr(d); if(routineDueOn(r, ds)) return ds; }
+  return null;
+}
+function jokerRemindersAhead(){
+  if(!modOn('routines')) return [];
+  const out = [], today = todayStr();
+  STATE.routines.forEach(r=>{
+    if((r.freqTag||'quotidienne') !== 'quotidienne' || !r.streak || !routineStreakAlive(r)) return;
+    const early = jokerEarly(r);
+    if(routineJoker(r)){ if(!early) out.push({id:'nmt-'+r.id, date:today, at:jokerAt(r), body:jokerBody(r)}); return; }
+    // faite la dernière fois, pas encore aujourd'hui : si ça reste comme ça, il faudra la rattraper au prochain jour prévu
+    if(routineDueToday(r) && !routineDone(r)){
+      const nd = routineNextDue(r); if(!nd) return;
+      if(early){ const e = new Date(nd+'T00:00:00'); e.setDate(e.getDate()-1); out.push({id:'nmt-'+r.id, date:wkDateStr(e), at:'21:00', body:jokerBody(r, true)}); }
+      else out.push({id:'nmt-'+r.id, date:nd, at:jokerAt(r), body:jokerBody(r)});
+    }
+  });
+  return out.slice(0, 10);
+}
+function checkJokerNotifications(nowMin, today){   // app ouverte, push inactif : mêmes rappels, en local
+  if(pushActive) return;
+  STATE.settings.jokerNotified = STATE.settings.jokerNotified || {};
+  jokerRemindersAhead().filter(x=>x.date === today).forEach(x=>{
+    const [h, m] = x.at.split(':').map(Number), at = h*60 + m;
+    if(nowMin < at || nowMin >= at + 180 || STATE.settings.jokerNotified[x.id] === today) return;
+    fireNotification('SYSTÈME // ZENKAI', x.body, 'zenkai-goal-'+x.id);
+    STATE.settings.jokerNotified[x.id] = today; queueSave();
+  });
+}
 function checkPlanningNotifications(){
   if(!STATE.settings.notificationsOn || typeof Notification === 'undefined' || Notification.permission !== 'granted') return;
   const now = new Date();
@@ -6090,6 +6164,7 @@ function checkPlanningNotifications(){
       b.notifiedDate = today; queueSave();
     }
   });
+  try{ checkJokerNotifications(nowMin, today); }catch(e){}
   planningItems().forEach(p=>{
     if(p.done) return;
     const [ph, pm] = p.time.split(':').map(Number);
@@ -6601,12 +6676,13 @@ async function deleteRoutine(id){
 function toggleRoutine(id){
   const r = STATE.routines.find(x=>x.id===id);
   if(!r) return;
+  try{ goalPushSoon(); }catch(e){}   // 04/11 : le serveur apprend vite qu'elle est faite (sinon un rappel « raté » pourrait partir demain)
   const freq = r.freqTag||'quotidienne';
   const period = periodKey(freq);
   const prevPeriod = routineDays(r) ? (routinePrevDue(r) || previousPeriodKey(freq)) : previousPeriodKey(freq);
   if(r.lastDoneDate !== period && !routineDueToday(r)){ showToast('REPOS', r.name, `prévue ${routineDaysLabel(r).toLowerCase()} seulement`, ''); return; }
   if(r.lastDoneDate === period){
-    r.lastDoneDate = (r.streak>1) ? prevPeriod : null;
+    r.lastDoneDate = (r.streak>1) ? (r.prevDoneDate || prevPeriod) : null;
     r.streak = Math.max(0, r.streak-1);
     STATE.todayStats.routinesDone = Math.max(0, STATE.todayStats.routinesDone - 1);
     STATE.stats.totalRoutinesDone = Math.max(0, STATE.stats.totalRoutinesDone - 1);
@@ -6615,9 +6691,9 @@ function toggleRoutine(id){
     addSkillXP(r.skill, -(r.awardedXp ?? r.xp));   // build 78 : décocher retire l'XP (avant : XP infinie)
     return;
   }
-  if(r.lastDoneDate === prevPeriod) r.streak += 1;
+  if(r.lastDoneDate && routineStreakAlive(r)) r.streak += 1;   // 04/11 : après un seul raté, la série continue
   else r.streak = 1;
-  r.lastDoneDate = period; r.lastDoneDay = todayStr();
+  r.prevDoneDate = r.lastDoneDate; r.lastDoneDate = period; r.lastDoneDay = todayStr();
   r.doneLog = (r.doneLog||[]).concat([todayStr()]).slice(-400);   // 10/10 : jours faits, pour les objectifs « jours de routine »
   refreshQuantifiedGoals();
   STATE.todayStats.routinesDone++;
@@ -7399,7 +7475,7 @@ function zkDrawWorkout(){
   const dist = wkIsDist(e), rec = dist ? null : ZR.recs[wkKey(e.name)];
   const kmTxt = v => String(Math.round(v*100)/100).replace('.',',');
   const chips = dist ? `<div class="${res[0] ? 'ok' : ''} ${res[0] ? '' : 'cur'}"><span>${e.int ? 'Fractionné' : 'Sortie'}</span><b>${res[0] ? (res[0].skip ? 'passée' : (e.int ? 'faite' : kmTxt(res[0].km) + ' km')) : 'en cours'}</b></div>` : Array.from({length:ZR.sets},(_,j)=>{ const v = res[j]; const cur = j === ZR.set-1; const isRec = v && rec && wkBetter({reps:v.reps, kg:v.kg}, rec);
-    return `<div class="${v ? 'ok' : ''} ${cur ? 'cur' : ''} ${isRec ? 'rec' : ''}"><span>Série ${j+1}</span><b>${v ? (v.skip ? 'passée' : v.reps + (v.kg ? ` × ${String(v.kg).replace('.',',')}` : '')) : (cur ? (ZR.phase==='rest' ? 'ensuite' : 'en cours') : '—')}</b></div>`; }).join('');
+    return `<div class="${v ? 'ok' : ''} ${cur ? 'cur' : ''} ${isRec ? 'rec' : ''}"><span>Série ${j+1}</span><b>${v ? (v.skip ? 'passée' : v.reps + (v.kg ? ` × ${String(v.kg).replace('.',',')}` : '')) : (cur ? `<i class="zr-tgt">→ ${ZR.reps || '?'}</i>` : '—')}</b></div>`; }).join('');
   let body = '';
   if(ZR.phase === 'set' && dist){
     body = e.int ? `<div class="zr-hint" style="margin-top:18px; font-size:15px;">${escapeHtml(wkFmtSet(e))}</div>`
@@ -7409,13 +7485,15 @@ function zkDrawWorkout(){
   }else if(ZR.phase === 'set'){
     const r2 = zkWkRec();
     body = `<div class="zr-step"><button type="button" aria-label="Une répétition de moins" onclick="zkWkAdj('reps',-1)">−</button><div class="v"><b id="zrReps">${ZR.reps}</b><span>répétitions</span></div><button type="button" aria-label="Une répétition de plus" onclick="zkWkAdj('reps',1)">+</button></div>
-      <div class="zr-kg"><button type="button" aria-label="Moins de charge" onclick="zkWkAdj('kg',-2.5)">−</button><span id="zrKg">${ZR.kg ? String(ZR.kg).replace('.',',') + ' kg' : 'poids du corps'}</span><button type="button" aria-label="Plus de charge" onclick="zkWkAdj('kg',2.5)">+</button></div>
+      <div class="zr-kg"><button type="button" aria-label="Moins de charge" onclick="zkWkAdj('kg',-zkKgStep())">−</button><span><input id="zrKgIn" class="zr-num2 zr-kgin" type="text" inputmode="decimal" autocomplete="off" value="${ZR.kg ? String(ZR.kg).replace('.',',') : ''}" placeholder="poids du corps" aria-label="Charge en kg (vide = poids du corps)" onfocus="this.select()" oninput="zkWkKgType(this.value)"> kg</span><button type="button" aria-label="Plus de charge" onclick="zkWkAdj('kg',zkKgStep())">+</button></div>
+      <div class="zr-kgstep" id="zrSteps">${zkStepsHtml()}</div>
       <div id="zrRecBox">${zkWkRecHtml()}</div>`;
   }else{
     const left = Math.max(0, Math.round((ZR.restEnd - Date.now())/1000)), m = Math.floor(left/60), sc = left%60, C = 603;
-    body = `<div class="zr-rest"><div class="zr-ring"><svg width="210" height="210" viewBox="0 0 210 210" aria-hidden="true"><circle cx="105" cy="105" r="96" fill="none" stroke="rgba(255,255,255,.1)" stroke-width="8"/><circle class="p" id="zrRestC" cx="105" cy="105" r="96" fill="none" stroke="var(--glow)" stroke-width="8" stroke-linecap="round" stroke-dasharray="${C}" stroke-dashoffset="${(C*(1-left/Math.max(1,ZR.restTotal))).toFixed(1)}"/></svg>
-      <div class="t"><span style="letter-spacing:3px; color:var(--glow); font-weight:700;">REPOS</span><b id="zrRestT">${m}:${String(sc).padStart(2,'0')}</b><span>Puis série ${ZR.set}</span></div></div>
-      <button type="button" class="zr-pill" onclick="ZR.restEnd+=30000; ZR.restTotal+=30; zkWkTick()">+30 s</button></div>`;
+    body = `<div class="zr-rest"><div class="zr-ring"><svg width="210" height="210" viewBox="0 0 210 210" aria-hidden="true"><circle cx="105" cy="105" r="96" fill="none" stroke="rgba(255,255,255,.1)" stroke-width="8"/><defs><filter id="zrGlow" x="-20%" y="-20%" width="140%" height="140%"><feGaussianBlur stdDeviation="4" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter></defs><circle class="p" id="zrRestC" filter="url(#zrGlow)" cx="105" cy="105" r="96" fill="none" stroke="var(--glow)" stroke-width="8" stroke-linecap="round" stroke-dasharray="${C}" stroke-dashoffset="${(C*(1-left/Math.max(1,ZR.restTotal))).toFixed(1)}"/></svg>
+      <div class="t"><span style="letter-spacing:3px; color:var(--glow); font-weight:700;">REPOS</span><b id="zrRestT">${m}:${String(sc).padStart(2,'0')}</b><span>${ZR.restKind === 'ex' ? `Puis : ${escapeHtml(e.name)}` : `Puis série ${ZR.set}`}</span></div></div>
+      <div class="zr-pills"><button type="button" class="zr-pill" onclick="zkRestAdd(-30)">−30 s</button><button type="button" class="zr-pill" onclick="zkRestAdd(30)">+30 s</button></div>
+      <div class="zr-steps zr-reststeps"><span>${ZR.restKind === 'ex' ? 'Repos entre exercices' : 'Repos entre séries'}</span>${ZK_REST_CH.map(s=>`<button type="button" class="${s === zkRestFor(ZR.restKind) ? 'on' : ''}" onclick="zkRestSet(${s})">${zkRestLbl(s)}</button>`).join('')}</div></div>`;
   }
   zkEl().innerHTML = `<div class="zr-top"><button type="button" class="zr-x" aria-label="Fermer le mode guidé" onclick="zkWkExit()">✕</button><div class="zr-title">${escapeHtml(type)}</div><div class="zr-count">${ZR.k+1}/${N}</div></div>
     ${zkSegs(N, ZR.k)}
@@ -7427,6 +7505,17 @@ function zkDrawWorkout(){
 }
 function zkWkRecHtml(){ const e = wkDraft[ZR.list[ZR.k]]; if(wkIsDist(e)) return ''; const rec = ZR.recs[wkKey(e.name)], r2 = zkWkRec();
   return r2 ? `<div class="zr-rec">🏆 Nouveau record en vue (avant : ${escapeHtml(wkFmtSet(r2))})</div>` : (rec ? `<div class="zr-hint" style="margin-top:12px;">Record : ${escapeHtml(wkFmtSet(rec))}</div>` : ''); }
+/* 02/11 : charge au choix en séance guidée — pas de 1, 2,5 ou 5 kg (retenu), ou la charge tapée exactement */
+const ZK_KG_STEPS = [1, 2.5, 5];
+function zkKgStep(){ const s = +STATE.settings.kgStep; return ZK_KG_STEPS.includes(s) ? s : 2.5; }
+function zkStepsHtml(){ return `<button type="button" class="zr-steplink" onclick="zkKgStepNext()" aria-label="Changer le pas des boutons − et +">± ${String(zkKgStep()).replace('.',',')} kg</button>`; }
+function zkKgStepNext(){ const i = ZK_KG_STEPS.indexOf(zkKgStep()); zkKgStepSet(ZK_KG_STEPS[(i + 1) % ZK_KG_STEPS.length]); }
+function zkKgStepSet(s){ STATE.settings.kgStep = s; queueSave(); const el = document.getElementById('zrSteps'); if(el) el.innerHTML = zkStepsHtml(); }
+function zkWkKgType(v){
+  if(!ZR || ZR.type!=='workout') return;
+  v = String(v||'').trim().replace(',', '.'); const k = v === '' ? 0 : parseFloat(v); if(isNaN(k)) return;
+  ZR.kg = Math.max(0, Math.min(500, Math.round(k*100)/100)); zkWkAdj('kgtype', 0);
+}
 function zkWkAdj(f, d){   // mise à jour sur place : pas de ré-animation de tout l'écran à chaque appui
   if(!ZR || ZR.type!=='workout') return;
   if(f==='km' || f==='min'){
@@ -7435,9 +7524,10 @@ function zkWkAdj(f, d){   // mise à jour sur place : pas de ré-animation de to
     if(a) a.value = String(ZR.km).replace('.',','); if(b) b.value = zkFmtMS(ZR.min); return;
   }
   const hadRec = !!zkWkRec();
-  if(f==='reps') ZR.reps = Math.max(0, ZR.reps + d); else ZR.kg = Math.max(0, Math.round((ZR.kg + d)*10)/10);
+  if(f==='reps') ZR.reps = Math.max(0, ZR.reps + d); else ZR.kg = Math.max(0, Math.min(500, Math.round((ZR.kg + d)*100)/100));
   const a = document.getElementById('zrReps'), b = document.getElementById('zrKg'), c = document.getElementById('zrRecBox');
   if(a) a.textContent = ZR.reps; if(b) b.textContent = ZR.kg ? String(ZR.kg).replace('.',',') + ' kg' : 'poids du corps';
+  const ki = document.getElementById('zrKgIn'); if(ki && f !== 'kgtype') ki.value = ZR.kg ? String(ZR.kg).replace('.',',') : '';
   if(c && hadRec !== !!zkWkRec()) c.innerHTML = zkWkRecHtml();
   else if(c && !zkWkRec()) c.innerHTML = zkWkRecHtml();
 }
@@ -7449,9 +7539,25 @@ function zkWkTick(){
   if(c) c.setAttribute('stroke-dashoffset', (603*(1-left/Math.max(1,ZR.restTotal))).toFixed(1));
   if(!t) zkDrawWorkout();
 }
+/* 02/11 : repos au choix — entre séries (2 min par défaut) et entre exercices (3 min par défaut), retenus pour les séances suivantes */
+const ZK_REST_CH = [60, 90, 120, 180, 240];
+function zkRestFor(kind){ const v = +(kind === 'ex' ? STATE.settings.restExSec : STATE.settings.restSec); return v > 0 ? v : (kind === 'ex' ? 180 : 120); }
+function zkRestLbl(s){ return s % 60 ? `${Math.floor(s/60)}:${String(s%60).padStart(2,'0')}` : `${s/60} min`; }
+function zkRestSet(s){
+  if(!ZR || ZR.phase !== 'rest') return;
+  if(ZR.restKind === 'ex') STATE.settings.restExSec = s; else STATE.settings.restSec = s; queueSave();
+  const left = Math.max(0, (ZR.restEnd - Date.now())/1000), done = Math.max(0, ZR.restTotal - left);
+  ZR.restTotal = s; ZR.restEnd = Date.now() + Math.max(0, s - done)*1000;
+  if(ZR.restEnd <= Date.now()) return zkWkTick();
+  zkDrawWorkout();
+}
+function zkRestAdd(d){
+  if(!ZR || ZR.phase !== 'rest') return;
+  ZR.restEnd += d*1000; ZR.restTotal = Math.max(1, ZR.restTotal + d); zkWkTick();
+}
 function zkWkRecord(val){
   const idx = ZR.list[ZR.k]; (ZR.res[idx] = ZR.res[idx] || [])[ZR.set-1] = val;
-  if(ZR.set < ZR.sets){ ZR.set++; ZR.phase = 'rest'; ZR.restTotal = STATE.settings.restSec || 120; ZR.restEnd = Date.now() + ZR.restTotal*1000; clearInterval(zkRestT); zkRestT = setInterval(zkWkTick, 1000); return zkDrawWorkout(); }
+  if(ZR.set < ZR.sets){ ZR.set++; ZR.phase = 'rest'; ZR.restKind = 'set'; ZR.restTotal = zkRestFor('set'); ZR.restEnd = Date.now() + ZR.restTotal*1000; clearInterval(zkRestT); zkRestT = setInterval(zkWkTick, 1000); return zkDrawWorkout(); }
   zkWkFinishEx();
 }
 function zkWkMain(){ if(ZR.phase==='rest'){ clearInterval(zkRestT); ZR.phase='set'; return zkDrawWorkout(); } try{ sfxCheck(); }catch(e){} const e = wkDraft[ZR.list[ZR.k]]; zkWkRecord(wkIsDist(e) ? {km:ZR.km, min:ZR.min} : {reps:ZR.reps, kg:ZR.kg}); }
@@ -7465,7 +7571,7 @@ function zkWkApply(idx){
 }
 function zkWkFinishEx(){
   zkWkApply(ZR.list[ZR.k]);
-  if(ZR.k < ZR.list.length-1){ ZR.k++; ZR.set = 1; zkWkLoad(); ZR.phase = 'rest'; ZR.restTotal = STATE.settings.restSec || 120; ZR.restEnd = Date.now() + ZR.restTotal*1000; clearInterval(zkRestT); zkRestT = setInterval(zkWkTick, 1000); return zkDrawWorkout(); }
+  if(ZR.k < ZR.list.length-1){ ZR.k++; ZR.set = 1; zkWkLoad(); ZR.phase = 'rest'; ZR.restKind = 'ex'; ZR.restTotal = zkRestFor('ex'); ZR.restEnd = Date.now() + ZR.restTotal*1000; clearInterval(zkRestT); zkRestT = setInterval(zkWkTick, 1000); return zkDrawWorkout(); }
   clearInterval(zkRestT);
   const doneEx = ZR.list.filter(i=>wkDraft[i].done);
   const anyRec = doneEx.some(i=>{ const e = wkDraft[i]; if(wkIsDist(e)) return false; const rec = ZR.recs[wkKey(e.name)]; return rec && wkBetter({reps:e.reps, kg:+e.kg||0}, rec); });
@@ -8851,7 +8957,7 @@ let wkDraft = [];   // exercices en cours de saisie dans la fenêtre
 function wkKey(n){ return String(n||'').trim().toLowerCase().replace(/\s+/g,' '); }
 /* build 78 : deux sortes d'exercices — « séries » (reps × kg) et « distance » (km + temps, ex. course).
    Records distance : la plus longue distance, et la meilleure allure (min/km) dès 1 km. */
-const WK_DIST_RE = /\b(course|run|running|footing|jogging|v[ée]lo|natation|nage|marche|rameur|trail)\b/i;   // 10/10 : mots entiers (« Développé » contenait « velo », « Gainage » contenait « nage »)
+const WK_DIST_RE = /(?<!\p{L})(course|run|running|footing|jogging|v[ée]lo|natation|nage|marche|rameur|trail)(?!\p{L})/iu   // 27/10 : « Dévelo… » (en tapant Développé) passait en mode distance : é n'est pas une lettre pour \b;   // 10/10 : mots entiers (« Développé » contenait « velo », « Gainage » contenait « nage »)
 function wkIsDist(e){ return e && e.mode === 'dist'; }
 function wkPace(e){ return (+e.km >= 1 && +e.min > 0) ? (+e.min) / (+e.km) : null; }
 function wkFmtPace(p){ const m = Math.floor(p), sec = Math.round((p - m) * 60); return `${m}'${String(sec === 60 ? 0 : sec).padStart(2,'0')}/km`; }
@@ -8920,7 +9026,7 @@ function wkGoalExNames(){   // exercices visés par un objectif en cours
   STATE.goals.forEach(g=>{ if(!g.done && g.progressType==='quantifie' && /^exercise_/.test(g.linkedSource||'') && g.linkedExercise){ const k = wkKey(g.linkedExercise); if(!seen.has(k)) seen.set(k, {name:g.linkedExercise, dist: /_(km|time)$/.test(g.linkedSource)}); } });
   return [...seen.values()];
 }
-function wkAddNamed(name, dist){ wkDraft.push(dist ? {name, mode:'dist', km:'', min:''} : {name, sets:3, reps:'', kg:''}); wkRedraw(); }
+function wkAddNamed(name, dist){ wkDraft.push(dist ? {name, mode:'dist', km:'', min:''} : {name, sets:3, reps:'', kg:''}); if(dist) wkRedraw(); else { const i = wkDraft.length - 1; wkRedraw(); wkAutoFill(i); } }
 function wkKnownNames(){
   const seen = new Map();
   STATE.workouts.log.forEach(w=>(w.exercises||[]).forEach(e=>{ const k = wkKey(e.name); if(k && !seen.has(k)) seen.set(k, e.name.trim()); }));
@@ -8935,7 +9041,7 @@ function wkDraftHtml(){
   return wkDraft.map((e,i)=>{
     const r = rec[wkKey(e.name)];
     return `<div class="wk-ex">
-      <div class="wk-ex-top"><button type="button" class="wk-done ${e.done?'on':''}" aria-label="Exercice fait" title="Fait (facultatif)" onclick="wkDraft[${i}].done=!wkDraft[${i}].done; wkRedraw()">${e.done?'✓':''}</button><input type="text" list="wkNames" class="wk-name" placeholder="Exercice" value="${escapeHtml(e.name)}" maxlength="30" oninput="wkDraft[${i}].name=this.value; wkHint(${i})">
+      <div class="wk-ex-top"><button type="button" class="wk-done ${e.done?'on':''}" aria-label="Exercice fait" title="Fait (facultatif)" onclick="wkDraft[${i}].done=!wkDraft[${i}].done; wkRedraw()">${e.done?'✓':''}</button><input type="text" list="wkNames" class="wk-name" placeholder="Exercice" value="${escapeHtml(e.name)}" maxlength="30" oninput="wkDraft[${i}].name=this.value; wkHint(${i}); wkAutoFill(${i}, true)" onchange="wkAutoFill(${i})">
         ${wkExHasHist(e.name) ? `<button type="button" class="icon-btn exf-btn" aria-label="Voir mes progrès" title="Mes progrès" onclick="wkFicheOpen(wkDraft[${i}].name)">📈</button>` : ''}<button type="button" class="icon-btn danger" aria-label="Retirer l'exercice" onclick="wkDraft.splice(${i},1); wkRedraw()">✕</button></div>
       <div class="wk-mode"><button type="button" class="${!wkIsDist(e)?'on':''}" onclick="wkDraft[${i}].mode='sets'; wkRedraw()">Séries</button><button type="button" class="${wkIsDist(e)?'on':''}" onclick="wkDraft[${i}].mode='dist'; wkRedraw()">Distance</button></div>
       ${wkIsDist(e) ? `<div class="wk-mode wk-sub"><button type="button" class="${!e.int?'on':''}" onclick="wkSetInt(${i}, false)">Continu</button><button type="button" class="${e.int?'on':''}" onclick="wkSetInt(${i}, true)">Fractionné</button></div>
@@ -9020,6 +9126,10 @@ function runGoalFor(name){
   const k = wkKey(name); if(!k) return null;
   return STATE.goals.find(g=>!g.done && g.progressType==='quantifie' && (g.linkedSource==='exercise_km' || g.linkedSource==='exercise_time') && wkKey(g.linkedExercise)===k) || null;
 }
+function wkLoadRefTxt(e, r){   // 27/10 : ton meilleur à la charge que tu es en train de taper
+  const k = wkKey(e.name), kg = +e.kg || 0; if(!k || (r && Math.abs((+r.kg||0) - kg) < 0.01)) return '';
+  const ra = wkRepsAt(k, kg); return ra.same ? ` · ${kg ? 'à ' + wkKgLbl(k, kg) : 'au poids du corps'} : ${ra.same} reps max` : '';
+}
 function wkHintText(e, rec){
   const k = wkKey(e.name), r = rec[k];
   if(wkIsDist(e)){
@@ -9034,7 +9144,7 @@ function wkHintText(e, rec){
   }
   const goal = STATE.goals.find(g=>!g.done && g.progressType==='quantifie' && /^exercise_(kg|reps)$/.test(g.linkedSource||'') && wkKey(g.linkedExercise) === k);
   const gTxt = goal ? `${+goal.declaredStart > 0 ? ` · ton niveau : ${String(goal.declaredStart).replace('.',',')} ${goal.unit||''}` : ''} · 🎯 objectif ${String(goal.targetValue).replace('.',',')} ${goal.unit||''}` : '';
-  return (r && !wkIsDist(r) ? `Record : ${wkFmtSet(r)}` : (e.name ? (goal && +goal.declaredStart > 0 ? 'Première série dans l\'app' : 'Nouvel exercice — ta première série devient ton record') : '')) + (e.name ? gTxt : '');
+  return (r && !wkIsDist(r) ? `Record : ${wkFmtSet(r)}${wkLoadRefTxt(e, r)}` : (e.name ? (goal && +goal.declaredStart > 0 ? 'Première série dans l\'app' : 'Nouvel exercice — ta première série devient ton record') : '')) + (e.name ? gTxt : '');
 }
 function wkHintText0(i){ const el = document.getElementById('wkHint'+i), e = wkDraft[i]; if(!el || !e) return; const rec = wkRecords(); el.innerHTML = escapeHtml(wkHintText(e, rec)) + wkLiveHtml(e, rec); }
 function wkHint(i){
@@ -9059,6 +9169,7 @@ function wkLiveHtml(e, rec){
   } else if(+e.reps){
     const old = rec[k];
     if(old && !wkIsDist(old) && wkBetter({reps:+e.reps, kg:+e.kg||0}, old)) out.push(`🏆 Nouveau record (${wkPrGain({reps:+e.reps, kg:+e.kg||0}, old).label})`);
+    else { const rp = wkRepPr(e); if(rp) out.push(`🏆 Record ${+e.kg ? 'à ' + wkKgLbl(k, +e.kg) : 'au poids du corps'} (+${rp.now.reps - rp.old.reps} rep${rp.now.reps - rp.old.reps > 1 ? 's' : ''})`); }
   }
   const g = STATE.goals.find(x=>!x.done && x.progressType==='quantifie' && /^exercise_/.test(x.linkedSource||'') && wkKey(x.linkedExercise) === k);
   if(g){
@@ -9232,6 +9343,28 @@ function submitLogWorkout(){
   closeModal();
   logWorkout(type2, dur2, note, exercises, date, blockId);
 }
+/* 27/10 : RECORDS SELON LA CHARGE — trois façons de progresser sur un exercice en séries :
+   1. charge max (le plus lourd jamais soulevé) ; 2. plus de reps qu'avant À LA MÊME CHARGE (poids du corps compris) ;
+   la 2 ne compte que si tu n'as jamais fait autant de reps avec plus lourd (sinon ce n'est pas un progrès).
+   La 1re fois à une charge n'est pas un record (rien à battre). */
+function wkRepsAt(k, kg){
+  let same = 0, heavier = 0;
+  STATE.workouts.log.forEach(w=>(w.exercises||[]).forEach(e=>{
+    if(wkKey(e.name) !== k || wkIsDist(e)) return;
+    const ek = +e.kg || 0, r = +e.reps || 0;
+    if(Math.abs(ek - kg) < 0.01) same = Math.max(same, r); else if(ek > kg) heavier = Math.max(heavier, r);
+  }));
+  return {same, heavier};
+}
+function wkIsBodyweightEx(k){ return STATE.workouts.log.some(w=>(w.exercises||[]).some(e=>wkKey(e.name) === k && !wkIsDist(e) && !(+e.kg))); }
+function wkKgLbl(k, kg){ return `${wkIsBodyweightEx(k) ? '+' : ''}${String(Math.round(kg*100)/100).replace('.', ',')} kg`; }
+function wkRepPr(e){
+  if(!e || wkIsDist(e)) return null;
+  const k = wkKey(e.name), kg = +e.kg || 0, reps = +e.reps || 0; if(!k || !reps) return null;
+  const ra = wkRepsAt(k, kg);
+  if(!ra.same || reps <= ra.same || reps <= ra.heavier) return null;
+  return {key: kg ? `${k}|@${kg}` : `${k}|reps`, name: kg ? `${e.name} · à ${wkKgLbl(k, kg)}` : `${e.name} · poids du corps`, now:{reps, kg}, old:{reps:ra.same, kg}};
+}
 function logWorkout(type, durationMin, note, exercises, date, blockId){
   date = date || todayStr();
   exercises = exercises || [];
@@ -9243,9 +9376,11 @@ function logWorkout(type, durationMin, note, exercises, date, blockId){
       if(!e.int && old && wkIsDist(old) && (+e.km) > (+old.km) && !prs.some(p=>p.key===k)) prs.push({key:k, name:e.name, now:{mode:'dist', km:e.km, min:e.min}, old});
       return;
     }
-    if(old && !wkIsDist(old) && wkBetter(e, old) && !prs.some(p=>p.key===k)) prs.push({key:k, name:e.name, now:{reps:e.reps, kg:e.kg}, old});
-    const orp = before[k+'|reps'];   // reps au poids du corps quand le record principal est lesté
-    if(orp && !(+e.kg) && (+e.reps) > orp.reps && !prs.some(p=>p.key===k+'|reps')) prs.push({key:k+'|reps', name:`${e.name} · poids du corps`, now:{reps:e.reps, kg:0}, old:orp});
+    const main = old && !wkIsDist(old) && wkBetter(e, old);
+    if(main && !prs.some(p=>p.key===k)) prs.push({key:k, name:e.name, now:{reps:e.reps, kg:e.kg}, old});
+    // 27/10 : plus de reps à la même charge (poids du corps ou lesté) = record aussi
+    const rp = !main && wkRepPr(e);
+    if(rp && !prs.some(p=>p.key===rp.key)) prs.push(rp);
   });
   // records par distance (1 km, 5 km, 10 km, semi, marathon) : un seul par séance, celui qui progresse le plus
   let runPr = null;
@@ -9549,6 +9684,29 @@ function wkFicheOpen(name){
   el.classList.add('on');
 }
 function wkFicheClose(){ const el = document.getElementById('exFiche'); if(el) el.classList.remove('on'); }
+/* ===================== 27/10 : EXERCICE DÉJÀ FAIT = TES ANCIENNES PERFS =====================
+   Dès que le nom correspond à un exercice déjà fait (tapé ou choisi dans les suggestions du clavier),
+   la ligne vide se remplit avec ta meilleure perf : séries, reps, kg. */
+function wkPickLast(name){ const k = wkKey(name); for(const w of STATE.workouts.log){ const e = (w.exercises||[]).find(x=>wkKey(x.name) === k); if(e) return e; } return null; }
+// 27/10 : ta meilleure perf sur l'exercice (charge la plus lourde, puis le plus de reps, puis le plus de séries)
+// kind : 'bw' = au poids du corps, 'wt' = lesté ; sans kind = la même sorte que ta dernière séance
+function wkBestOf(name, kind){
+  const k = wkKey(name); let best = null;
+  if(!kind){ const l = wkPickLast(name); kind = l && !wkIsDist(l) && wkIsBodyweightEx(k) ? (+l.kg ? 'wt' : 'bw') : null; }
+  STATE.workouts.log.forEach(w=>(w.exercises||[]).forEach(e=>{
+    if(wkKey(e.name) !== k || wkIsDist(e) || !(+e.reps)) return;
+    if(kind === 'bw' && +e.kg) return; if(kind === 'wt' && !(+e.kg)) return;
+    if(!best || wkBetter(e, best) || ((+e.kg||0) === (+best.kg||0) && +e.reps === +best.reps && (+e.sets||0) > (+best.sets||0))) best = e;
+  }));
+  return best;
+}
+function wkAutoFill(i, live){
+  const e = wkDraft[i]; if(!e || wkIsDist(e) || String(e.reps||'').trim() || String(e.kg||'').trim()) return;
+  if(live && !wkPickLast(e.name)) return;   // pendant la frappe : seulement quand le nom est complet et connu
+  const best = wkBestOf(e.name); if(!best) return;
+  Object.assign(e, {sets: +best.sets || 3, reps: best.reps, kg: +best.kg ? best.kg : ''}); wkRedraw();
+  const n = document.querySelectorAll('#wkExList .wk-name')[i]; if(live && n){ n.focus(); n.setSelectionRange(n.value.length, n.value.length); }
+}
 function modalWorkoutHistory(){
   openModal(`<h3>HISTORIQUE SPORT</h3><div id="wkHistBody">${wkHistoryBody()}</div>
     <div class="modal-actions"><button class="btn" onclick="closeModal()">Fermer</button></div>`);
@@ -9740,7 +9898,7 @@ const SETTINGS_TABS = [
 const ZK_GUIDE = [
   {id:'jour', ico:'☀', t:'Ta journée', it:[
     {t:'Prochaine quête', d:"La carte du haut de « Jour » te dit quoi faire maintenant. Un toucher pour valider.", go:()=>{ closeModal(); switchTab('today'); }},
-    {t:'Journée tenue', d:"Fais ton minimum d'actions (3 par défaut, réglable) pour tenir la journée et garder ta série de jours.", go:()=>modalDayHeld()},
+    {t:'Journée tenue', d:"Fais ton minimum d'actions (2 par jour la 1re semaine, puis 3 ; réglable) pour tenir la journée et garder ta série de jours. Rater un jour ne casse pas ta série, en rater deux d'affilée, si (pareil pour tes routines).", go:()=>modalDayHeld()},
     {t:'Non-négociable de demain', d:"Le soir, choisis LA quête que tu tiendras quoi qu'il arrive (🌟).", go:()=>modalCommitTomorrow()},
   ]},
   {id:'routines', mod:'routines', ico:'🔁', t:'Routines (habitudes)', it:[
@@ -10038,6 +10196,7 @@ function renderRoutinesList(onlyPending){
           ${(r.steps||[]).length ? `<span class="zk-steps-chip">${r.steps.length} étapes</span>` : ''}
           ${r.time?`<span>${escapeHtml(r.time)}${r.deadlinePenalty?' ⏰':''}</span>`:''}
           ${displayStreak>0?`<span class="streak">🔥 ${displayStreak}j</span>`:''}
+          ${routineJoker(r)?`<span class="streak-warn">⚠ raté la dernière fois : pas deux</span>`:''}
           ${rest?`<span style="color:var(--text-faint);">repos aujourd'hui</span>`:''}
         </div>
       </div>
