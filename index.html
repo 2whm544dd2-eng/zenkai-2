@@ -668,6 +668,13 @@
   .day-held em{font-style:normal; font-family:var(--font-mono); font-size:10.5px; color:var(--text-dim); white-space:nowrap;}
   .day-held.ok{border-color:rgba(255,201,77,0.5); background:rgba(255,201,77,0.07);}
   .day-held.ok .dh-t{color:#ffc94d;} .day-held.ok .dh-dots i.on{background:linear-gradient(90deg,#ff9f43,#ffc94d);}
+  .dh-row{display:flex; gap:8px; align-items:stretch; margin:0 0 12px;} .dh-row .day-held{flex:1; margin:0; min-width:0;}
+  .dh-pomo{flex:0 0 auto; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:1px; min-width:74px; padding:6px 10px; border-radius:12px; border:1px solid rgba(63,169,255,.35); background:rgba(63,169,255,.07); color:#7fd4ff; font:inherit; cursor:pointer;}
+  .dh-pomo .l{font-family:var(--font-mono); font-size:9.5px; letter-spacing:1.2px; color:var(--text-dim);}
+  .dh-pomo b{font-family:'Inter', system-ui, sans-serif; font-size:19px; font-weight:800; line-height:1.1; font-variant-numeric:tabular-nums; letter-spacing:0;}
+  .dh-pomo b small{font-size:12px; font-weight:600; opacity:.7; margin-left:1px;}
+  .dh-pomo.ok{border-color:rgba(107,227,160,.5); background:rgba(107,227,160,.08); color:#6be3a0;}
+  .dh-pomo.run{box-shadow:0 0 0 1px rgba(63,169,255,.25), 0 0 14px -4px rgba(63,169,255,.8);}
   .mod-grid{display:grid; grid-template-columns:1fr 1fr; gap:8px; margin:12px 0;}
   .mod-opt{border:1px solid rgba(255,255,255,0.12); border-radius:12px; padding:10px; cursor:pointer; opacity:.55;}
   .mod-opt b{display:block; font-size:13px;} .mod-opt span{display:block; font-size:10.5px; color:var(--text-dim); margin-top:3px; line-height:1.35;}
@@ -1419,6 +1426,34 @@
   .ach-prog > div{height:100%; border-radius:999px; background:linear-gradient(90deg, var(--glow-dim), var(--glow));}
 
   /* ===== Prière (05/11, admin) ===== */
+  .zx-row{display:flex; gap:8px; align-items:stretch; margin:0 0 12px;} .zx-row .sn-card{flex:1; min-width:0; margin:0 !important;}
+  .pr-mini{flex:0 0 112px; display:flex; flex-direction:column; justify-content:center; gap:2px; padding:10px 12px; border-radius:16px; border:1px solid rgba(255,201,77,.28); background:rgba(255,201,77,.05); color:inherit; font:inherit; text-align:left; cursor:pointer; letter-spacing:0;}
+  .pr-mini .l{font-family:var(--font-mono); font-size:9.5px; letter-spacing:1.3px; color:var(--gold);} .pr-mini b{font-size:15px; color:var(--text); white-space:nowrap;} .pr-mini small{font-size:11.5px; color:var(--text-dim); white-space:nowrap; overflow:hidden; text-overflow:ellipsis;}
+  .pr-mini.due{border-color:rgba(107,227,160,.5);} .pr-mini.due small{color:#6be3a0; font-weight:600;}
+  .zp-in-modal{padding:0 !important;} .zp-in-modal .zp-fold{display:none;}
+  .fd-wrap{margin-left:auto; padding-left:10px; border-left:1px solid rgba(255,255,255,.15); display:flex; gap:5px; align-items:center; cursor:pointer;}
+  .day-held .fd-wrap + *{display:none;}
+  .fd-l{font-family:var(--font-mono); font-size:9.5px; letter-spacing:1.3px; color:#7fd4ff; margin-right:2px;}
+  .fd{width:18px; height:18px; border-radius:50%; display:grid; place-items:center; font-style:normal; font-size:10px; border:1.5px solid rgba(127,212,255,.45); color:rgba(127,212,255,.6); flex:0 0 auto;}
+  .fd.on{background:#3fa9ff; border-color:#3fa9ff; color:#04111f;} .fd.gold{background:#ffc94d; border-color:#ffc94d; color:#2a1c00; font-weight:700;}
+  .fd.play{width:22px; height:22px; background:rgba(63,169,255,.18); border-color:#3fa9ff; color:#7fd4ff; box-shadow:0 0 10px rgba(63,169,255,.6);}
+  .fd.run{width:22px; height:22px; border:none;} .fd.run svg{width:22px; height:22px;}
+  .fd-more{font-size:11px; color:#7fd4ff;}
+  .day-held.has-fd{gap:8px;} .day-held.has-fd .dh-t{letter-spacing:.8px; white-space:nowrap;} .day-held.has-fd .dh-dots{min-width:28px;} .day-held.has-fd .fd-l{letter-spacing:.8px;}
+  @media (max-width:380px){ .day-held.has-fd .dh-dots{display:none;} }
+  .zx-row .sn-tag{min-width:62px;} .zx-row .sn-main{font-size:13.5px;}
+  .zq-in{min-width:0; overflow:hidden; text-overflow:ellipsis;}
+  @media (max-width:380px){ .pr-mini{flex-basis:100px; padding:10px;} .zx-row .sn-tag{min-width:54px;} }
+  .zq{display:flex; align-items:center; gap:8px; padding:9px 12px 9px 14px !important; cursor:pointer; min-height:52px;}
+  .zq-i{font-size:16px;} .zq-t{font-size:15px; color:var(--text); font-weight:600; white-space:nowrap; letter-spacing:0;} .zq-t b{color:var(--gold);}
+  .zq-in{font-size:12.5px; color:var(--text-dim); white-space:nowrap; letter-spacing:0;} .zq-th{font-size:14px;}
+  .zq-dots{margin-left:auto; display:flex; gap:4px;} .zq-dots i{width:8px; height:8px; border-radius:50%; border:1.5px solid rgba(255,255,255,.25);}
+  .zq-dots i.ok{background:#6be3a0; border-color:#6be3a0;} .zq-dots i.qd{background:#ffc94d; border-color:#ffc94d;} .zq-dots i.nx{border-color:var(--gold); box-shadow:0 0 6px rgba(255,201,77,.7);}
+  .zq-go{border:1px solid rgba(107,227,160,.55); background:rgba(107,227,160,.10); color:#6be3a0; border-radius:10px; padding:0 10px; min-height:36px; font:inherit; font-size:13px; font-weight:600; white-space:nowrap; cursor:pointer; letter-spacing:0;}
+  .zq-go.late{border-color:rgba(255,201,77,.55); background:rgba(255,201,77,.08); color:#ffc94d;}
+  .zq-chev{color:var(--text-dim); font-size:18px;}
+  .zp-fold{background:none; border:none; color:var(--text-dim); font:inherit; font-size:12.5px; letter-spacing:0; margin-left:auto; margin-right:4px; cursor:pointer; white-space:nowrap;}
+  @media (max-width:360px){ .zq-in{display:none;} }
   .zp-card{padding-top:14px !important; padding-bottom:12px !important;}
   .zp-head{display:flex; justify-content:space-between; align-items:center;}
   .zp-set{background:none; border:none; color:var(--text-dim); font-size:16px; padding:4px 6px; cursor:pointer;}
@@ -6163,9 +6198,16 @@ function checkDayHeld(){
 }
 function dayHeldHtml(){
   const n = dayActions(), min = dayHeldMin(), ok = !!(STATE.todayStats && STATE.todayStats.dayHeld), streak = dayHeldStreak();
-  return `<div class="day-held ${ok?'ok':''}" onclick="modalDayHeld()"><span class="dh-t">${ok ? '✓ JOURNÉE TENUE' : 'JOURNÉE TENUE'}</span>
+  const fd = focusDotsHtml(), focusOn = !!fd;
+  return `<div class="day-held ${ok?'ok':''} ${fd?'has-fd':''}" onclick="modalDayHeld()"><span class="dh-t">${ok ? '✓ JOURNÉE TENUE' : 'JOURNÉE TENUE'}</span>
     <div class="dh-dots">${Array.from({length:min}).map((_,i)=>`<i class="${i<n?'on':''}"></i>`).join('')}</div>
-    <em>${ok ? (streak > 1 ? `🔥 série de ${streak} j` : `+${DAY_HELD_XP} XP`) : `${Math.min(n,min)}/${min} · +${DAY_HELD_XP} XP`}</em></div>`;
+    <em>${ok ? (streak > 1 ? `🔥 série de ${streak} j` : `+${DAY_HELD_XP} XP`) : (focusOn ? `${Math.min(n,min)}/${min}` : `${Math.min(n,min)}/${min} · +${DAY_HELD_XP} XP`)}</em>${fd}</div>`;
+}
+function dayHeldRowHtml(){   // 07/11 : journée tenue + compteur de pomodoros juste à côté (autre police pour bien les distinguer)
+  if(!modOn('focus')) return dayHeldHtml();
+  const done = STATE.pomo.completedToday || 0, goal = STATE.pomo.dailyGoal || 4, hit = done >= goal;
+  return `<div class="dh-row">${dayHeldHtml()}<button type="button" class="dh-pomo ${hit ? 'ok' : ''} ${pomoRunning ? 'run' : ''}" onclick="switchTab('pomodoro')" aria-label="Pomodoro : ${done} sur ${goal} sessions">
+    <span class="l">⏱ FOCUS</span><b>${done}<small>/${goal}</small></b></button></div>`;
 }
 function modalDayHeld(){
   const min = dayHeldMin();
@@ -6403,7 +6445,7 @@ const PR_METHODS = {
   egypt: {label:'Égypte',                   fajr:19.5, isha:17.5, desc:'Fajr 19,5° · Icha 17,5°'},
 };
 const PR_HL = {seventh:{label:'1/7 de la nuit'}, angle:{label:'Selon l\'angle'}, mid:{label:'Milieu de la nuit'}};
-function prOn(){ return isAdminDevice() && !!(STATE.prayer && STATE.prayer.enabled); }
+function prOn(){ return !!(STATE.prayer && STATE.prayer.enabled); }   // 07/11 : l'interrupteur n'existe que sur un appareil admin ; une fois activé, la synchro l'emmène sur tes autres appareils (app installée comprise)
 function prCfg(){
   if(!STATE.prayer) STATE.prayer = {};
   const c = STATE.prayer;
@@ -6501,11 +6543,12 @@ function prThOpen(){
 function prThMark(key, v){
   const c = prCfg(); c.log[key] = c.log[key] || {};
   if(v) c.log[key].tahajjud = v; else delete c.log[key].tahajjud;
-  queueSave(); goalPushSoon(); closeModal(); render();
+  queueSave(); goalPushSoon(); closeModal(); render(); prBackToSheet();
 }
 function prInLbl(m){ return m < 60 ? `dans ${m} min` : `dans ${Math.floor(m/60)} h${m%60 ? ' ' + String(m%60).padStart(2,'0') : ''}`; }
 function prCardHtml(){
   if(!prOn()) return '';
+  if(!prCfg().open) return prCompactHtml();
   const c = prCfg(), today = todayStr(), log = c.log[today] || {}, nx = prNext();
   const nowMin = new Date().getHours()*60 + new Date().getMinutes();
   const cells = prTimes(today).map(p=>{
@@ -6516,13 +6559,76 @@ function prCardHtml(){
   }).join('');
   return `<div class="panel full zp-card">
     <div class="c-tl"></div><div class="c-br"></div>
-    <div class="zp-head"><div class="eyebrow">PROCHAINE PRIÈRE · ${escapeHtml(c.city.toUpperCase())}</div><button type="button" class="zp-set" onclick="prSettings()" aria-label="Réglages de la prière">⚙</button></div>
+    <div class="zp-head"><div class="eyebrow">PRIÈRE · ${escapeHtml(c.city.toUpperCase())}</div><button type="button" class="zp-fold" onclick="prToggleOpen()">Réduire ▴</button><button type="button" class="zp-set" onclick="prSettings()" aria-label="Réglages de la prière">⚙</button></div>
     <div class="zp-top"><div class="zp-next">${nx.tomorrow ? 'Demain · ' : ''}<b>${nx.n}</b> ${nx.hhmm}</div><div class="zp-in">${prInLbl(nx.inMin)}</div></div>
     <div class="zp-row">${cells}</div>
     ${prThHtml()}
     <div class="zp-foot">✓ à l'heure · ↺ rattrapée</div>
   </div>`;
 }
+/* 07/11 : prière repliée par défaut — une seule ligne ; un toucher l'ouvre. Bouton rapide pour la dernière prière passée. */
+function prToggleOpen(){ const c = prCfg(); c.open = !c.open; queueSave(); render(); }
+function prLastPending(){   // dernière prière passée et pas encore notée ; « à l'heure » tant que la suivante n'a pas commencé
+  const c = prCfg(), today = todayStr(), log = c.log[today] || {}, nowMin = new Date().getHours()*60 + new Date().getMinutes();
+  const t = prTimes(today), sunrise = prMin(prCompute(today).sunrise);
+  for(let i = t.length - 1; i >= 0; i--){
+    const p = t[i]; if(p.min > nowMin) continue;
+    if(log[p.k]) return null;
+    const end = i === 0 ? sunrise : (t[i+1] ? t[i+1].min : 24*60 + t[0].min);
+    return {...p, late: nowMin >= end};
+  }
+  return null;
+}
+function prQuick(k, v){ prMark(k, v); }
+function prCompactHtml(){
+  const c = prCfg(), today = todayStr(), log = c.log[today] || {}, nx = prNext(), lp = prLastPending();
+  const dots = prTimes(today).map(p=>{ const st = log[p.k], cur = !nx.tomorrow && nx.k === p.k; return `<i class="${st === 'ok' ? 'ok' : st === 'qd' ? 'qd' : cur ? 'nx' : ''}" title="${p.n} ${p.hhmm}"></i>`; }).join('');
+  const n = c.th ? prCurNight() : null, nowMin = new Date().getHours()*60 + new Date().getMinutes();
+  const th = n && n.key === today && nowMin >= n.third && nowMin < n.fajr && !(c.log[n.key]||{}).tahajjud ? '<span class="zq-th" title="Dernier tiers de la nuit">🌙</span>' : '';
+  const go = lp ? `<button type="button" class="zq-go ${lp.late ? 'late' : ''}" onclick="event.stopPropagation(); prQuick('${lp.k}','${lp.late ? 'qd' : 'ok'}')">${lp.late ? '↺' : '✓'} ${lp.n}</button>` : '';
+  return `<div class="panel full zq" onclick="prToggleOpen()" role="button" aria-label="Prière : ouvrir">
+    <span class="zq-i">🕌</span><span class="zq-t"><b>${nx.tomorrow ? 'Fajr' : nx.n}</b> ${nx.hhmm}</span><span class="zq-in">${prInLbl(nx.inMin)}</span>${th}
+    <span class="zq-dots">${dots}</span>${go}<span class="zq-chev">›</span></div>`;
+}
+/* 07/11 : ligne « ENSUITE | PRIÈRE » — la prochaine prière dans une petite case à droite de MAINTENANT / ENSUITE. */
+function prMiniHtml(){
+  const nx = prNext(), lp = prLastPending();
+  return `<button type="button" class="pr-mini ${lp ? 'due' : ''}" onclick="prSheet()" aria-label="Prière : ouvrir">
+    <span class="l">🕌 PRIÈRE</span><b>${nx.tomorrow ? 'Fajr' : nx.n} ${nx.hhmm}</b><small>${lp ? `${lp.n} à noter` : prInLbl(nx.inMin)}</small></button>`;
+}
+function prSheet(){   // la carte complète, dans une fenêtre
+  const c = prCfg(), was = c.open; c.open = true; let html = prCardHtml(); c.open = was;
+  html = html.replace('panel full zp-card', 'zp-card zp-in-modal').replace(/prOpen\('/g, "prOpenS('").replace(/prThOpen\(\)/g, 'prThOpenS()');
+  openModal(html + `<div class="modal-actions"><button class="btn ghost" onclick="window.__prSheet = false; closeModal()">Fermer</button></div>`);
+}
+function prOpenS(k){ window.__prSheet = true; prOpen(k); }
+function prThOpenS(){ window.__prSheet = true; prThOpen(); }
+function prBackToSheet(){ if(window.__prSheet){ window.__prSheet = false; setTimeout(prSheet, 60); } }
+function dayNextRowHtml(){
+  const sn = modOn('agenda') ? schedNowCardHtml() : '';
+  if(!prOn()) return sn;
+  if(!sn) return prCardHtml();   // aucune plage en cours ou à venir : la prière seule, repliée sur une ligne
+  return `<div class="zx-row">${sn}${prMiniHtml()}</div>`;
+}
+/* 07/11 : pastilles de Focus à côté de la journée tenue (une par session ; ▶ lance la suivante ; or quand l'objectif est atteint). */
+function focusDotsHtml(){
+  if(!modOn('focus') || STATE.settings.focusDots === false) return '';
+  const done = STATE.pomo.completedToday || 0, goal = Math.max(1, STATE.pomo.dailyGoal || 4), hit = done >= goal, shown = Math.min(goal, 6);
+  const running = pomoRunning && pomoMode === 'work';
+  let dots = '';
+  for(let i = 0; i < shown; i++){
+    if(i < done){ dots += `<i class="fd ${hit ? 'gold' : 'on'}">${hit ? '✓' : '⏱'}</i>`; continue; }
+    if(i === done && running){
+      const tot = (STATE.pomo.workMin || 25) * 60000, fr = pomoEndAt ? Math.max(0, Math.min(1, 1 - (pomoEndAt - Date.now()) / tot)) : 0;
+      dots += `<span class="fd run"><svg viewBox="0 0 36 36"><circle cx="18" cy="18" r="15" fill="none" stroke="rgba(127,212,255,.2)" stroke-width="5"/><circle cx="18" cy="18" r="15" fill="none" stroke="#3fa9ff" stroke-width="5" stroke-linecap="round" stroke-dasharray="${(fr*94.2).toFixed(1)} 94.2" transform="rotate(-90 18 18)"/></svg></span>`; continue;
+    }
+    dots += i === done ? `<i class="fd play">▶</i>` : `<i class="fd">⏱</i>`;
+  }
+  const more = goal > 6 ? `<small class="fd-more">+${goal - 6}</small>` : '';
+  return `<span class="fd-wrap" role="button" aria-label="Focus : ${done} session${done > 1 ? 's' : ''} sur ${goal} aujourd'hui" onclick="event.stopPropagation(); focusDotsTap()"><span class="fd-l">FOCUS</span>${dots}${more}</span>`;
+}
+function focusDotsTap(){ const go = !pomoRunning && (STATE.pomo.completedToday || 0) < (STATE.pomo.dailyGoal || 4); switchTab('pomodoro'); if(go) setTimeout(()=>{ try{ if(!pomoRunning) pomoToggle(); }catch(e){} }, 350); }
+function toggleFocusDotsPref(){ STATE.settings.focusDots = STATE.settings.focusDots === false; queueSave(); document.getElementById('focusDotsSwitch')?.classList.toggle('on', STATE.settings.focusDots !== false); }
 function prOpen(k){
   const c = prCfg(), today = todayStr(), p = prTimes(today).find(x=>x.k === k); if(!p) return;
   const st = (c.log[today] || {})[k] || '';
@@ -6543,7 +6649,7 @@ function prMark(k, v){
   c.log[today] = c.log[today] || {};
   if(v) c.log[today][k] = v; else delete c.log[today][k];
   const keep = Object.keys(c.log).sort().slice(-120); Object.keys(c.log).forEach(d=>{ if(!keep.includes(d)) delete c.log[d]; });   // 4 mois d'historique
-  queueSave(); closeModal(); render();
+  queueSave(); closeModal(); render(); prBackToSheet();
 }
 function prSettings(){
   const c = prCfg(), p = 'style="font-size:12px; color:var(--text-dim); margin:2px 0 0;"';
@@ -10504,6 +10610,10 @@ function modalPomoSettings(){
       <label style="font-family:var(--font-mono); font-size:11px; color:var(--text-dim); cursor:pointer;">Notification à la fin des sessions</label>
       <div class="mini-switch ${STATE.settings.pomoNotify?'on':''}" id="pomoNotifySwitch"></div>
     </div>
+      <div class="field-row" style="justify-content:space-between; cursor:pointer; padding:6px 0;" onclick="toggleFocusDotsPref()" role="button" aria-label="Pastilles Focus à côté de la journée tenue">
+        <label style="width:auto; cursor:pointer;">Pastilles Focus à côté de la journée tenue</label>
+        <div class="mini-switch ${STATE.settings.focusDots !== false ? 'on' : ''}" id="focusDotsSwitch"></div>
+      </div>
     <div class="q-hint" id="pomoPenaltyHint" style="display:${STATE.settings.pomoPenaltyEnabled?'block':'none'}">À minuit, si l'objectif du jour n'est pas atteint : −${Math.max(5, Math.round(pomoSessionXP()*PENALTY_RATE))} XP sur la compétence du pomodoro.</div>
     <div class="modal-actions"><button class="btn ghost" onclick="closeModal()">Annuler</button><button class="btn" onclick="submitPomoSettings()">Valider</button></div>
   `);
@@ -11078,12 +11188,12 @@ function goalRowHtml(g){
               ? `<button class="icon-btn" style="width:34px; height:34px; font-size:18px; color:var(--gold);" title="Mettre à jour" aria-label="Mettre à jour" onclick="modalGoalDetail('${g.id}'); setTimeout(()=>{ const i=document.getElementById('gdVal'); if(i) i.focus(); }, 80)">＋</button>`
               : isManualQ && !hasSubtasks
               ? `<div style="display:flex; flex-direction:column; gap:2px;">
-                  <button class="icon-btn" style="width:36px; height:30px; font-size:14px;" title="+1" aria-label="Ajouter 1" onclick="incrementGoalValue('${g.id}',1)">+</button>
-                  <button class="icon-btn" style="width:36px; height:30px; font-size:14px;" title="-1" aria-label="Retirer 1" onclick="incrementGoalValue('${g.id}',-1)">−</button>
+                  <button class="icon-btn" style="width:20px; height:16px; font-size:11px;" title="+1" onclick="incrementGoalValue('${g.id}',1)">+</button>
+                  <button class="icon-btn" style="width:20px; height:16px; font-size:11px;" title="-1" onclick="incrementGoalValue('${g.id}',-1)">−</button>
                 </div>`
               : hasSubtasks ? `<div class="chk" role="button" title="Valider l'étape suivante" aria-label="Valider l'étape suivante" onclick="goalStepNext('${g.id}')"></div>`
-              : ''))   // 04/11 : objectif automatique : pas de case vide
-      : (g.done ? `<div class="chk done" onclick="toggleGoal('${g.id}')">✓</div>` : '');   // 04/11 : au ressenti : « atteint » est dans le détail
+              : `<div class="chk" style="cursor:default;" title="Se complète automatiquement"></div>`))
+      : `<div class="chk ${g.done?'done':''}" onclick="toggleGoal('${g.id}')">${g.done?'✓':''}</div>`;
     let deadlineBadge = '';
     if(daysLeft!==null && !g.done){
       const color = daysLeft<0 ? 'var(--danger)' : daysLeft<=3 ? 'var(--gold)' : 'var(--text-dim)';
@@ -11091,19 +11201,26 @@ function goalRowHtml(g){
       deadlineBadge = `<div class="deadline-badge" style="color:${color}; border-color:${color};">${label}</div>`;
     }
     return `
-    <div class="item g-card" style="${(hasSubtasks || isExam)?'flex-wrap:wrap;':''}">
+    <div class="item" style="${(hasSubtasks || isExam)?'flex-wrap:wrap;':''}">
+      <div class="pri-dot" style="background:${PRIORITY_COLOR[g.priority]}" title="Priorité ${PRIORITY_LABEL[g.priority]}"></div>
       ${checkboxCell}
       <div class="item-body">
-        <div class="g-head g-open" onclick="modalGoalDetail('${g.id}')"><div class="item-name ${g.done?'done':''}">${escapeHtml(g.name)}</div>${deadlineBadge}${g.done ? '' : `<span class="g-pct">${pct} %</span>`}<span class="g-chev" aria-hidden="true">›</span></div>
+        <div class="g-head"><div class="item-name ${g.done?'done':''}" style="cursor:pointer;" onclick="modalGoalDetail('${g.id}')">${escapeHtml(g.name)}</div>${deadlineBadge}<button class="icon-btn g-mini" title="Modifier" aria-label="Modifier" onclick="modalEditGoal('${g.id}')">✎</button><button class="icon-btn danger g-mini" title="Supprimer" aria-label="Supprimer" onclick="deleteGoal('${g.id}')">✕</button></div>
         ${!g.done && (hasSubtasks || (isQ && g.targetValue) || !isQ) ? `
         <div style="cursor:pointer;" onclick="modalGoalDetail('${g.id}')">${goalBarHtml(g, pct)}</div>
         ${(hasSubtasks || isExam) ? '' : goalNextPalierHtml(g)}
         ${goalWeekHtml(g)}
-        ${isExam ? `<div class="item-meta" style="cursor:pointer;" onclick="modalExam('${g.id}')"><span style="font-family:var(--font-mono); color:var(--cyan);">${examMasteredCount(g)}/${examItemCount(g)} maîtrisés · 📅 ${Math.min(examRevCount(g), examRevNeed(g))}/${examRevNeed(g)} j de révision</span>${exCanDeclare ? `<span style="color:#ffc94d;">résultat ›</span>` : ''}</div>` : ''}
-        ${!isQ && !hasSubtasks && !isExam ? `<div class="g-acts"><button class="g-step" aria-label="Avancer de 10 %" onclick="setGoalPercent('${g.id}', ${pct+10})">+10 %</button></div>` : ''}
+        ${(()=>{ const rc = runCoach(g) || weightLine(g) || (g.linkedSource==='routine_days' && isQ ? goalNextStepHint(g) : ''); return rc ? `<div class="g-coach">${g.linkedSource==='routine_days'?'🗣':g.linkedSource==='body_weight'?'⚖':'🏃'} ${escapeHtml(rc)}</div>` : ''; })()}
+        ${isExam ? `<div class="item-meta" style="cursor:pointer;" onclick="modalExam('${g.id}')"><span style="font-family:var(--font-mono); color:var(--cyan);">${pct} % prêt · ${examMasteredCount(g)}/${examItemCount(g)} maîtrisés${g.exam.studyMin ? ` · ⏱ ${wkFmtMin(g.exam.studyMin)}` : ''}${g.done ? '' : ` · 📅 ${Math.min(examRevCount(g), examRevNeed(g))}/${examRevNeed(g)} j de révision`}</span><span style="color:#ffc94d;">${exCanDeclare ? 'résultat ›' : 'ouvrir ›'}</span></div>` : `<div class="item-meta">${!isQ && !hasSubtasks ? `<button class="g-step" aria-label="Reculer de 10 %" onclick="setGoalPercent('${g.id}', ${pct-10})">−</button>` : ''}<span style="font-family:var(--font-mono); color:var(--cyan);">${hasSubtasks ? pct+' %' : isQ ? pct+' %' : ''}</span>${!isQ && !hasSubtasks ? `<button class="g-step" aria-label="Avancer de 10 %" onclick="setGoalPercent('${g.id}', ${pct+10})">+10 %</button>` : ''}</div>`}
         ` : ''}
-        ${g.done ? `<div class="item-meta"><span class="xp-tag">+${g.awardedXp ?? g.xp} XP</span>${g.reward?`<span class="reward-tag">🎁 ${escapeHtml(g.reward)}</span>`:''}</div>` : ''}
-        ${hasSubtasks ? `<div class="item-meta">${subToggle}</div>` : ''}
+        <div class="item-meta">
+          <span class="term-chip ${g.term}">${g.term==='court'?'CT':'MT'}</span>
+          <span class="rank-chip" style="color:${rankForLevel(RANK_THRESHOLDS[g.rank]||1).color}; font-size:9px; padding:1px 4px;">${g.rank}</span>
+          <span>${escapeHtml(sk ? sk.name : '—')}</span>
+          <span class="xp-tag" title="XP complète à partir de ${goalFullDays(g.rank)} jours">${g.done ? `+${g.awardedXp ?? g.xp} XP` : `jusqu'à ${goalBaseXP(g.rank)} XP`}</span>
+          ${g.reward?`<span class="reward-tag">🎁 ${escapeHtml(g.reward)}</span>`:''}
+          ${hasSubtasks ? subToggle : ''}
+        </div>
         ${subList}
       </div>
       ${(hasSubtasks || isExam) && !g.done ? `<div class="zk-gstep-wrap">${goalNextHtml(g)}</div>` : ''}
@@ -11227,6 +11344,14 @@ function tabToday(){
     </div>` : ''}
 
     ${returnCardHtml()}
+    ${initLineHtml()}
+
+    ${dayHeldHtml()}
+    ${penaltyNudgeHtml()}
+    ${dayNextRowHtml()}
+    ${oathReminderHtml()}
+
+
     ${(STATE.commitment && STATE.commitment.forDate===todayStr() && STATE.commitment.taskIds.length) ? `
     <div class="panel full" style="border-color:var(--gold); box-shadow:0 0 0 1px rgba(255,201,77,0.15), inset 0 0 30px rgba(255,201,77,0.04);">
       <div class="c-tl" style="border-color:var(--gold);"></div><div class="c-br" style="border-color:var(--gold);"></div>
@@ -11246,7 +11371,30 @@ function tabToday(){
       }).join('')}
     </div>` : ''}
 
-    ${prCardHtml()}
+    ${(()=>{
+      const h = new Date().getHours();
+      const alreadySet = STATE.commitment && STATE.commitment.forDate === tomorrowStr();
+      const dismissedToday = STATE.commitment && STATE.commitment.promptDismissedDate === todayStr();
+      if(h>=20 && !alreadySet && !dismissedToday && STATE.tasks.some(t=>!t.done)){
+        return `<div class="panel full" style="display:flex; align-items:center; justify-content:space-between; gap:10px; flex-wrap:wrap;">
+          <div class="tip-banner" style="margin:0; flex:1;">🌙 Quelles quêtes sont non-négociables demain ? Choisis-les maintenant, à froid.</div>
+          <div style="display:flex; gap:8px;">
+            <button class="btn small" onclick="modalCommitTomorrow()">Choisir</button>
+            <button class="icon-btn" title="Plus tard" aria-label="Plus tard" onclick="dismissCommitmentPrompt()">✕</button>
+          </div>
+        </div>`;
+      }
+      return '';
+    })()}
+
+    ${!modOn('goals') || !STATE.goals.some(g=>!g.done) ? '' : `<div class="panel full panel-compact">
+      <div class="c-tl"></div><div class="c-br"></div>
+      <div class="eyebrow">OBJECTIFS</div>
+      <h2>🎯 Objectifs en cours ${zkHelp(3)}</h2>
+      <div class="sub">${STATE.goals.filter(g=>!g.done).length} OBJECTIF(S) ACTIF(S) · COURT &amp; MOYEN TERME</div>
+      ${renderGoalsList(true, 3)}
+    </div>`}
+
     ${currentThemeId()==='systeme' ? systemeDailyQuestHtml(pendingPlan, waterLeft) : `
     <div class="panel full">
       <div class="c-tl"></div><div class="c-br"></div>
@@ -11293,37 +11441,7 @@ function tabToday(){
         </div>
       </div>` : ''}
     </div>`}
-
-    ${dayHeldHtml()}
-    ${penaltyNudgeHtml()}
-    ${modOn('agenda') ? schedNowCardHtml() : ''}
-    ${oathReminderHtml()}
-
-    ${(()=>{
-      const h = new Date().getHours();
-      const alreadySet = STATE.commitment && STATE.commitment.forDate === tomorrowStr();
-      const dismissedToday = STATE.commitment && STATE.commitment.promptDismissedDate === todayStr();
-      if(h>=20 && !alreadySet && !dismissedToday && STATE.tasks.some(t=>!t.done)){
-        return `<div class="panel full" style="display:flex; align-items:center; justify-content:space-between; gap:10px; flex-wrap:wrap;">
-          <div class="tip-banner" style="margin:0; flex:1;">🌙 Quelles quêtes sont non-négociables demain ? Choisis-les maintenant, à froid.</div>
-          <div style="display:flex; gap:8px;">
-            <button class="btn small" onclick="modalCommitTomorrow()">Choisir</button>
-            <button class="icon-btn" title="Plus tard" aria-label="Plus tard" onclick="dismissCommitmentPrompt()">✕</button>
-          </div>
-        </div>`;
-      }
-      return '';
-    })()}
-
-    ${initLineHtml()}
-
-    ${!modOn('goals') || !STATE.goals.some(g=>!g.done) ? '' : `<div class="panel full panel-compact">
-      <div class="c-tl"></div><div class="c-br"></div>
-      <div class="eyebrow">OBJECTIFS</div>
-      <h2>🎯 Objectifs en cours ${zkHelp(3)}</h2>
-      <div class="sub">${STATE.goals.filter(g=>!g.done).length} OBJECTIF(S) ACTIF(S) · COURT &amp; MOYEN TERME</div>
-      ${renderGoalsList(true, 3)}
-    </div>`}`;
+`;
 }
 
 let skillsMgmtOpen = false;   // 17/10 : options avancées repliées
