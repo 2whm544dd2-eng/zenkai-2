@@ -1507,6 +1507,30 @@
   .qa-grid button{border:1px solid rgba(255,255,255,.12); background:rgba(255,255,255,.04); border-radius:16px; padding:16px 4px 12px; color:var(--text); font:inherit; cursor:pointer; min-width:0;}
   .qa-grid .i{display:block; font-size:28px; line-height:1.1;} .qa-grid b{display:block; font-size:14.5px; margin-top:6px;}
   .qa-grid small{display:block; font-size:12px; color:var(--text-dim); margin-top:2px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;}
+  /* ===== Mes séances (07/11) ===== */
+  .zr-sw{display:flex; align-items:center; gap:10px; padding:11px 0; border-bottom:1px solid rgba(255,255,255,.06);} .zr-sw > div:first-child{flex:1; min-width:0;}
+  .zr-sw b{display:block; font-size:14.5px; color:var(--text); font-weight:600;} .zr-sw span{display:block; font-size:12.5px; color:var(--text-dim); line-height:1.35; margin-top:2px;}
+  .zr-sw select, .zr-sw .zr-time{width:auto; max-width:118px; padding:6px 8px; font-size:13px;} .zr-sw .mini-switch{flex:0 0 auto;}
+  .wk-tplsave{margin-top:8px; border-style:solid !important; border-color:rgba(139,92,246,.45) !important; color:#d6c8ff !important;}
+  .rc-list{margin:4px 0 12px;} .rc-row{display:flex; align-items:center; gap:10px; padding:9px 2px; border-bottom:1px solid rgba(255,255,255,.06); cursor:pointer; min-height:48px;}
+  .rc-st{width:20px; text-align:center; font-size:13px; color:#6be3a0;} .rc-st.rest{opacity:.6;}
+  .rc-b{flex:1; min-width:0; display:flex; flex-direction:column; gap:2px;} .rc-n{min-width:0; font-size:15px; color:var(--text); white-space:nowrap; overflow:hidden; text-overflow:ellipsis;}
+  .rc-m{font-size:12.5px; color:var(--text-dim); white-space:nowrap; overflow:hidden; text-overflow:ellipsis;}
+  .ws-t{display:flex; justify-content:space-between; align-items:baseline; font-size:12px; letter-spacing:1.5px; color:var(--text-dim); margin:16px 0 8px;} .ws-t a{letter-spacing:0; color:#b79bff; font-size:12.5px; text-decoration:none;}
+  .ws{display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:8px; margin-top:10px;}
+  .ws button{border:1px solid rgba(255,255,255,.12); border-radius:14px; padding:10px; background:rgba(255,255,255,.03); color:inherit; font:inherit; text-align:left; min-width:0; position:relative; cursor:pointer;}
+  .ws b{display:block; font-size:14.5px; color:var(--text); white-space:nowrap; overflow:hidden; text-overflow:ellipsis;}
+  .ws span{display:block; font-size:12px; color:var(--text-dim); margin-top:3px; overflow:hidden; display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical;}
+  .ws em{display:block; font-style:normal; font-size:12.5px; color:#b79bff; margin-top:6px; font-weight:600;}
+  .ws.run button em{color:#7fd4ff;}
+  .ws button.nx{border-color:var(--gold); box-shadow:0 0 0 1px rgba(255,201,77,.25), 0 0 16px -6px rgba(255,201,77,.7);} .ws button.nx em{color:var(--gold);}
+  .ws button.done{border-color:rgba(107,227,160,.45);} .ws button.done em{color:#6be3a0;}
+  .ws-tag{position:absolute; top:-9px; left:10px; background:var(--gold); color:#2a1c00; font-size:10.5px; font-weight:800; padding:1px 7px; border-radius:6px; font-style:normal; letter-spacing:.3px;}
+  .ws-tag.ok{background:#6be3a0; color:#06210f;}
+  .wsc{display:flex; gap:6px; flex-wrap:wrap; margin:4px 0 10px;} .wsc button{border:1px solid rgba(255,255,255,.14); background:rgba(255,255,255,.04); color:var(--text-dim); border-radius:999px; padding:8px 13px; font:inherit; font-size:14px; font-weight:600; cursor:pointer;}
+  .wsc button.on{background:linear-gradient(135deg,#8b5cf6,#6d28d9); color:#fff; border-color:transparent;} .wsc button.onr{background:linear-gradient(135deg,#3fa9ff,#1d6fd1); color:#fff; border-color:transparent;}
+  .wsl{font-size:12px; letter-spacing:1.5px; color:var(--text-dim); margin:12px 0 6px;}
+  .ws-add{display:flex; gap:6px; margin:2px 0 4px;} .ws-add input{flex:1; min-width:0; font-size:16px;}
   /* ===== Serment Inné ===== */
   .oath-panel{background:radial-gradient(ellipse at 100% 0%, rgba(255,201,77,0.08), transparent 55%), linear-gradient(165deg, var(--bg-panel), var(--bg-panel-2) 65%);}
   .oath-quote{font-family:var(--font-display); font-size:19px; line-height:1.35; color:#fff; font-weight:600; margin:4px 0 6px;}
@@ -1550,7 +1574,8 @@
   @media (prefers-reduced-motion: reduce){ .rb-rays,.rb-fire,.rb-p{animation:none;} }
 
   /* ===== Navigation en bas (styles Monarque, Système, Manhwa, Donjon, Épuré) ===== */
-  body.nav-bottom{padding-bottom:calc(112px + env(safe-area-inset-bottom));}
+  body.nav-bottom{padding-bottom:calc(150px + env(safe-area-inset-bottom));}
+  .fab.fab-away{opacity:0 !important; transform:translateY(30px) scale(.6) !important; pointer-events:none !important;} .fab{transition:opacity .2s, transform .2s;}
   body.nav-bottom .tabbar-wrap{position:fixed; left:0; right:0; bottom:0; z-index:45; margin:0;}
   body.nav-bottom .tabbar-wrap::before, body.nav-bottom .tabbar-wrap::after{display:none;}
   body.nav-bottom .tabbar{display:grid; grid-template-columns:repeat(7, minmax(0,1fr)); gap:2px; overflow:visible; padding:6px 4px calc(10px + env(safe-area-inset-bottom));}
@@ -2197,7 +2222,7 @@
 <script>
 /* ========================= STORAGE (Claude artifact OR standalone phone) ========================= */
 const STORAGE_KEY = 'sl-tracker-state-v1';
-const APP_VERSION = '78';
+const APP_VERSION = '131';   // 07/11 : remise à jour (n'est pas affichée)
 // Pomodoro : XP fixe par minute de focus et bornes de durée (voir pomoSessionXP).
 const POMO_XP_PER_MIN = 0.8;
 const POMO_MIN_WORK = 10, POMO_MAX_WORK = 90;
@@ -5523,6 +5548,7 @@ function pomoCompleteWork(endedAt){
   if(exG){ exG.exam.studyMin = (exG.exam.studyMin||0) + STATE.pomo.workMin; exG.lastMoveDate = todayStr(); examMarkRev(exG); }
   addSkillXP(targetSkill, xp);
   STATE.pomo.completedToday++;
+  try{ goalPushSoon(); }catch(e){}   // 07/11 : la relance Focus suit le compteur
   STATE.pomo.curBreak = pomoBreakFor(STATE.pomo.completedToday);
   STATE.pomo.lastPomoDate = (STATE.todayStats && STATE.todayStats.date) || todayStr();   // jour « actif » (session à cheval sur minuit)
   STATE.stats.totalFocusMinutes += STATE.pomo.workMin;
@@ -6048,6 +6074,7 @@ function pushPeriodEnd(freq){
   return wkDateStr(d);
 }
 function pushTimedItems(){
+  if(!remCfg().timed) return [];
   const out = [], nm = s => String(s||'').slice(0, 40);
   STATE.routines.filter(r=>r.time).forEach(r=>{
     const f = r.freqTag || 'quotidienne', days = routineDays(r);
@@ -6073,15 +6100,15 @@ async function syncPushState(existingSub){
       code: syncCode || null,   // 05/11 : le serveur n'accepte plus d'abonnement sans code d'accès valide
       timezone: Intl.DateTimeFormat().resolvedOptions().timeZone,
       state: {
-        hasPendingTasks: STATE.tasks.some(t=>!t.done),
+        hasPendingTasks: false,   // 07/11 : le rappel du soir passe par « Mes rappels » (dernier appel), une seule notification le soir
         commitmentForDate: commitment.forDate || null,
         commitmentTaskNames: taskNames,
         // plages de la journée type, pour le rappel 30 min avant (app fermée)
-        blocks: [0,1,2,3,4,5,6].flatMap(i=>{ const d = new Date(); d.setDate(d.getDate()+i); const ds = wkDateStr(d); return schedBlocksOn(ds).map(b=>({...b, _date: ds})); })
+        blocks: !remCfg().blocks ? [] : [0,1,2,3,4,5,6].flatMap(i=>{ const d = new Date(); d.setDate(d.getDate()+i); const ds = wkDateStr(d); return schedBlocksOn(ds).map(b=>({...b, _date: ds})); })
           .filter(b=>b.kind!=='repos').slice(0, 60).map(b=>{ const l = schedLinkObj(b), k = SCHED_KINDS[b.kind] || SCHED_KINDS.travail;
           const nn = schedAssigned(b, b._date).map(t=>(t.nn?'🌟 ':'⚔ ') + taskName(t)).join(', ');
           return {id:b.id, name:`${k.ico} ${b.name}`.slice(0, 40), start:b.start, date:b._date, link: (nn || (l ? l.name : '')).slice(0, 80) || null}; }),
-        goals: prayerRemindersAhead().concat(goalRemindersAhead(), jokerRemindersAhead(true)).slice(0, 40),   // 05/11 : + prière (admin)   // 04/11 : + rappels « ne rate pas deux fois » (même canal, aucun changement serveur)
+        goals: prayerRemindersAhead().concat(remAheadItems(), goalRemindersAhead(), jokerRemindersAhead(true)).sort((a, b)=>a.date < b.date ? -1 : a.date > b.date ? 1 : 0).slice(0, 40),   // 07/11 : + dernier appel et relance Focus ; trié par jour pour que ceux d'aujourd'hui ne soient jamais coupés   // 05/11 : + prière (admin)   // 04/11 : + rappels « ne rate pas deux fois » (même canal, aucun changement serveur)
         timed: pushTimedItems(),   // 04/11 : routines et quêtes à heure fixe, rappelées même app fermée
       },
     };
@@ -6195,13 +6222,14 @@ function checkDayHeld(){
     addSkillXP(dayHeldSkill(), -DAY_HELD_XP);
   }
   oathPushWeekSoon();
+  try{ goalPushSoon(); }catch(e){}   // 07/11 : le dernier appel disparaît dès que la journée est tenue
 }
 function dayHeldHtml(){
   const n = dayActions(), min = dayHeldMin(), ok = !!(STATE.todayStats && STATE.todayStats.dayHeld), streak = dayHeldStreak();
   const fd = focusDotsHtml(), focusOn = !!fd;
   return `<div class="day-held ${ok?'ok':''} ${fd?'has-fd':''}" onclick="modalDayHeld()"><span class="dh-t">${ok ? '✓ JOURNÉE TENUE' : 'JOURNÉE TENUE'}</span>
     <div class="dh-dots">${Array.from({length:min}).map((_,i)=>`<i class="${i<n?'on':''}"></i>`).join('')}</div>
-    <em>${ok ? (streak > 1 ? `🔥 série de ${streak} j` : `+${DAY_HELD_XP} XP`) : (focusOn ? `${Math.min(n,min)}/${min}` : `${Math.min(n,min)}/${min} · +${DAY_HELD_XP} XP`)}</em>${fd}</div>`;
+    <em>${ok ? (streak > 1 ? `🔥 ${fd ? '' : 'série de '}${streak} j` : `+${DAY_HELD_XP} XP`) : (focusOn ? `${Math.min(n,min)}/${min}` : `${Math.min(n,min)}/${min} · +${DAY_HELD_XP} XP`)}</em>${fd}</div>`;
 }
 function dayHeldRowHtml(){   // 07/11 : journée tenue + compteur de pomodoros juste à côté (autre police pour bien les distinguer)
   if(!modOn('focus')) return dayHeldHtml();
@@ -6364,6 +6392,7 @@ function goalReminderOfDay(ds){
   return cands[0];
 }
 function goalRemindersAhead(){   // pour le serveur : rappels des 7 prochains jours (recalculés à chaque progrès)
+  if(!remCfg().goals) return [];
   const out = [];
   for(let i = 0; i < 7; i++){
     const d = new Date(); d.setDate(d.getDate()+i); const ds = wkDateStr(d);
@@ -6372,7 +6401,7 @@ function goalRemindersAhead(){   // pour le serveur : rappels des 7 prochains jo
   return out;
 }
 function checkGoalReminders(nowMin, today){
-  if(pushActive || STATE.goalReminderDate === today) return;
+  if(pushActive || STATE.goalReminderDate === today || !remCfg().goals) return;
   const r = goalReminderOfDay(today); if(!r) return;
   const [ah, am] = String(r.g.remindAt || '19:00').split(':').map(Number), at = ah*60 + am;
   if(nowMin < at || nowMin >= at + 180) return;
@@ -6402,7 +6431,7 @@ function jokerWarnDate(r){   // 05/11 : jour où la routine sera « à ne pas ra
   return routineDueToday(r) && !routineDone(r) ? routineNextDue(r) : null;
 }
 function jokerRemindersAhead(skipTimed){
-  if(!modOn('routines')) return [];
+  if(!modOn('routines') || !remCfg().joker) return [];
   const out = [], today = todayStr();
   STATE.routines.forEach(r=>{
     if((r.freqTag||'quotidienne') !== 'quotidienne' || !r.streak || !routineStreakAlive(r)) return;
@@ -6546,6 +6575,10 @@ function prThMark(key, v){
   queueSave(); goalPushSoon(); closeModal(); render(); prBackToSheet();
 }
 function prInLbl(m){ return m < 60 ? `dans ${m} min` : `dans ${Math.floor(m/60)} h${m%60 ? ' ' + String(m%60).padStart(2,'0') : ''}`; }
+let fabLastY = 0;   // 07/11 : le + s'efface quand on fait défiler vers le bas (il cachait ✓, ✎ et ✕), revient dès qu'on remonte
+window.addEventListener('scroll', ()=>{ const y = window.scrollY, f = document.querySelector('.fab'); if(f){ if(y > fabLastY + 6 && y > 60) f.classList.add('fab-away'); else if(y < fabLastY - 6 || y <= 60) f.classList.remove('fab-away'); } fabLastY = y; }, {passive:true});
+function prInShort(m){ return m < 60 ? `${m} min` : `${Math.floor(m/60)} h${m%60 ? ' ' + String(m%60).padStart(2,'0') : ''}`; }   // 07/11 : la ligne repliée coupait « dans … »
+function prLeadSel(){ const L = prCfg().lead || 0; return `<select onchange="prCfg().lead = +this.value; queueSave(); goalPushSoon();" aria-label="Quand prévenir">${[[0,"à l'heure"],[5,'5 min avant'],[10,'10 min avant']].map(([v,l])=>`<option value="${v}" ${v===L?'selected':''}>${l}</option>`).join('')}</select>`; }
 function prCardHtml(){
   if(!prOn()) return '';
   if(!prCfg().open) return prCompactHtml();
@@ -6587,7 +6620,7 @@ function prCompactHtml(){
   const th = n && n.key === today && nowMin >= n.third && nowMin < n.fajr && !(c.log[n.key]||{}).tahajjud ? '<span class="zq-th" title="Dernier tiers de la nuit">🌙</span>' : '';
   const go = lp ? `<button type="button" class="zq-go ${lp.late ? 'late' : ''}" onclick="event.stopPropagation(); prQuick('${lp.k}','${lp.late ? 'qd' : 'ok'}')">${lp.late ? '↺' : '✓'} ${lp.n}</button>` : '';
   return `<div class="panel full zq" onclick="prToggleOpen()" role="button" aria-label="Prière : ouvrir">
-    <span class="zq-i">🕌</span><span class="zq-t"><b>${nx.tomorrow ? 'Fajr' : nx.n}</b> ${nx.hhmm}</span><span class="zq-in">${prInLbl(nx.inMin)}</span>${th}
+    <span class="zq-i">🕌</span><span class="zq-t"><b>${nx.tomorrow ? 'Fajr' : nx.n}</b> ${nx.hhmm}</span><span class="zq-in">${prInShort(nx.inMin)}</span>${th}
     <span class="zq-dots">${dots}</span>${go}<span class="zq-chev">›</span></div>`;
 }
 /* 07/11 : ligne « ENSUITE | PRIÈRE » — la prochaine prière dans une petite case à droite de MAINTENANT / ENSUITE. */
@@ -6665,7 +6698,7 @@ function prSettings(){
     <div style="margin-top:12px; font-size:14px; color:var(--text);">Décalage pour coller à ta mosquée (minutes)</div>
     <div class="zp-offs">${PR_NAMES.map(([k, n])=>`<div><span>${n}</span><input type="number" inputmode="numeric" step="1" min="-60" max="60" value="${c.offsets[k]}" onchange="prSetOff('${k}', this.value)"></div>`).join('')}</div>
     <p ${p}>Aujourd'hui : ${t.map(x=>`${x.n} ${x.hhmm}`).join(' · ')}</p>
-    ${row('Rappel à l\'heure', 'même app fermée, si les notifications sont activées', `<div class="mini-switch ${c.remind?'on':''}" id="prRemindSw" onclick="prSet('remind', !prCfg().remind)" role="button" aria-label="Rappel à l'heure de chaque prière"></div>`)}
+    ${row('Rappel de chaque prière', 'même app fermée, si les notifications sont activées', `<div class="mini-switch ${c.remind?'on':''}" id="prRemindSw" onclick="prSet('remind', !prCfg().remind)" role="button" aria-label="Rappel à l'heure de chaque prière"></div>`)}${c.remind ? row('Quand', 'pour les 5 prières', prLeadSel()) : ''}
     ${row('Tahajjud', 'milieu et dernier tiers de la nuit (Maghrib → Fajr)', `<div class="mini-switch ${c.th?'on':''}" onclick="prSet('th', !prCfg().th)" role="button" aria-label="Afficher le Tahajjud"></div>`)}
     ${c.th ? `${row('Rappel Tahajjud', `au début du dernier tiers${c.thOff ? (c.thOff > 0 ? ' + ' : ' − ') + Math.abs(c.thOff) + ' min' : ''} · cette nuit : ${prHHMM(prCurNight().third + c.thOff)}`, `<div class="mini-switch ${c.thRemind?'on':''}" onclick="prSet('thRemind', !prCfg().thRemind)" role="button" aria-label="Rappel Tahajjud"></div>`)}
     ${c.thRemind ? row('Décalage du rappel', 'en minutes, ex. +15 pour te laisser le temps', `<input type="number" inputmode="numeric" step="5" min="-120" max="120" value="${c.thOff}" onchange="prSetThOff(this.value)" style="width:80px; text-align:center; font-size:16px;">`) : ''}` : ''}
@@ -6687,8 +6720,9 @@ function prayerRemindersAhead(){
   for(let i = 0; i < 3; i++){
     const d = new Date(); d.setDate(d.getDate()+i); const ds = wkDateStr(d);
     prTimes(ds).forEach(p=>{
-      if(i === 0 && (p.min <= nowMin || (c.log[ds]||{})[p.k])) return;
-      out.push({id:'pr-'+p.k, date:ds, at:p.hhmm, body:`🕌 ${p.n} — ${p.hhmm} (${c.city})`});
+      const L = p.min >= (c.lead||0) ? (c.lead||0) : 0, atMin = p.min - L;
+      if(i === 0 && (atMin <= nowMin || (c.log[ds]||{})[p.k])) return;
+      out.push({id:'pr-'+p.k, date:ds, at:prHHMM(atMin), body: L ? `🕌 ${p.n} dans ${L} min · ${p.hhmm} (${c.city})` : `🕌 ${p.n} — ${p.hhmm} (${c.city})`});
     });
   }
   if(c.th && c.thRemind){   // tahajjud : la nuit en cours (si le rappel est encore à venir) + les 2 suivantes
@@ -6703,12 +6737,98 @@ function prayerRemindersAhead(){
   }
   return out;
 }
+/* ===== Mes rappels (07/11) : tout au même endroit, moins de notifications =====
+   Le « dernier appel » remplace le rappel du soir : une seule notification le soir, avec ce qu'il reste pour tenir la journée
+   (seulement si elle n'est pas tenue) et, s'il le faut, le choix des non-négociables de demain. La relance Focus ne part que si
+   tu es sous ton objectif. Tout passe par le canal des objectifs (state.goals) : aucun changement côté serveur. */
+function remCfg(){
+  const s = STATE.settings; s.rem = s.rem || {}; const r = s.rem;
+  const d = {timed:true, joker:true, goals:true, blocks:true, evening:true, last:true, lastAt:'20:30', focus:false, focusAt:'14:00'};
+  for(const k in d) if(r[k] === undefined) r[k] = d[k];
+  return r;
+}
+function remNeedCommit(){ const c = STATE.commitment || {}; return c.forDate !== tomorrowStr() && STATE.tasks.some(t=>!t.done); }
+function remLeftList(){
+  const left = modOn('routines') ? STATE.routines.filter(r=>(r.freqTag||'quotidienne') === 'quotidienne' && routineDueToday(r) && !routineDone(r)).map(r=>r.name) : [];
+  const out = left.slice(0, 3).concat(left.length > 3 ? [`+${left.length - 3}`] : []);
+  if(modOn('focus')){ const done = STATE.pomo.lastPomoDate === todayStr() ? (STATE.pomo.completedToday||0) : 0, goal = STATE.pomo.dailyGoal || 4; if(done < goal) out.push(`Focus ${done}/${goal}`); }
+  return out;
+}
+function remAheadItems(){
+  const r = remCfg(), out = [], nowMin = new Date().getHours()*60 + new Date().getMinutes(), toMin = t => { const [h, m] = String(t).split(':').map(Number); return h*60 + m; };
+  const commitTxt = 'Quelles quêtes sont non-négociables demain ?';
+  for(let i = 0; i < 3; i++){
+    const d = new Date(); d.setDate(d.getDate()+i); const ds = wkDateStr(d);
+    // soir : dernier appel et/ou non-négociables de demain, en une seule notification
+    if(i > 0 || toMin(r.lastAt) > nowMin){
+      let body = null;
+      if(i === 0){
+        const held = !!(STATE.todayStats && STATE.todayStats.dayHeld), n = dayActions(), min = dayHeldMin(), need = r.evening && remNeedCommit();
+        if(r.last && !held){ const left = remLeftList(), k = Math.max(1, min - n);
+          body = `🌙 Journée ${Math.min(n, min)}/${min}${left.length ? ` · il te reste : ${left.join(', ')}` : ''}. ${k === 1 ? 'Une action suffit' : `${k} actions`} pour la tenir.${need ? ' Puis : ' + commitTxt.toLowerCase() : ''}`; }
+        else if(need) body = `🌙 ${held ? 'Journée tenue ✓ · ' : ''}${commitTxt}`;
+      } else if(r.last) body = `🌙 Dernier appel : ta journée n'est pas encore tenue. Une action suffit pour garder ta série.${r.evening && STATE.tasks.some(t=>!t.done) ? ' Puis : ' + commitTxt.toLowerCase() : ''}`;
+      else if(r.evening && STATE.tasks.some(t=>!t.done)) body = `🌙 ${commitTxt}`;
+      if(body) out.push({id:'rem-soir', date:ds, at:r.lastAt, body});
+    }
+    // relance Focus : seulement si tu es sous ton objectif
+    if(r.focus && modOn('focus') && (i > 0 || toMin(r.focusAt) > nowMin)){
+      const done = i === 0 && STATE.pomo.lastPomoDate === todayStr() ? (STATE.pomo.completedToday||0) : 0, goal = STATE.pomo.dailyGoal || 4;
+      if(done < goal && !(i === 0 && pomoRunning)) out.push({id:'rem-focus', date:ds, at:r.focusAt, body:`🍅 Focus ${done}/${goal}${i ? " aujourd'hui" : ''} · une session de ${STATE.pomo.workMin || 25} min maintenant ?`});
+    }
+  }
+  return out;
+}
+function checkRemNotifications(nowMin, today){   // app ouverte, push inactif : les mêmes, en local
+  if(pushActive) return;
+  STATE.settings.remNotified = STATE.settings.remNotified || {};
+  remAheadItems().filter(x=>x.date === today).forEach(x=>{
+    const [h, m] = x.at.split(':').map(Number), at = h*60 + m;
+    if(nowMin < at || nowMin >= at + 120 || STATE.settings.remNotified[x.id] === today) return;
+    fireNotification('SYSTÈME // ZENKAI', x.body, 'zenkai-goal-'+x.id);
+    STATE.settings.remNotified[x.id] = today; queueSave();
+  });
+}
+function remTodayCount(){   // ce qui peut encore sonner aujourd'hui
+  const today = todayStr(), nowMin = new Date().getHours()*60 + new Date().getMinutes(), toMin = t => { const [h, m] = String(t).split(':').map(Number); return h*60 + m; };
+  let n = prayerRemindersAhead().concat(goalRemindersAhead(), jokerRemindersAhead(true), remAheadItems()).filter(x=>x.date === today).length;
+  if(remCfg().timed) n += pushTimedItems().filter(it=>!(it.doneUntil && it.doneUntil >= today) && (it.date ? it.date === today : !(Array.isArray(it.days) && !it.days.includes((new Date().getDay()+6)%7))) && toMin(it.time) > nowMin).length;
+  if(remCfg().blocks && modOn('agenda')) n += schedBlocksOn(today).filter(b=>b.kind !== 'repos' && toMin(b.start) > nowMin).length;
+  return n;
+}
+function remToggle(k){ const r = remCfg(); r[k] = !r[k]; queueSave(); goalPushSoon(); modalReminders(); }
+function remSet(k, v){ if(!/^\d{2}:\d{2}$/.test(v)) return; remCfg()[k] = v; queueSave(); goalPushSoon(); }
+function modalReminders(){
+  const r = remCfg(), c = prCfg(), granted = typeof Notification !== 'undefined' && Notification.permission === 'granted' && STATE.settings.notificationsOn;
+  const sw = (on, js, lbl) => `<div class="mini-switch ${on ? 'on' : ''}" onclick="${js}" role="button" aria-label="${lbl}"></div>`;
+  const row = (ico, t, sub, right) => `<div class="zr-sw"><div><b>${ico} ${t}</b><span>${sub}</span></div>${right}</div>`;
+  const time = (k) => `<input type="time" class="zr-time" value="${r[k]}" onchange="remSet('${k}', this.value)">`;
+  const rows = [];
+  if(prOn()) rows.push(row('🕌', 'Prières', c.remind ? 'les 5 prières' : 'désactivé', `${c.remind ? prLeadSel() : ''}${sw(c.remind, "prCfg().remind = !prCfg().remind; queueSave(); goalPushSoon(); modalReminders()", 'Rappel des prières')}`));
+  if(prOn() && c.th) rows.push(row('🌙', 'Tahajjud', 'dernier tiers de la nuit', sw(c.thRemind, "prCfg().thRemind = !prCfg().thRemind; queueSave(); goalPushSoon(); modalReminders()", 'Rappel du tahajjud')));
+  rows.push(row('⏰', 'Routines et quêtes à heure fixe', '30 min avant, puis à l\'heure', sw(r.timed, "remToggle('timed')", 'Heure fixe')));
+  if(modOn('routines')) rows.push(row('🔁', 'Ne rate pas deux fois', 'le jour où il faut rattraper une routine', sw(r.joker, "remToggle('joker')", 'Ne rate pas deux fois')));
+  if(modOn('goals')) rows.push(row('🎯', 'Objectifs', 'selon le rappel choisi dans chaque objectif', sw(r.goals, "remToggle('goals')", 'Objectifs')));
+  if(modOn('agenda')) rows.push(row('📅', 'Journée type', '30 min avant chaque plage', sw(r.blocks, "remToggle('blocks')", 'Journée type')));
+  if(modOn('focus')) rows.push(row('🍅', 'Relance Focus', `seulement si tu as moins de ${STATE.pomo.dailyGoal || 4} sessions`, `${r.focus ? time('focusAt') : ''}${sw(r.focus, "remToggle('focus')", 'Relance Focus')}`));
+  if(modOn('focus')) rows.push(row('⏱', 'Fin de session Focus', 'quand le minuteur sonne', sw(STATE.settings.pomoNotify, "STATE.settings.pomoNotify = !STATE.settings.pomoNotify; queueSave(); modalReminders()", 'Fin de session')));
+  rows.push(row('🌙', 'Dernier appel', 'ce qu\'il reste pour tenir la journée, seulement si elle n\'est pas tenue', `${r.last || r.evening ? time('lastAt') : ''}${sw(r.last, "remToggle('last')", 'Dernier appel')}`));
+  rows.push(row('🌟', 'Non-négociables de demain', 'le soir, si tu ne les as pas choisis · dans le dernier appel', sw(r.evening, "remToggle('evening')", 'Non-négociables de demain')));
+  const n = granted ? remTodayCount() : 0;
+  openModal(`<h3>MES RAPPELS</h3>
+    ${granted ? `<div class="q-hint" style="margin-bottom:6px;">${n === 0 ? "Plus rien ne sonne aujourd'hui." : `Encore <b>${n}</b> rappel${n > 1 ? 's' : ''} aujourd'hui.`} ${n > 6 ? '<span style="color:var(--gold, #f5c542);">C\'est beaucoup : coupe ceux qui ne t\'aident pas, sinon on finit par tout ignorer.</span>' : 'Garde ceux qui te font agir.'}</div>`
+      : `<div class="q-hint" style="margin-bottom:8px;">Les notifications ne sont pas activées sur cet appareil.</div><button class="btn wide" onclick="requestNotifications()">ACTIVER LES NOTIFICATIONS</button>`}
+    ${rows.join('')}
+    <div class="q-hint" style="margin-top:10px;">Un rappel peut arriver jusqu'à 10 minutes plus tard (app fermée).</div>
+    <div class="modal-actions"><button class="btn" onclick="closeModal()">OK</button></div>`);
+}
 function checkPrayerNotifications(nowMin, today){   // app ouverte, push inactif
   if(pushActive || !prOn() || !prCfg().remind) return;
   const c = prCfg(); c.notified = c.notified || {};
   prTimes(today).forEach(p=>{
-    if(nowMin < p.min || nowMin >= p.min + 30 || c.notified[p.k] === today || (c.log[today]||{})[p.k]) return;
-    fireNotification('SYSTÈME // ZENKAI', `🕌 ${p.n} — ${p.hhmm} (${c.city})`, 'zenkai-goal-pr-'+p.k);
+    const L = p.min >= (c.lead||0) ? (c.lead||0) : 0, atMin = p.min - L;
+    if(nowMin < atMin || nowMin >= atMin + 30 || c.notified[p.k] === today || (c.log[today]||{})[p.k]) return;
+    fireNotification('SYSTÈME // ZENKAI', L ? `🕌 ${p.n} dans ${L} min · ${p.hhmm} (${c.city})` : `🕌 ${p.n} — ${p.hhmm} (${c.city})`, 'zenkai-goal-pr-'+p.k);
     c.notified[p.k] = today; queueSave();
   });
   if(c.th && c.thRemind){
@@ -6817,13 +6937,143 @@ function wkRecentHtml(){
     return `<div class="wk-recent" onclick="modalWorkoutHistory()" role="button"><div><b>${escapeHtml(w.type)} · ${w.durationMin} min</b><small>${ex.length ? escapeHtml(ex.map(wkExLine).join(' · ')) : (w.note ? escapeHtml(w.note) : '—')}${w.prs ? ' 🏆' : ''}</small></div><span>${wkDayLbl(w.date)}</span></div>`;
   }).join('')}`;
 }
+function wkNewWorkout(){
+  if(wkCurrent() || !wkSplits()){ modalLogWorkout(); return; }
+  const nx = wkNextSplit(); if(nx){ wkSplitGo(nx.name); return; }
+  modalLogWorkout(undefined, false, null);
+}
 function wkRedo(id){
   const src = STATE.workouts.log.find(w=>w.id === id); if(!src) return;
   if(wkCurrent()){ modalLogWorkout(); return; }   // une séance est déjà en cours : on la rouvre au lieu de l'écraser
-  modalLogWorkout({type: src.type, durationMin: src.durationMin});
+  modalLogWorkout({type: src.type, durationMin: src.durationMin}, false, src.split || null);
   wkDraft = (src.exercises || []).filter(e=>e.name).map(e=>({name:e.name, mode:e.mode, sets:e.sets, reps:e.reps, kg:e.kg, km:e.km, min:e.min, int: e.int ? {...e.int} : undefined}));
   wkRedraw();
   try{ wkAutoSaveSoon(); }catch(e){}
+}
+
+/* ========================= MES SÉANCES (07/11) : Push / Pull / Legs, Upper / Lower… et séances de course =========================
+   STATE.workouts.splits = {muscu:[...], course:[...], rotate:true}. Chaque séance enregistrée garde son nom (w.split).
+   Sport affiche une carte par séance (la dernière faite) ; la suivante dans l'ordre est mise en avant.
+   La course n'apparaît que si la personne a ajouté des séances de course. */
+const WK_SPLIT_PRESETS = {ppl:['Push','Pull','Legs'], ul:['Upper','Lower'], fb:['Full body'], fbab:['Full body A','Full body B'], pp:['Push','Pull'],
+  ulf:['Upper','Lower','Full body'], arnold:['Pecs + Dos','Épaules + Bras','Jambes'], bro:['Pecs','Dos','Épaules','Bras','Jambes'], sw:['Tirage','Poussée','Jambes','Skills']};
+const WK_SPLIT_LABELS = [['ppl','Push · Pull · Legs'],['ul','Upper · Lower'],['fb','Full body'],['fbab','Full body A · B'],['pp','Push · Pull'],['ulf','Upper · Lower · Full'],['arnold','Pecs+Dos · Épaules+Bras · Jambes'],['bro','Un muscle par jour'],['sw','Street workout']];
+const WK_RUN_PRESET = ['Footing','Fractionné','Sortie longue'];
+let wkSplitSel = null;
+function wkSplits(){ const s = STATE.workouts.splits; return s && ((s.muscu||[]).length || (s.course||[]).length) ? s : null; }
+function wkSplitIsRun(name){ const s = wkSplits(); return !!(s && (s.course||[]).includes(name)); }
+function wkLastOfSplit(name){ return wkSortedLog().find(w=>w.split === name) || null; }
+function wkSplitTpl(name){ const t = (STATE.workouts.splitTpl || {})[name]; return t && t.length ? t : null; }
+function wkCopyEx(list){ return (list||[]).filter(e=>e.name).map(e=>({name:e.name, mode:e.mode, sets:e.sets, reps:e.reps, kg:e.kg, km:e.km, min:e.min, int: e.int ? {...e.int} : undefined})); }
+let wkSplitBuf = {};   // exercices en cours de saisie, une liste par séance (passer de Push à Pull ne mélange plus)
+function wkSplitSaveTpl(){
+  const name = wkSplitSel; if(!name) return;
+  const ex = wkCopyEx(wkDraft); if(!ex.length){ showToast('SÉANCE TYPE', 'Ajoute au moins un exercice', '', ''); return; }
+  STATE.workouts.splitTpl = STATE.workouts.splitTpl || {}; STATE.workouts.splitTpl[name] = ex;
+  clearTimeout(wkSaveTimer); delete STATE.workouts.current; wkDraft = []; wkSplitBuf = {};
+  queueSave(); closeModal(); render();
+  showToast('SÉANCE ' + name.toUpperCase() + ' ENREGISTRÉE', `${ex.length} exercice${ex.length > 1 ? 's' : ''} · ${ex.slice(0, 3).map(e=>e.name).join(', ')}`, 'Pas d\'XP : rien n\'est compté comme fait. « Lancer » la reprend le jour J.', '');
+}
+function wkNextSplit(){
+  const s = wkSplits(); if(!s || !(s.muscu||[]).length || s.rotate === false) return null;
+  const last = wkSortedLog().find(w=>w.split && s.muscu.includes(w.split));
+  if(!last) return {name: s.muscu[0], doneToday: null};
+  const i = s.muscu.indexOf(last.split), nx = s.muscu[(i + 1) % s.muscu.length];
+  return {name: nx, doneToday: last.date === todayStr() ? last.split : null};
+}
+function wkSplitSub(w, name){
+  if(!w){ const t = name && wkSplitTpl(name); return t ? `prête · ${t.length} exo${t.length > 1 ? 's' : ''}` : 'pas encore faite'; }
+  const ex = (w.exercises||[]).filter(e=>e.name), day = new Date(w.date+'T00:00:00').toLocaleDateString('fr-FR', {weekday:'short', day:'numeric', month:'numeric'});
+  const one = ex.length === 1 && wkIsDist(ex[0]);
+  const what = one ? (ex[0].int ? `${ex[0].int.reps} × ${ex[0].int.m} m` : `${wkFmtKm(+ex[0].km || 0)} km${+ex[0].min ? ` en ${wkFmtRun(+ex[0].min)}` : ''}`)
+    : ex.slice(0, 3).map(e=>escapeHtml(e.name) + (+e.kg ? ` ${String(+e.kg).replace('.', ',')} kg` : '')).join(', ');
+  return `${w.date === todayStr() ? "aujourd'hui" : day} · ${what || '—'}`;
+}
+function wkSplitCardsHtml(){
+  const s = wkSplits(); if(!s) return '';
+  if(wkCurrent()) return '';
+  const nx = wkNextSplit();
+  const card = (name, run) => {
+    const w = wkLastOfSplit(name), doneToday = w && w.date === todayStr();
+    const isNext = !run && nx && nx.name === name && !doneToday;
+    const tag = doneToday ? `<i class="ws-tag ok">FAITE ✓</i>` : isNext ? `<i class="ws-tag">${nx.doneToday ? 'PROCHAINE' : "AUJOURD'HUI"}</i>` : '';
+    return `<button type="button" class="${doneToday ? 'done' : isNext ? 'nx' : ''}" onclick="wkSplitGo('${escapeHtml(name).replace(/'/g, "\\'")}')">${tag}<b>${escapeHtml(name)}</b><span>${wkSplitSub(w, name)}</span><em>${w ? '↻ Refaire' : wkSplitTpl(name) ? '▶ Lancer' : '+ Préparer'}</em></button>`;
+  };
+  let h = '';
+  if((s.muscu||[]).length) h += `<div class="ws-t"><span>MES SÉANCES · ${s.muscu.map(escapeHtml).join(' / ').toUpperCase()}</span><a href="#" onclick="event.preventDefault(); modalSplits()">régler ›</a></div><div class="ws">${s.muscu.map(n=>card(n, false)).join('')}</div>`;
+  if((s.course||[]).length) h += `<div class="ws-t"><span>COURSE</span>${(s.muscu||[]).length ? '' : `<a href="#" onclick="event.preventDefault(); modalSplits()">régler ›</a>`}</div><div class="ws run">${s.course.map(n=>card(n, true)).join('')}</div>`;
+  return h;
+}
+function wkSplitGo(name){
+  const w = wkLastOfSplit(name);
+  if(w){ wkRedo(w.id); return; }
+  if(wkCurrent()){ modalLogWorkout(); return; }
+  const run = wkSplitIsRun(name);
+  wkSplitSel = name;
+  modalLogWorkout(run ? {type: STATE.workouts.types.includes('Course à pied') ? 'Course à pied' : undefined} : {type:'Musculation'}, false, name);
+  const t = wkSplitTpl(name);
+  if(t){ wkDraft = wkCopyEx(t); wkRedraw(); }
+  else if(run && !wkDraft.length){ wkDraft = [wkRunStart(name)]; wkRedraw(); }
+}
+function wkRunStart(name){ return /fraction|interval|vma|piste/i.test(name) ? {name:'Course', mode:'dist', km:'', min:'', int:{reps:'', m:'', sec:''}} : {name:'Course', mode:'dist', km:'', min:''}; }   // fractionné : le formulaire s'ouvre en mode répétitions
+function wkSplitTplBtnHtml(){
+  if(!wkSplits()) return '<span id="wkSplitTplBtn"></span>';
+  return wkSplitSel ? `<button type="button" id="wkSplitTplBtn" class="q-more wk-tplsave" onclick="wkSplitSaveTpl()">💾 Enregistrer comme ma séance ${escapeHtml(wkSplitSel)} type · sans la faire</button>` : '<span id="wkSplitTplBtn"></span>';
+}
+function wkSplitChipsHtml(){
+  const s = wkSplits(); if(!s) return '';
+  const all = (s.muscu||[]).map(n=>[n, false]).concat((s.course||[]).map(n=>[n, true]));
+  return `<div class="wsl">QUELLE SÉANCE ?</div><div class="wsc" id="wkSplitChips">${all.map(([n, run])=>`<button type="button" class="${wkSplitSel === n ? (run ? 'onr' : 'on') : ''}" onclick="wkSplitPick('${escapeHtml(n).replace(/'/g, "\\'")}')">${escapeHtml(n)}</button>`).join('')}<button type="button" class="${wkSplitSel ? '' : 'on'}" onclick="wkSplitPick(null)">Autre</button></div>`;
+}
+function wkSplitPick(name){
+  const prev = wkSplitSel;
+  wkSplitBuf[prev || '__autre'] = wkCopyEx(wkDraft);   // on garde ce qui a été saisi pour la séance d'avant
+  wkSplitSel = name;
+  const box = document.getElementById('wkSplitChips'); if(box) box.outerHTML = wkSplitChipsHtml().replace(/^<div class="wsl">QUELLE SÉANCE \?<\/div>/, '');
+  const ty = document.getElementById('mWType'), run = name && wkSplitIsRun(name);
+  if(ty && name){ const t = run ? 'Course à pied' : 'Musculation'; if(STATE.workouts.types.includes(t)) ty.value = t; try{ wkMetaSync(); }catch(e){} }
+  // chaque séance a sa propre liste : ce qui a déjà été saisi pour elle, sinon sa dernière fois, sinon sa séance type, sinon vide
+  const key = name || '__autre', w = name && wkLastOfSplit(name), t = name && wkSplitTpl(name);
+  wkDraft = wkSplitBuf[key] ? wkCopyEx(wkSplitBuf[key]) : w ? wkCopyEx(w.exercises) : t ? wkCopyEx(t) : (run ? [wkRunStart(name)] : []);
+  wkRedraw();
+  const sv = document.getElementById('wkSplitTplBtn'); if(sv) sv.outerHTML = wkSplitTplBtnHtml();
+  const fin = document.getElementById('wkFinishBtn'); if(fin) fin.textContent = name ? `✓ ${name} faite` : '✓ Séance faite';
+  try{ wkAutoSaveSoon(); }catch(e){}
+}
+function modalSplits(){
+  const s = STATE.workouts.splits || {muscu:[], course:[], rotate:true};
+  const draft = {muscu:(s.muscu||[]).slice(), course:(s.course||[]).slice(), rotate: s.rotate !== false};
+  window.__wkSplitDraft = draft;
+  wkSplitsRender();
+}
+function wkSplitsRender(){
+  const d = window.__wkSplitDraft, same = (a, b) => a.length === b.length && a.every((x, i)=>x === b[i]);
+  const preset = (k, l) => `<button type="button" class="${same(d.muscu, WK_SPLIT_PRESETS[k]) ? 'on' : ''}" onclick="window.__wkSplitDraft.muscu = WK_SPLIT_PRESETS['${k}'].slice(); wkSplitsRender()">${l}</button>`;
+  const chips = (arr, kind) => arr.map((n, i)=>`<button type="button" class="${kind === 'course' ? 'onr' : 'on'}" onclick="window.__wkSplitDraft.${kind}.splice(${i},1); wkSplitsRender()" aria-label="Retirer ${escapeHtml(n)}">${escapeHtml(n)} ✕</button>`).join('');
+  openModal(`<h3>MES SÉANCES</h3>
+    <div class="sub" style="margin-bottom:6px;">À RÉGLER UNE SEULE FOIS</div>
+    <div class="wsl">MUSCU : COMMENT TU DÉCOUPES ?</div>
+    <div class="wsc">${WK_SPLIT_LABELS.map(([k, l])=>preset(k, l)).join('')}<button type="button" class="${d.muscu.length ? '' : 'on'}" onclick="window.__wkSplitDraft.muscu = []; wkSplitsRender()">Aucun</button></div>
+    <div class="wsc">${chips(d.muscu, 'muscu')}</div>
+    <div class="ws-add"><input id="wsAddM" type="text" maxlength="20" placeholder="Ajouter (ex. Haut du corps)" onkeydown="if(event.key==='Enter') wkSplitAdd('muscu','wsAddM')"><button type="button" class="btn small" onclick="wkSplitAdd('muscu','wsAddM')">+</button></div>
+    ${d.muscu.length > 1 ? `<div class="field-row" style="justify-content:space-between; margin-top:6px; cursor:pointer;" onclick="window.__wkSplitDraft.rotate = !window.__wkSplitDraft.rotate; wkSplitsRender()"><label style="width:auto; cursor:pointer;">Mettre en avant la suivante dans l'ordre</label><div class="mini-switch ${d.rotate ? 'on' : ''}"></div></div>` : ''}
+    <div class="wsl" style="margin-top:16px;">COURSE</div>
+    ${d.course.length ? `<div class="wsc">${chips(d.course, 'course')}</div>` : `<div class="wsc"><button type="button" onclick="window.__wkSplitDraft.course = WK_RUN_PRESET.slice(); wkSplitsRender()">🏃 Je cours : Footing · Fractionné · Sortie longue</button></div>`}
+    <div class="ws-add"><input id="wsAddC" type="text" maxlength="20" placeholder="Ajouter (ex. Côte, Trail)" onkeydown="if(event.key==='Enter') wkSplitAdd('course','wsAddC')"><button type="button" class="btn small" onclick="wkSplitAdd('course','wsAddC')">+</button></div>
+    <p style="font-size:12.5px; color:var(--text-dim); line-height:1.5; margin-top:10px;">Sans séance de course, la partie Course n'apparaît pas. Touche un nom pour le retirer. La course n'entre pas dans l'ordre de la muscu.</p>
+    <div class="modal-actions"><button class="btn ghost" onclick="closeModal()">Annuler</button><button class="btn" onclick="wkSplitsSave()">Enregistrer</button></div>`);
+}
+function wkSplitAdd(kind, id){
+  const i = document.getElementById(id), v = (i && i.value || '').trim().slice(0, 20); if(!v) return;
+  const d = window.__wkSplitDraft;
+  if(!d.muscu.concat(d.course).some(x=>x.toLowerCase() === v.toLowerCase())) d[kind].push(v);
+  wkSplitsRender();
+}
+function wkSplitsSave(){
+  const d = window.__wkSplitDraft;
+  STATE.workouts.splits = {muscu: d.muscu.slice(0, 8), course: d.course.slice(0, 6), rotate: d.rotate};
+  queueSave(); closeModal(); render();
+  showToast('MES SÉANCES', (d.muscu.length || d.course.length) ? d.muscu.concat(d.course).join(' · ') : 'aucune séance', 'tu les retrouves dans Sport', '');
 }
 
 function checkPlanningNotifications(){
@@ -6836,7 +7086,7 @@ function checkPlanningNotifications(){
   // [heure-30min ; heure[ (pas seulement à la minute exacte, pour rattraper un tick manqué
   // quand l'app revient au premier plan), une seule fois par jour.
   // plages de la journée type : rappel 30 min avant (le serveur s'en charge si le push est actif)
-  if(!pushActive) schedBlocksOn(today).forEach(b=>{
+  if(!pushActive && remCfg().blocks) schedBlocksOn(today).forEach(b=>{
     if(b.kind === 'repos') return;
     const [bh, bm] = b.start.split(':').map(Number), bMin = bh*60 + bm;
     STATE.settings.blockNotified = STATE.settings.blockNotified || {};   // 04/11 : gardé ici : une plage « ce jour seulement » est une copie, elle sonnait toutes les 30 s
@@ -6849,8 +7099,9 @@ function checkPlanningNotifications(){
   });
   try{ checkJokerNotifications(nowMin, today); }catch(e){}
   try{ checkPrayerNotifications(nowMin, today); }catch(e){}
+  try{ checkRemNotifications(nowMin, today); }catch(e){}
   planningItems().forEach(p=>{
-    if(p.done) return;
+    if(p.done || !remCfg().timed) return;
     const [ph, pm] = p.time.split(':').map(Number);
     const itemMin = ph*60 + pm;
     const startMin = Math.max(0, itemMin - REMINDER_LEAD_MIN);
@@ -6895,7 +7146,7 @@ function checkCommitmentNotifications(hhmm, today){
   STATE.commitment = STATE.commitment || {forDate:null, taskIds:[], promptDismissedDate:null, eveningNotifiedDate:null, morningNotifiedDate:null};
   const hour = parseInt(hhmm.split(':')[0], 10);
   const alreadySetForTomorrow = STATE.commitment.forDate === tomorrowStr();
-  if(!alreadySetForTomorrow && hour>=20 && STATE.commitment.eveningNotifiedDate !== today && STATE.tasks.some(t=>!t.done)){
+  if(false && !alreadySetForTomorrow && hour>=20 && STATE.commitment.eveningNotifiedDate !== today && STATE.tasks.some(t=>!t.done)){   // 07/11 : remplacé par le dernier appel (Mes rappels)
     if(!pushActive) fireNotification('SYSTÈME // ZENKAI', "🌙 Quelles quêtes sont non-négociables demain ?", 'hunter-log-commitment-evening');
     STATE.commitment.eveningNotifiedDate = today;
     queueSave();
@@ -10021,7 +10272,7 @@ function wkReadForm(){
   const g = id => document.getElementById(id);
   return {type: g('mWType') ? g('mWType').value : 'Musculation', durationMin: parseInt(g('mWDuration') && g('mWDuration').value)||45,
     note: g('mWNote') ? g('mWNote').value.trim() : '', date: g('mWDate') ? g('mWDate').value : todayStr(),
-    exercises: wkDraft.map(e=>({...e}))};
+    exercises: wkDraft.map(e=>({...e})), split: wkSplitSel || null};
 }
 function wkKeepForLater(){
   clearTimeout(wkSaveTimer);
@@ -10054,11 +10305,13 @@ async function wkCancel(){
   if(snap) STATE.workouts.current = snap; else delete STATE.workouts.current;
   queueSave(); closeModal(); render();
 }
-function modalLogWorkout(ctx, keepSnap){
+function modalLogWorkout(ctx, keepSnap, split){
   clearTimeout(wkSaveTimer);
   wkDraft = [];
   wkLogCtx = ctx || null;
   const cur = wkCurrent();
+  wkSplitSel = cur ? (cur.split || null) : (split !== undefined ? split : (wkNextSplit() ? wkNextSplit().name : null));   // 07/11 : séance pré-cochée
+  wkSplitBuf = {};
   if(!keepSnap) wkOpenSnap = cur ? JSON.parse(JSON.stringify(cur)) : null;
   if(cur){
     wkDraft = (cur.exercises||[]).map(e=>({...e, int: e.int ? {...e.int} : undefined}));
@@ -10072,7 +10325,8 @@ function modalLogWorkout(ctx, keepSnap){
   openModal(`
     <h3>${cur ? 'SÉANCE EN COURS' : 'SÉANCE DE SPORT'}</h3>
     ${cur ? `<div class="wk-cur-info">⏸ Préparée ${cur.date === todayStr() ? `à ${new Date(cur.startedAt||Date.now()).toTimeString().slice(0,5)}` : `le ${new Date(cur.date+'T00:00:00').toLocaleDateString('fr-FR',{weekday:'long', day:'numeric'})}`} · pas encore d'XP</div>` : ''}
-    ${(hasLast || tpls.length) ? `<div class="wk-tpls">${hasLast ? `<button type="button" class="wk-tpl" data-id="__last" onclick="wkApplyTemplate('__last')">↺ Refaire la dernière</button>` : ''}${tpls.map(t=>`<button type="button" class="wk-tpl" data-id="${t.id}" onclick="wkApplyTemplate('${t.id}')">${escapeHtml(t.name)}</button>`).join('')}</div>` : ''}
+    ${wkSplitChipsHtml()}
+    ${(hasLast || tpls.length) && !wkSplits() ? `<div class="wk-tpls">${hasLast ? `<button type="button" class="wk-tpl" data-id="__last" onclick="wkApplyTemplate('__last')">↺ Refaire la dernière</button>` : ''}${tpls.map(t=>`<button type="button" class="wk-tpl" data-id="${t.id}" onclick="wkApplyTemplate('${t.id}')">${escapeHtml(t.name)}</button>`).join('')}</div>` : ''}
     <div class="wk-meta" id="wkMeta"><span id="wkMetaTxt"></span><a href="#" onclick="event.preventDefault(); document.getElementById('wkMetaFields').style.display='block'; document.getElementById('wkMeta').style.display='none';">modifier</a></div>
     <div id="wkMetaFields" style="display:none;">
     <div class="field-row"><label>Date</label><input type="date" id="mWDate" value="${todayStr()}" min="${wkDateStr(minD)}" max="${todayStr()}"></div>
@@ -10087,10 +10341,11 @@ function modalLogWorkout(ctx, keepSnap){
     <button type="button" class="q-more" onclick="wkAddExercise()">+ Ajouter un exercice</button>
     <button type="button" class="btn ghost wide zk-guide-btn" style="margin-top:8px;" onclick="zkRunWorkout()">▶ Mode guidé · série par série</button>
     <div class="field-row" style="margin-top:8px;"><label>Note</label><input type="text" id="mWNote" placeholder="optionnel" maxlength="60" value="${cur ? escapeHtml(cur.note||'') : ''}"></div>
-    <label class="wk-save-tpl"><input type="checkbox" id="mWSaveTpl" onchange="document.getElementById('mWTplName').style.display=this.checked?'block':'none'"> Enregistrer comme modèle</label>
+    ${wkSplitTplBtnHtml()}
+    <label class="wk-save-tpl" ${wkSplits() ? 'style="display:none;"' : ''}><input type="checkbox" id="mWSaveTpl" onchange="document.getElementById('mWTplName').style.display=this.checked?'block':'none'"> Enregistrer comme modèle</label>
     <input type="text" id="mWTplName" placeholder="Nom du modèle (ex : Push)" maxlength="20" style="display:none; width:100%; margin-top:6px;">
-    <div class="modal-actions wk-actions"><button class="btn ghost" onclick="wkCancel()">Annuler</button><button class="btn ghost wk-later" onclick="wkKeepForLater()" title="Sans XP : tu la termines après">⏸ Plus tard</button><button class="btn" onclick="submitLogWorkout()">✓ Terminer</button></div>
-    <div class="wk-foot">« Plus tard » garde la séance sans XP (avant ou pendant la salle). L'XP tombe à « Terminer ».${cur ? ` <a href="#" onclick="event.preventDefault(); wkDropCurrent()">Supprimer ce brouillon</a>` : ''}</div>
+    <div class="modal-actions wk-actions"><button class="btn ghost" onclick="wkCancel()">Annuler</button><button class="btn ghost wk-later" onclick="wkKeepForLater()" title="Sans XP : tu la termines après">⏸ Plus tard</button><button class="btn" id="wkFinishBtn" onclick="submitLogWorkout()">${wkSplitSel ? `✓ ${escapeHtml(wkSplitSel)} faite` : '✓ Séance faite'}</button></div>
+    <div class="wk-foot"><b>✓ Faite</b> : tu as fait la séance, elle est enregistrée avec son XP. <b>⏸ Plus tard</b> : tu la prépares ou tu es en train de la faire, elle t'attend (sans XP). <b>Annuler</b> : rien n'est gardé.${cur ? ` <a href="#" onclick="event.preventDefault(); wkDropCurrent()">Supprimer ce brouillon</a>` : ''}</div>
   `);
   wkMetaSync();
 }
@@ -10182,7 +10437,7 @@ function logWorkout(type, durationMin, note, exercises, date, blockId){
   const sx = wkSessionXP(exercises, date), baseXp = sx.xp;
   const xp = baseXp + (sx.capped ? 0 : prBonus);   // 10/10 : au-delà de 2 séances récompensées, les records non plus
   if(sx.capped) setTimeout(()=>showToast('SÉANCE ENREGISTRÉE', `Déjà ${WK_DAILY_MAX} séances récompensées ${date===todayStr() ? "aujourd'hui" : 'ce jour-là'}`, 'pas d\'XP pour cette séance ni ses records', ''), 200);
-  const entry = {id:'w'+Date.now(), date, type, durationMin, note, xp, baseXp, prs:prs.length, exercises, time: date===todayStr() ? new Date().toTimeString().slice(0,5) : '—', blockId: blockId || null};
+  const entry = {id:'w'+Date.now(), date, type, durationMin, note, xp, baseXp, prs:prs.length, exercises, time: date===todayStr() ? new Date().toTimeString().slice(0,5) : '—', blockId: blockId || null, split: wkSplitSel || null};
   STATE.workouts.log.unshift(entry);
   STATE.workouts.log.sort((a,b)=> a.date < b.date ? 1 : a.date > b.date ? -1 : 0);   // séance rattrapée : rangée à sa date
   if(date !== todayStr()) setTimeout(()=>showToast('SÉANCE RATTRAPÉE', new Date(date+'T00:00:00').toLocaleDateString('fr-FR',{weekday:'long', day:'numeric', month:'long'}), `+${xp} XP`, 'reward'), 250);
@@ -10275,6 +10530,7 @@ function modalWorkoutSettings(){
   const tpls = STATE.workouts.templates || [];
   openModal(`
     <h3>RÉGLAGES SPORT</h3>
+    <button type="button" class="btn ghost wide" style="margin-bottom:10px;" onclick="closeModal(); setTimeout(modalSplits, 120)">🏋 Mes séances (Push / Pull / Legs, course…) ›</button>
     <div class="field-row"><label>Compétence</label><select id="mSkill">${skillOptions(STATE.workouts.skill)}</select></div>
     <div class="field-row" style="justify-content:space-between;">
       <label style="font-family:var(--font-mono); font-size:10px; color:var(--text-faint);">XP</label>
@@ -10546,11 +10802,11 @@ function renderWorkoutLog(){
   return `
     <div class="sub">${Math.round((weekMinutes/60)*10)/10} H · ${weekLogs.length} SÉANCE${weekLogs.length>1?'S':''} CETTE SEMAINE${STATE.stats.totalPRs ? ` · 🏆 ${STATE.stats.totalPRs} RECORD${STATE.stats.totalPRs>1?'S':''}` : ''}</div>
     <div style="display:flex; gap:8px; margin-top:12px;">
-      ${wkCurrent() ? `<button class="btn wide wk-resume" onclick="modalLogWorkout()">⏸ SÉANCE EN COURS · ${(wkCurrent().exercises||[]).filter(e=>e.name).length} EXO${(wkCurrent().exercises||[]).filter(e=>e.name).length>1?'S':''} — REPRENDRE</button>` : `<button class="btn wide" onclick="modalLogWorkout()">+ NOUVELLE SÉANCE</button>`}
+      ${wkCurrent() ? `<button class="btn wide wk-resume" onclick="modalLogWorkout()">⏸ SÉANCE EN COURS · ${(wkCurrent().exercises||[]).filter(e=>e.name).length} EXO${(wkCurrent().exercises||[]).filter(e=>e.name).length>1?'S':''} — REPRENDRE</button>` : `<button class="btn wide" onclick="wkNewWorkout()">+ NOUVELLE SÉANCE</button>`}
       <button class="btn ghost small" title="Historique" aria-label="Historique et records" onclick="modalWorkoutHistory()">📈</button>
       <button class="btn ghost small" title="Réglages" aria-label="Réglages sport" onclick="modalWorkoutSettings()">⚙</button>
     </div>
-    ${wkRedoHtml()}
+    ${wkSplits() ? wkSplitCardsHtml() : wkRedoHtml() + (wkCurrent() || !STATE.workouts.log.length ? '' : `<div class="ws-t"><span></span><a href="#" onclick="event.preventDefault(); modalSplits()">Push / Pull / Legs ? Règle tes séances ›</a></div>`)}
     ${wkRecentHtml()}
     <div class="wk-week" style="margin-top:16px;">${days.map((d,i)=>`<div class="wk-day ${byDay[d]?'on':''} ${d===today?'today':''}" title="${byDay[d]||0} min"><span>${'LMMJVSD'[i]}</span><i></i></div>`).join('')}</div>
     ${(()=>{ const tgt = +STATE.workouts.weekTarget || 0;
@@ -10852,6 +11108,7 @@ function modalGeneralSettings(){
       <div class="field-row"><label>Rappels</label>
         <button class="btn small" style="flex:1;" onclick="requestNotifications()">${notifState==='granted' && STATE.settings.notificationsOn ? 'ACTIVÉES ✓' : 'ACTIVER'}</button>
       </div>
+      <div class="field-row"><label>Lesquels</label><button class="btn small ghost" style="flex:1;" onclick="modalReminders()">🔔 Mes rappels…</button></div>
       <p ${p}>Même app fermée : l'heure de tes routines et de tes quêtes (30 min avant, puis à l'heure), tes plages d'agenda, tes objectifs, tes non-négociables et le choix du soir. Un rappel peut arriver jusqu'à 10 minutes plus tard. Sur iPhone, ils ne marchent que si l'app a été ajoutée à l'écran d'accueil (iOS 16.4 ou plus récent).</p>
       ${notifState==='denied' ? `<p ${p}><span style="color:var(--danger);">Les notifications sont bloquées pour ce site dans ton navigateur. Pour les réactiver : réglages du navigateur (ou de l'app sur iPhone) → Notifications → autoriser ce site, puis reviens appuyer sur ACTIVER.</span></p>` : ''}
     `;
@@ -11445,20 +11702,29 @@ function tabToday(){
 }
 
 let skillsMgmtOpen = false;   // 17/10 : options avancées repliées
+function renderRoutinesCompact(){   // 07/11 : dans Quêtes, les routines servent à être gérées (on les coche dans Jour)
+  if(!STATE.routines.length) return '<div class="empty">AUCUNE ROUTINE — AJOUTE-EN UNE</div>';
+  return `<div class="rc-list">${STATE.routines.map(r=>{
+    const done = routineDone(r), rest = !done && !routineDueToday(r), streak = routineStreakAlive(r) ? r.streak : 0;
+    const freq = routineDaysLabel(r) || {quotidienne:'QUOT.', hebdomadaire:'HEBDO', mensuelle:'MENS.'}[r.freqTag] || 'QUOT.';
+    return `<div class="rc-row" onclick="modalRoutineSheet('${r.id}')" role="button">
+      <span class="rc-st ${done ? 'ok' : rest ? 'rest' : ''}">${done ? '✓' : rest ? '💤' : ''}</span>
+      <span class="rc-b"><span class="rc-n">${r.morning ? '🌅 ' : ''}${escapeHtml(r.name)}</span>
+      <span class="rc-m">${freq}${r.time ? ' · ' + escapeHtml(r.time) : ''}${streak ? ` · 🔥 ${streak} j` : ''}</span></span>
+      <button type="button" class="icon-btn" onclick="event.stopPropagation(); modalEditRoutine('${r.id}')" aria-label="Modifier ${escapeHtml(r.name)}">✎</button></div>`;
+  }).join('')}</div>`;
+}
 function tabQuests(){
   return `
     <div class="grid">
-      ${modOn('routines') ? `<div class="panel">
+      ${modOn('sport') ? `<div class="panel full">
         <div class="c-tl"></div><div class="c-br"></div>
-        <div class="eyebrow">ROUTINES</div>
-        <h2>Routines ${zkHelp(1)}</h2>
-        <div class="sub">TES HABITUDES QUI REVIENNENT · ${STATE.routines.filter(routineDone).length}/${STATE.routines.filter(r=>routineDone(r) || routineDueToday(r)).length} FAITES</div>
-        ${(()=>{ const rt = STATE.routines.filter(r=>routineDone(r) || routineDueToday(r)); return zkSegBar(rt.filter(routineDone).length, rt.length); })()}
-        ${renderRoutinesList(false)}
-        <button class="btn wide" onclick="zkCreate('routine')">+ AJOUTER UNE ROUTINE</button>
+        <div class="eyebrow">SPORT</div>
+        <h2>Séances de sport ${zkHelp(4)}</h2>
+        ${renderWorkoutLog()}
       </div>` : ''}
 
-      <div class="panel ${modOn('routines') ? '' : 'full'}">
+      <div class="panel full">
         <div class="c-tl"></div><div class="c-br"></div>
         <div class="eyebrow">QUÊTES</div>
         <h2>Quêtes ${zkHelp(2)}</h2>
@@ -11483,11 +11749,13 @@ function tabQuests(){
         <button class="btn wide" onclick="modalAddGoal()">+ AJOUTER UN OBJECTIF</button>
       </div>` : ''}
 
-      ${modOn('sport') ? `<div class="panel full">
+      ${modOn('routines') ? `<div class="panel full">
         <div class="c-tl"></div><div class="c-br"></div>
-        <div class="eyebrow">SPORT</div>
-        <h2>Séances de sport ${zkHelp(4)}</h2>
-        ${renderWorkoutLog()}
+        <div class="eyebrow">ROUTINES</div>
+        <h2>Routines ${zkHelp(1)}</h2>
+        <div class="sub">ON LES COCHE DANS JOUR · ICI : TOUCHE = FICHE, ✎ = MODIFIER</div>
+        ${renderRoutinesCompact()}
+        <button class="btn wide" onclick="zkCreate('routine')">+ AJOUTER UNE ROUTINE</button>
       </div>` : ''}
 
       ${modOn('water') ? `<div class="panel full">
@@ -12363,7 +12631,7 @@ function render(){
   // Remonté depuis l'onglet Succès (où il était enterré, 12e stat d'une longue liste) :
   // le streak est le chiffre qui coûte le plus cher à perdre, il doit être visible en
   // permanence, pas seulement quand on va le chercher.
-  const headerStreak = Math.max(0, ...STATE.routines.map(r=> routineStreakAlive(r) ? r.streak : 0), 0);
+  const headerStreak = dayHeldStreak();   // 07/11 : un seul chiffre de série partout, celui de la journée tenue (avant : la meilleure série de routine, différente de celle juste en dessous)
 
   if((currentTab==='planning' && !modOn('agenda')) || (currentTab==='pomodoro' && !modOn('focus'))) currentTab = 'today';
   let tabContent = '';

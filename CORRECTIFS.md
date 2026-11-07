@@ -1,5 +1,34 @@
 # ZENKAI — build 78 (mise en ligne du 14/10/2026)
 
+## 07/11 (4) — Bugs de l'analyse du 07/11, « Mes rappels », un seul rappel le soir — index.html
+- Une seule série : l'en-tête affiche la série de journées tenues (avant : la meilleure série de routine, « 12 j » à côté de « série de 26 j »).
+- Journée tenue avec les pastilles Focus : « 🔥 26 j » au lieu de « série de 26 j » (les pastilles sortaient de la carte à 390 px).
+- Ligne Prière repliée : « 1 h 27 » au lieu de « dans … » coupé.
+- Le bouton + s'efface quand on fait défiler vers le bas et revient dès qu'on remonte (il cachait le ✓ de la Prochaine quête, ✎, ✕ et « Meilleur combo ») ; un peu plus de marge en bas de page.
+- Quêtes → Routines : le nom sur sa ligne, fréquence, heure et série en dessous (les noms étaient coupés).
+- APP_VERSION passe à 131 (toujours pas affiché).
+- Prière : rappel « à l'heure », « 5 min avant » ou « 10 min avant » (réglages Prière et Mes rappels).
+- Réglages → Notifications → « 🔔 Mes rappels… » : tous les rappels au même endroit, chacun activable (prières, tahajjud, heure fixe, ne rate pas deux fois, objectifs, journée type, relance Focus, fin de session Focus, dernier appel, non-négociables de demain), avec le nombre de rappels qui peuvent encore sonner aujourd'hui (avertissement au-delà de 6).
+- Dernier appel (20:30 par défaut, réglable) : une seule notification le soir. Journée pas tenue : « Journée 1/3 · il te reste : … · 2 actions pour la tenir », plus le choix des non-négociables de demain s'il le faut. Journée tenue : seulement le choix de demain, ou rien. Il remplace le rappel du soir de 20:00 (le serveur ne l'envoie plus : hasPendingTasks = false). Les jours où l'app n'est pas ouverte, un dernier appel générique part quand même.
+- Relance Focus (désactivée par défaut, 14:00) : seulement si tu as moins de sessions que ton objectif.
+- Tout passe par le canal des objectifs (aucun changement serveur). La liste envoyée est triée par jour pour que les rappels du jour ne soient jamais coupés. Le serveur est remis à jour quand la journée devient tenue et à chaque pomodoro.
+- Vérifier : Réglages → Notifications → Mes rappels ; régler le dernier appel 2 min plus tard, fermer l'app sans tenir la journée : une notification « Journée x/3 · il te reste … » arrive (jusqu'à 10 min de décalage).
+
+## 07/11 (3) — Sport en premier dans Quêtes, séances types, une liste par séance — index.html
+- Onglet Quêtes : Sport en haut, puis Quêtes, Objectifs, Routines, Hydratation. Les routines (cochées dans Jour) passent en liste compacte de gestion : nom, fréquence, heure, série ; toucher = fiche des 30 jours, ✎ = modifier, « + Ajouter une routine ».
+- Mes séances : plus de découpages proposés (Full body A · B, Push · Pull, Upper · Lower · Full, Pecs+Dos · Épaules+Bras · Jambes, un muscle par jour, Street workout), en plus de Push · Pull · Legs, Upper · Lower, Full body.
+- Séance type : quand les séances sont réglées, « Enregistrer comme modèle » est remplacé par « 💾 Enregistrer comme ma séance Push type · sans la faire ». Les exercices sont gardés (STATE.workouts.splitTpl), le brouillon est vidé, aucune XP, rien n'est compté comme fait. La carte affiche « prête · N exos » et « ▶ Lancer », qui ouvre la séance avec ces exercices. Une séance déjà faite repart de sa dernière fois.
+- Une liste par séance dans le formulaire : passer de Push à Pull ne garde plus les exercices de Push. Chaque puce (y compris « Autre ») retrouve ce qui a été saisi pour elle, sinon sa dernière fois, sinon sa séance type, sinon rien.
+- Boutons plus clairs : « ✓ Push faite » (ou « ✓ Séance faite ») au lieu de « Terminer », avec une ligne qui dit à quoi sert chacun (Faite = enregistrée avec XP, Plus tard = elle t'attend sans XP, Annuler = rien n'est gardé).
+- « + Nouvelle séance » avec des séances réglées ouvre directement la suivante dans l'ordre, avec ses exercices.
+- Vérifier : régler Push · Pull · Legs ; Push → ajouter 2 exercices → 💾 → la carte Push dit « prête · 2 exos » et il n'y a aucune séance dans l'historique ; ouvrir Pull, ajouter Tractions, toucher Push puis Pull : chaque puce garde sa propre liste.
+
+## 07/11 (2) — Sport : « Mes séances » (Push / Pull / Legs, Upper / Lower, course) — index.html
+- Réglage unique (⚙ Sport → « Mes séances », ou « régler › » dans Sport) : choix rapide (Push · Pull · Legs, Upper · Lower, Full body, Aucun), tes propres noms, un interrupteur « mettre en avant la suivante dans l'ordre ». Côté course : « Je cours » ajoute Footing · Fractionné · Sortie longue, avec des noms libres. Stocké dans STATE.workouts.splits.
+- Sport : une carte par séance, avec la date et les exercices de la dernière fois, puis « ↻ Refaire » (ou « + Commencer » si elle n'a jamais été faite). La suivante dans l'ordre porte « AUJOURD'HUI » ; une séance faite aujourd'hui porte « FAITE ✓ » et la suivante « PROCHAINE ». La partie Course n'apparaît que si des séances de course sont réglées.
+- Formulaire : « QUELLE SÉANCE ? » avec une puce par séance, plus « Autre ». « Refaire » pré-coche la séance de départ ; « + Nouvelle séance » pré-coche la suivante dans l'ordre. Choisir une séance sur un formulaire vide reprend sa dernière fois (exercices, séries, charges). Une séance de course passe le type en « Course à pied » ; un fractionné s'ouvre en mode répétitions. Chaque séance enregistrée garde son nom (w.split, aussi dans le brouillon).
+- Sans réglage, rien ne change : cartes « Refaire » d'avant, plus un lien « Push / Pull / Legs ? Règle tes séances ›». Les anciennes séances n'ont pas de nom : les cartes se remplissent au fur et à mesure.
+
 ## 07/11 — Écran Jour et objectifs comme avant le 04/11, Prière visible partout — index.html
 - Ordre du Jour rétabli comme avant le 04/11 : carte de retour (si absence), initiation, journée tenue, rappel des pénalités, MAINTENANT / ENSUITE (journée type), serment, engagement d'hier soir, rappel du soir, OBJECTIFS, prière, puis AUJOURD'HUI (prochaine quête, routines, eau, pomodoro). Retour demandé par Moustapha après usage réel.
 - Cartes d'objectifs rétablies comme avant : case ou +/−, point de priorité, départ et cible, prochain palier, −10 % / +10 %, CT ou MT, compétence, XP, ✎ et ✕. La ligne « Cette semaine : … » est gardée.
