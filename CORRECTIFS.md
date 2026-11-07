@@ -1,5 +1,54 @@
 # ZENKAI — build 78 (mise en ligne du 14/10/2026)
 
+## 05/11 (2) — Fiche routine, « Refaire » une séance, menu + — index.html
+- Toucher le nom d'une routine (Jour ou Quêtes) ouvre sa fiche : série, record, cette semaine, et une grille des 30 derniers jours (faite / pas faite / repos / pas encore suivie), avec Modifier et Supprimer. Les jours viennent de doneLog, rempli depuis le 10/10. Record : r.best, nouveau, plus un calcul sur doneLog qui applique la règle « ne rate jamais deux fois ».
+- Sport : « + Nouvelle séance » remonte en haut. En dessous : « Refaire en un toucher » (les 2 dernières séances différentes : le formulaire s'ouvre avec les mêmes exercices, le même type et la même durée), puis les 3 dernières séances (un toucher ouvre l'historique). Les cartes « Refaire » sont cachées tant qu'une séance est en cours, et « Refaire » rouvre la séance en cours au lieu de l'écraser.
+- Menu + : une grille de choix courts (Routine, Quête, Objectif, Séance, Eau +250 ml, Focus, Repas si le module est actif) à la place des grandes cartes à lire.
+
+## 05/11 — Module Prière (version admin seulement) — index.html
+- Visible seulement sur un appareil admin, à activer dans Réglages → Affichage → « Module Prière ». Les autres joueurs ne voient rien.
+- Carte sur « Aujourd'hui », au-dessus de la liste du jour : prochaine prière, temps restant, et les 5 prières du jour. Toucher une prière : à l'heure, rattrapée ou pas encore.
+- Horaires calculés dans l'app, sans serveur ni API. Ville choisie à la main (Belgique, France, Dakar, Casablanca, Montréal), au choix : méthode (Ligue islamique mondiale, UOIF, ISNA, Égypte), Asr standard ou hanafite, règle d'été pour les hautes latitudes (1/7 de la nuit par défaut), et un décalage par prière pour coller à la mosquée.
+- Vérifié pour Bruxelles avec la Ligue islamique mondiale : le 05/11, Fajr 05:48, Dhuhr 12:27, Asr 14:45, Maghrib 17:10, Icha 18:57. Le 21/06, sans la règle d'été, il n'y aurait ni Fajr ni Icha ; avec, Fajr 04:25 et Icha 23:04.
+- Rappels à l'heure, même app fermée : canal des objectifs (aujourd'hui + 2 jours), sans changement serveur. Pas de rappel pour une prière déjà notée.
+- Aucune XP, aucune pénalité. Ne compte ni pour la journée tenue ni pour le classement. Historique gardé 4 mois (STATE.prayer.log).
+- Tahajjud : ligne sous les 5 prières. La nuit est comptée de Maghrib à Fajr ; la fenêtre affiche le milieu de la nuit et le début du dernier tiers (nuit du 5 au 6/11 à Bruxelles : milieu 23:30, dernier tiers dès 01:37, Fajr 05:50). La nuit est rangée à la date du matin qui la termine ; on peut la noter jusqu'à Dhuhr. Rappel au début du dernier tiers, avec un décalage réglable. Désactivable dans les réglages Prière.
+
+## 04/11 (3) — Sécurité et corrections de la revue — index.html, netlify/functions/oath.js, subscribe.js, send-reminders.js, _redirects, .gitignore
+- Fichiers du repo plus servis par le site (_redirects) : README.md, CORRECTIFS.md, CLAUDE.md, package.json, netlify.toml, code des fonctions. Vérifier : ouvrir /README.md sur le site → page 404.
+- .gitignore : CLAUDE.md, .env, node_modules.
+- Classement : l'id public est un HMAC avec la variable Netlify OATH_ID_SECRET (avant : simple hachage du code, retrouvable). Sans la variable, ancien calcul + message d'erreur dans les logs.
+- Classement : jour et semaine en vraie heure de Bruxelles (avant : +2 h fixes, remise à zéro le dimanche à 23 h en hiver).
+- subscribe : code d'accès obligatoire et vérifié ; refusé → l'abonnement de l'appareil est supprimé et l'app repasse en rappels locaux.
+- Routine à heure fixe ratée la dernière fois : plus de 3 notifications. L'avertissement « pas deux » passe dans les rappels 30 min avant et à l'heure (warnDate).
+- Synchro : avant d'adopter un remplacement (import, restauration, tout effacer) venu d'un autre appareil, une copie de cet appareil est gardée + message.
+- Import d'une vieille sauvegarde : fillMissingState ne court-circuite plus les migrations (thème, XP totale).
+- Textes de synchro corrigés : « toutes les 2 min » et « fusionnées ».
+
+## 04/11 (suite) — Rappels app fermée, brouillon de séance, séries exactes — index.html, netlify/functions/send-reminders.js, netlify/functions/subscribe.js
+- Rappels : les routines et quêtes à heure fixe partent du serveur, 30 min avant puis à l'heure, app fermée. Il faut avoir activé les notifications. Avec le push actif, l'app n'envoie plus ces rappels elle-même. Limite : une routine cochée sur un appareil peut encore être rappelée sur l'autre.
+- Brouillon : la séance en saisie est gardée à chaque changement et après chaque série guidée. Toucher à côté la garde ; « Annuler » demande confirmation.
+- Séries guidées : le détail est enregistré (8 × 80, 6 × 80, 4 × 60 kg). sets, reps et kg restent la meilleure série, donc records et XP ne changent pas.
+- Charge : gardée au centième (1,25 kg reste 1,25 kg).
+- Retour après au moins 3 jours d'absence : aucune pénalité d'XP ce jour-là (eau, pomodoro, série rompue, heure limite), les séries repartent de zéro. Une carte remplace le guide et propose une seule action parmi 3 ; le récap hebdo est sauté cette semaine-là. Avant 3 jours, les règles ne changent pas.
+- Démarrage : état incomplet complété au chargement ; si la sauvegarde reste inutilisable, l'app essaie les sauvegardes automatiques, puis affiche un écran de secours (exporter, restaurer, réessayer).
+- Import et restauration : testés avant de remplacer ; en cas d'échec, les données actuelles restent. Import, restauration et « tout effacer » passent sur les autres appareils (STATE.syncEpoch), même avec moins d'XP.
+- Synchro : pas d'envoi en fermeture au-delà de 60 Ko ; les données partent à la prochaine synchro.
+- XP : supprimer une quête ou une routine validée aujourd'hui retire son XP du jour ; 3 créations ou passages en rang A/S par jour au maximum ; XP d'une quête plafonnée à celle de son rang ; décocher retire la journée parfaite ; dette d'XP affichée sur l'écran Jour.
+- Platine : Pionnier n'est plus exigé hors bêta.
+- Séance guidée : écran gardé allumé (repos compris), à vérifier sur un vrai téléphone.
+- Interface : boutons +/− agrandis, champs à 16 px sur tactile (plus de zoom forcé sur iPhone), contraste de --text-faint relevé dans tous les thèmes, numéro de version retiré des réglages, textes des réglages à jour.
+- Divers : accents et majuscules ne séparent plus les exercices ; fiche sans « + » ni « charge ajoutée » pour un exercice non lesté ; calendrier : un objectif chiffré ou un examen ouvre sa fiche ; plage « ce jour seulement » : rappel local plus répété toutes les 30 s.
+- Écran Jour (validé) : engagements et liste du jour d'abord, puis journée tenue, initiation sur une ligne (la liste s'ouvre au toucher), puis objectifs. La carte du guide est retirée ; le guide reste dans les réglages.
+- Fiches d'objectifs (validé) : nom, %, barre, prochain palier, « Cette semaine : … ». Passent dans le détail : départ et cible, terme, XP, récompense, modifier, supprimer, −10 % et « Objectif atteint ». Retirés : la case vide des objectifs automatiques et le point de priorité (le tri par priorité reste).
+- Texte : « -X XP GAGNÉE » devient « -X XP AUJOURD'HUI » ; le récap hebdo affiche « XP DE LA SEMAINE » si le total est négatif.
+
+## 04/11 — Classement de la semaine, ce qui te rapproche, démarrage (validé le 04/11) — index.html, netlify/functions/oath.js
+- Classement : trié par journées tenues depuis lundi, à la place du niveau. Remise à zéro chaque lundi, même score = même place. Il faut toujours un serment pour y figurer.
+- Limite connue : le score vient de l'appareil. Le serveur le plafonne aux jours écoulés, sans le vérifier davantage.
+- Ce qui te rapproche : une ligne sur les objectifs reliés à des données (séances, exercice, focus, course, routine, eau). Rien sur les objectifs manuels, au ressenti, à étapes, examen ou poids.
+- Démarrage pour un nouveau joueur, après l'éveil : ce qu'il veut changer, son objectif, une habitude et sa première action, tous écrits par lui. Ses modules sont réglés selon son choix ; « Passer » rouvre l'ancien écran des modules.
+
 ## Fichiers
 - index.html (app), admin.html (nouveau : /admin.html), sw.js, netlify.toml, badges/ (nouveaux écussons)
 - netlify/functions : access.js (nouveau), sync-state.js, members.js, oath.js, zapier-webhook.js, subscribe.js, send-reminders.js, broadcast.js, pomo-notify.js, pomo-timer.js, vapid-key.js

@@ -1,0 +1,9 @@
+# 04/11 : fichiers du repo qui ne doivent pas être servis par le site (le repo entier est publié tel quel)
+/README.md            /404  404!
+/CORRECTIFS.md        /404  404!
+/CLAUDE.md            /404  404!
+/package.json         /404  404!
+/package-lock.json    /404  404!
+/netlify.toml         /404  404!
+/netlify/*            /404  404!
+/.gitignore           /404  404!

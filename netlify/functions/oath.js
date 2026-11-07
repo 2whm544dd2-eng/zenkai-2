@@ -1,7 +1,7 @@
 // netlify/functions/oath.js — "Serment Inné" : objectif public + classement + encouragements (build 78).
 //
 //   GET                       -> { oaths: [{ id, displayName, text, level, rank, cheers, cheeredToday? }] }
-//                                (public, trié par niveau ; ?code=XXX ajoute cheeredToday pour ce joueur)
+//                                (public, trié par journées tenues depuis lundi ; ?code=XXX ajoute cheeredToday pour ce joueur)
 //   GET ?me=CODE              -> { me: { cheers, recent:[{name, at}] } }   (léger : une seule lecture)
 //   POST { code, displayName, text, level, rank, subscription? }
 //                             -> enregistre / remplace le serment lié à ce code
@@ -29,8 +29,33 @@ const json = (statusCode, obj) => ({
   body: JSON.stringify(obj),
 });
 const CODE_RE = /^[A-Z0-9]{4,16}$/;
-const publicId = (code) => crypto.createHash('sha256').update('zenkai-oath:' + code).digest('hex').slice(0, 16);
-const dayKey = () => new Date(Date.now() + 2 * 3600e3).toISOString().slice(0, 10);   // jour ~ heure de Bruxelles
+// 05/11 : HMAC avec un secret serveur (variable Netlify OATH_ID_SECRET). Un simple hachage du code se retrouvait
+// par calcul hors ligne (codes de 8 caractères), et le code donne accès à toutes les données de la personne.
+let warnedSecret = false;
+const publicId = (code) => {
+  const secret = process.env.OATH_ID_SECRET;
+  if (!secret) {
+    if (!warnedSecret) { console.error('oath: OATH_ID_SECRET manquante dans les variables Netlify — ids publics NON protégés'); warnedSecret = true; }
+    return crypto.createHash('sha256').update('zenkai-oath:' + code).digest('hex').slice(0, 16);
+  }
+  return crypto.createHmac('sha256', secret).update('zenkai-oath:' + code).digest('hex').slice(0, 24);
+};
+// 05/11 : vraie heure de Bruxelles (UTC+1 en hiver, UTC+2 en été) ; avant : +2 h fixes, donc remise à zéro du classement à 23 h en hiver.
+const brusselsDate = () => {
+  const p = new Intl.DateTimeFormat('en-CA', { timeZone: 'Europe/Brussels', year: 'numeric', month: '2-digit', day: '2-digit' }).formatToParts(new Date());
+  const g = (t) => p.find((x) => x.type === t).value;
+  return `${g('year')}-${g('month')}-${g('day')}`;
+};
+const dayKey = () => brusselsDate();
+// 04/11 : classement de la semaine. Lundi de la semaine en cours et nombre de jours écoulés (1 à 7).
+const weekInfo = () => {
+  const d = new Date(brusselsDate() + 'T12:00:00Z');
+  const elapsed = (d.getUTCDay() + 6) % 7 + 1;
+  d.setUTCDate(d.getUTCDate() - (elapsed - 1));
+  return { monday: d.toISOString().slice(0, 10), elapsed };
+};
+// Le score vient de l'appareil : plafonné au nombre de jours écoulés, mais pas encore vérifié par le serveur.
+const weekScore = (o, monday) => (o.week === monday ? (o.weekHeld || 0) : 0);
 
 async function allowedCode(code, members) {
   const m = await members.get(code, { type: 'json' }).catch(() => null);
@@ -70,11 +95,12 @@ exports.handler = async (event) => {
       if (m && m.active === false) continue; // ex-membres retirés du classement public
       list.push({ ...o, id: publicId(key) });
     }
-    list.sort((a, b) => (b.level || 0) - (a.level || 0) || (b.updated || 0) - (a.updated || 0));
+    const { monday } = weekInfo();
+    list.sort((a, b) => weekScore(b, monday) - weekScore(a, monday) || (b.updated || 0) - (a.updated || 0));
     return json(200, {
       oaths: list.slice(0, 100).map((o) => ({
         id: o.id, displayName: o.displayName, text: o.text, level: o.level || null, rank: o.rank || null,
-        cheers: o.cheers || 0,
+        cheers: o.cheers || 0, weekHeld: weekScore(o, monday),
         ...(viewer ? { mine: o.id === viewer, cheeredToday: !!(o.cheerLog && o.cheerLog[viewer] === today) } : {}),
       })),
     });
@@ -135,8 +161,12 @@ exports.handler = async (event) => {
     let subs = Array.isArray(prev.subs) ? prev.subs : [];
     const sub = body.subscription;
     if (sub && typeof sub.endpoint === 'string' && !subs.some((s) => s.endpoint === sub.endpoint)) subs = subs.concat([sub]).slice(-3);
+    // Score de la semaine : ignoré s'il ne correspond pas à la semaine en cours (ancienne version de l'app, appareil à la mauvaise date).
+    const { monday, elapsed } = weekInfo();
+    const sameWeek = body.week === monday;
+    const weekHeld = sameWeek ? Math.max(0, Math.min(elapsed, parseInt(body.weekHeld, 10) || 0)) : weekScore(prev, monday);
     await oaths.setJSON(code, {
-      displayName, text, level, rank, updated: Date.now(),
+      displayName, text, level, rank, updated: Date.now(), week: monday, weekHeld,
       cheers: sameOath ? (prev.cheers || 0) : 0,
       recent: sameOath ? (prev.recent || []) : [],
       cheerLog: sameOath ? (prev.cheerLog || {}) : {},

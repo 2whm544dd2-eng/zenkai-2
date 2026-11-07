@@ -27,7 +27,7 @@
     --gold: #ffc94d;
     --text: #e6eefb;
     --text-dim: #7089ae;
-    --text-faint: #3a4d6e;
+    --text-faint: #7484a3;
     --danger: #ff4d5e;
     --ok: #3ddc84;
     --radius: 4px;
@@ -545,6 +545,28 @@
   .wk-done.on{background:#4ade80; border-color:#4ade80;}
   .wk-done-info{font-size:10.5px; color:var(--text-faint); margin:-2px 0 6px; line-height:1.45;} .wk-done-info b{color:#4ade80;}
   .g-coach{font-size:11px; color:var(--cyan, #67e8f9); margin:4px 0 2px; line-height:1.45;}
+  .g-week{display:flex; flex-wrap:wrap; align-items:baseline; gap:2px 6px; font-size:12px; color:var(--text); margin:5px 0 2px; line-height:1.4;}
+  .g-card .gb-path + .gb-lab, .g-card .gb-sub, .g-card .gb-full span{display:none;}
+  .g-card .gb-path{margin-top:10px; margin-bottom:6px;}
+  .g-card .g-next{font-family:inherit; font-size:12px; margin:4px 0 0;}
+  .g-open{cursor:pointer; align-items:center;}
+  .g-pct{flex:0 0 auto; font-family:var(--font-mono); font-size:12.5px; color:var(--cyan);}
+  .g-chev{flex:0 0 auto; color:var(--text-dim); font-size:18px; line-height:1;}
+  .g-acts{margin-top:6px;}
+  .init-line{display:flex; align-items:center; gap:10px; width:100%; padding:13px 16px; margin:0 0 12px; border:1px solid var(--line); border-radius:16px; background:transparent; color:var(--text); font:inherit; font-size:13px; text-align:left; cursor:pointer;}
+  .init-line span{flex:1; min-width:0;}
+  .init-line em{flex:0 0 auto; font-style:normal; font-family:var(--font-mono); font-size:12px; color:var(--text-dim);}
+  .init-line i{flex:0 0 auto; font-style:normal; color:var(--text-dim); font-size:18px; line-height:1;}
+  .g-week.zero{color:var(--text-dim);}
+  .qs-paths{display:grid; gap:8px; margin-top:10px;}
+  .qs-lead{font-size:13px; color:var(--text-dim); line-height:1.5; margin:4px 0 10px;}
+  .qs-lbl{display:block; font-family:var(--font-mono); font-size:10px; letter-spacing:1px; color:var(--text-dim); margin:12px 0 5px;}
+  .qs-input{width:100%; box-sizing:border-box; font-size:16px !important; padding:11px 12px;}
+  @media (pointer:coarse){ input:not([type=checkbox]):not([type=radio]):not([type=range]):not(.zr-num), select, textarea{font-size:16px !important;}
+    .aw-name input:not(#_), .name-ask input:not(#_), #accessGate input:not(#_), .nu-qty input:not(#_){font-size:20px !important;} .gd-upd input:not(#_){font-size:17px !important;} #zkRun .zc-in:not(#_){font-size:18px !important;} }
+  .qs-foot{font-size:11px; color:var(--text-dim); text-align:center; margin-top:10px;}
+  .oath-score{flex:none; align-self:center; font-family:var(--font-mono); font-size:12px; font-weight:700; color:var(--gold); white-space:nowrap;}
+  .oath-hint{font-size:12px; color:var(--text-dim); line-height:1.45; margin:6px 0 2px;}
   .wk-quick{display:flex; flex-wrap:wrap; align-items:center; justify-content:space-between; gap:6px; margin-top:6px;}
   .wk-diff{font-family:var(--font-mono); font-size:10px; color:var(--text-faint);} .wk-diff.up{color:#4ade80; font-weight:700;}
   .wk-qbtns{display:flex; gap:4px;} .wk-qbtns button{background:var(--bg-panel-2); border:1px solid var(--line); color:var(--text); border-radius:14px; padding:5px 9px; font-size:11px; font-weight:700; cursor:pointer;}
@@ -911,7 +933,7 @@
   body.theme-monarch.theme-or{
     --bg:#0b0907; --bg-panel:rgba(40,31,18,0.72); --bg-panel-2:rgba(20,15,9,0.86); --line:rgba(230,194,122,0.15);
     --glow:#e6c27a; --glow-dim:#a8823e; --cyan:#f0d394; --purple:#e6c27a; --gold:#f5c451;
-    --text:#f3ead8; --text-dim:#b5a688; --text-faint:#6d6150;
+    --text:#f3ead8; --text-dim:#b5a688; --text-faint:#8f8270;
     background-image: radial-gradient(ellipse at 50% -10%, rgba(230,194,122,0.14), transparent 50%), radial-gradient(ellipse at 90% 110%, rgba(168,130,62,0.12), transparent 50%) !important;
     background-color:#0b0907 !important;
   }
@@ -1327,7 +1349,7 @@
     --line: #1b2942;
     --text: #dce8fa;
     --text-dim: #5c7093;
-    --text-faint: #35435f;
+    --text-faint: #7484a3;
     --radius: 0;
     --radius-lg: 0;
     background-image:
@@ -1396,6 +1418,60 @@
   .ach-prog.big{width:100%; height:6px;}
   .ach-prog > div{height:100%; border-radius:999px; background:linear-gradient(90deg, var(--glow-dim), var(--glow));}
 
+  /* ===== Prière (05/11, admin) ===== */
+  .zp-card{padding-top:14px !important; padding-bottom:12px !important;}
+  .zp-head{display:flex; justify-content:space-between; align-items:center;}
+  .zp-set{background:none; border:none; color:var(--text-dim); font-size:16px; padding:4px 6px; cursor:pointer;}
+  .zp-top{display:flex; align-items:baseline; justify-content:space-between; gap:10px; margin-top:6px;}
+  .zp-next{font-family:var(--font-body); font-size:20px; font-weight:600; color:var(--text); letter-spacing:0; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; min-width:0;}
+  .zp-next b{color:var(--gold); font-weight:700;}
+  .zp-in{font-family:var(--font-body); font-size:13px; letter-spacing:0; color:var(--text-dim); white-space:nowrap;}
+  .zp-row{display:grid; grid-template-columns:repeat(5, minmax(0,1fr)); gap:6px; margin-top:12px;}
+  .zp-p{border:1px solid rgba(255,255,255,.10); border-radius:12px; padding:8px 1px 7px; text-align:center; background:rgba(255,255,255,.03); color:inherit; font:inherit; cursor:pointer; min-width:0; min-height:44px;}
+  .zp-p .n{display:block; font-size:12px; letter-spacing:0; color:var(--text); font-weight:600; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;}
+  .zp-p .t{display:block; font-size:12px; color:var(--text-dim); margin-top:2px; font-variant-numeric:tabular-nums;}
+  .zp-p .s{display:block; font-size:15px; margin-top:4px; height:18px; line-height:18px;}
+  .zp-p.ok{border-color:rgba(107,227,160,.45); background:rgba(107,227,160,.08);} .zp-p.ok .s{color:#6be3a0;}
+  .zp-p.qd{border-color:rgba(255,201,77,.45); background:rgba(255,201,77,.07);} .zp-p.qd .s{color:#ffc94d;}
+  .zp-p.nx{border-color:var(--gold); box-shadow:0 0 0 1px rgba(255,201,77,.25), 0 0 18px -6px rgba(255,201,77,.6);} .zp-p.nx .s{color:var(--gold); font-size:12px;}
+  .zp-p.late .t{color:var(--text-faint);}
+  .zp-foot{margin-top:10px; font-size:12px; color:var(--text-dim); text-align:center; letter-spacing:0;}
+  .zp-opt{justify-content:flex-start; text-align:left; padding:14px 16px;}
+  .zp-offs{display:grid; grid-template-columns:repeat(5, minmax(0,1fr)); gap:6px; margin-top:8px;}
+  .zp-offs div{text-align:center;} .zp-offs span{display:block; font-size:12px; color:var(--text-dim);}
+  .zp-offs input{width:100%; margin-top:4px; text-align:center; font-size:16px; padding:6px 0;}
+  .zp-th{display:flex; justify-content:space-between; align-items:center; gap:8px; width:100%; margin-top:8px; padding:10px 12px; border:1px solid rgba(255,255,255,.10); border-radius:12px; background:rgba(127,140,255,.06); color:var(--text-dim); font:inherit; font-size:13px; text-align:left; cursor:pointer; min-height:44px; letter-spacing:0;}
+  .zp-th b{color:var(--text); font-weight:600;} .zp-th .s{color:var(--text-dim); font-size:15px;}
+  .zp-th.ok{border-color:rgba(107,227,160,.45); background:rgba(107,227,160,.08);} .zp-th.ok .s{color:#6be3a0;}
+  .zp-th.nx{border-color:var(--gold);} .zp-th.nx .s{color:var(--gold);}
+  .zp-thinfo{display:grid; grid-template-columns:repeat(3, minmax(0,1fr)); gap:8px;}
+  .zp-thinfo div{border:1px solid rgba(255,255,255,.10); border-radius:12px; padding:10px 4px; text-align:center;}
+  .zp-thinfo span{display:block; font-size:11.5px; color:var(--text-dim);} .zp-thinfo b{display:block; margin-top:4px; font-size:18px; color:var(--gold); font-variant-numeric:tabular-nums;}
+  /* ===== 05/11 : fiche routine, sport « refaire », menu + ===== */
+  .rs-stats{display:grid; grid-template-columns:repeat(3, minmax(0,1fr)); gap:8px;}
+  .rs-stats div{border:1px solid rgba(255,255,255,.10); border-radius:12px; padding:10px 4px; text-align:center;}
+  .rs-stats b{display:block; font-size:18px; color:var(--gold); font-variant-numeric:tabular-nums;} .rs-stats span{font-size:12px; color:var(--text-dim);}
+  .rs-t{display:flex; justify-content:space-between; align-items:baseline; margin:16px 0 8px; font-size:12px; letter-spacing:1.5px; color:var(--text-dim);} .rs-t b{letter-spacing:0; font-size:13px; color:var(--text);}
+  .rs-grid{display:grid; grid-template-columns:repeat(10, 1fr); gap:5px;}
+  .rs-c{display:block; aspect-ratio:1; border-radius:5px; background:rgba(255,255,255,.07);}
+  .rs-c.ok{background:#8b5cf6;} .rs-c.ko{background:rgba(255,255,255,.07);} .rs-c.na{background:none; border:1px dashed rgba(255,255,255,.14);}
+  .rs-c.nd{background:none; border:1px solid rgba(255,255,255,.05);} .rs-c.td{background:none; border:1.5px solid var(--gold);}
+  .rs-dates{display:flex; justify-content:space-between; font-size:11.5px; color:var(--text-dim); margin-top:6px;}
+  .rs-leg{display:flex; flex-wrap:wrap; gap:6px 14px; margin-top:10px; font-size:12px; color:var(--text-dim);} .rs-leg span{display:flex; align-items:center; gap:6px;} .rs-leg .rs-c{width:12px; height:12px; aspect-ratio:auto;}
+  .wk-redo-t{font-size:12px; letter-spacing:1.5px; color:var(--text-dim); margin:16px 0 8px;}
+  .wk-redo{display:grid; grid-template-columns:repeat(2, minmax(0,1fr)); gap:8px;}
+  .wk-redo button{border:1px solid rgba(255,255,255,.12); border-radius:14px; padding:11px 12px; background:rgba(255,255,255,.03); color:inherit; font:inherit; text-align:left; cursor:pointer; min-width:0;}
+  .wk-redo b{display:block; font-size:14px; color:var(--text); white-space:nowrap; overflow:hidden; text-overflow:ellipsis;}
+  .wk-redo span{display:block; font-size:12.5px; color:var(--text-dim); margin-top:3px; overflow:hidden; text-overflow:ellipsis; display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical;}
+  .wk-redo em{display:block; font-style:normal; font-size:12.5px; color:#b79bff; margin-top:6px; font-weight:600;}
+  .wk-recent{display:flex; justify-content:space-between; gap:10px; padding:10px 0; border-top:1px solid rgba(255,255,255,.06); cursor:pointer;}
+  .wk-recent div{min-width:0;} .wk-recent b{display:block; font-size:14px; color:var(--text); font-weight:600;}
+  .wk-recent small{display:block; color:var(--text-dim); font-size:12.5px; margin-top:2px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;}
+  .wk-recent span{color:var(--text-dim); font-size:12.5px; white-space:nowrap;}
+  .qa-grid{display:grid; grid-template-columns:repeat(3, minmax(0,1fr)); gap:10px;}
+  .qa-grid button{border:1px solid rgba(255,255,255,.12); background:rgba(255,255,255,.04); border-radius:16px; padding:16px 4px 12px; color:var(--text); font:inherit; cursor:pointer; min-width:0;}
+  .qa-grid .i{display:block; font-size:28px; line-height:1.1;} .qa-grid b{display:block; font-size:14.5px; margin-top:6px;}
+  .qa-grid small{display:block; font-size:12px; color:var(--text-dim); margin-top:2px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;}
   /* ===== Serment Inné ===== */
   .oath-panel{background:radial-gradient(ellipse at 100% 0%, rgba(255,201,77,0.08), transparent 55%), linear-gradient(165deg, var(--bg-panel), var(--bg-panel-2) 65%);}
   .oath-quote{font-family:var(--font-display); font-size:19px; line-height:1.35; color:#fff; font-weight:600; margin:4px 0 6px;}
@@ -1472,7 +1548,7 @@
     --gold:#f5c451;
     --text:#eeeaf8;
     --text-dim:#9b94b8;
-    --text-faint:#5d5679;
+    --text-faint:#8a84a6;
     --danger:#fb7185;
     --ok:#4ade80;
     --radius:12px;
@@ -1660,7 +1736,7 @@
   body.theme-systeme{
     --bg:#03060d; --bg-panel:rgba(8,26,54,0.78); --bg-panel-2:rgba(5,16,36,0.85);
     --line:rgba(63,169,255,0.38); --glow:#3fa9ff; --glow-dim:#1d5f9e; --cyan:#7fd4ff;
-    --purple:#8fa8ff; --gold:#ffd166; --text:#d9ecff; --text-dim:#7d9cc0; --text-faint:#46618a;
+    --purple:#8fa8ff; --gold:#ffd166; --text:#d9ecff; --text-dim:#7d9cc0; --text-faint:#7690b8;
     --danger:#ff6b7a; --ok:#6be3a0; --radius:0; --radius-lg:0;
     --font-display:'Chakra Petch', 'Rajdhani', sans-serif; --font-body:'Chakra Petch', 'Inter', sans-serif; --font-mono:'Share Tech Mono', 'Space Mono', monospace;
     background-color:var(--bg);
@@ -1712,7 +1788,7 @@
      ===================================================================== */
   body.theme-manhwa{
     --bg:#f3efe6; --bg-panel:#ffffff; --bg-panel-2:#ffffff; --line:#111111; --glow:#111111; --glow-dim:#111111;
-    --cyan:#111111; --purple:#6b3fa0; --gold:#b36b00; --text:#111111; --text-dim:#4a4a4a; --text-faint:#8a8580;
+    --cyan:#111111; --purple:#6b3fa0; --gold:#b36b00; --text:#111111; --text-dim:#4a4a4a; --text-faint:#6b6763;
     --danger:#d7263d; --ok:#1a7f3c; --radius:0; --radius-lg:0;
     --font-display:'Anton', 'Impact', sans-serif; --font-body:'Archivo', 'Arial', sans-serif; --font-mono:'Archivo', 'Arial', sans-serif;
     color:#111; background-color:var(--bg);
@@ -1793,7 +1869,7 @@
      ===================================================================== */
   body.theme-donjon{
     --bg:#110d0e; --bg-panel:#1c1617; --bg-panel-2:#141011; --line:rgba(107,85,48,0.75); --glow:#c9a24a; --glow-dim:#8a6d2f;
-    --cyan:#e0b75a; --purple:#b0303f; --gold:#e0b75a; --text:#eadfc8; --text-dim:#b5a88c; --text-faint:#7a6c55;
+    --cyan:#e0b75a; --purple:#b0303f; --gold:#e0b75a; --text:#eadfc8; --text-dim:#b5a88c; --text-faint:#93866e;
     --danger:#d0546a; --ok:#8fbf6f; --radius:2px; --radius-lg:3px;
     --font-display:'Cormorant Garamond', Georgia, serif; --font-body:'Alegreya Sans', 'Inter', sans-serif; --font-mono:'Alegreya Sans', 'Inter', sans-serif;
     background-color:var(--bg);
@@ -1854,7 +1930,7 @@
      ===================================================================== */
   body.theme-epure{
     --bg:#0d0e10; --bg-panel:#16181c; --bg-panel-2:#16181c; --line:#23262c; --glow:#c8f560; --glow-dim:#7fa33a;
-    --cyan:#f2f3f5; --purple:#7cc7ff; --gold:#c8f560; --text:#f2f3f5; --text-dim:#8b9099; --text-faint:#5b606a;
+    --cyan:#f2f3f5; --purple:#7cc7ff; --gold:#c8f560; --text:#f2f3f5; --text-dim:#8b9099; --text-faint:#8a8f99;
     --danger:#ff7a6b; --ok:#c8f560; --radius:12px; --radius-lg:22px;
     --font-display:'Manrope', 'Inter', sans-serif; --font-body:'Manrope', 'Inter', sans-serif; --font-mono:'Manrope', 'Inter', sans-serif;
     background:#0d0e10; min-height:100vh;
@@ -2262,9 +2338,28 @@ async function loadState(){
   }catch(e){
     STATE = DEFAULT_STATE();
   }
-  migrateState();
+  try{ migrateState(); }
+  catch(err){   // 04/11 : sauvegarde inutilisable : on essaie les sauvegardes automatiques, de la plus récente à la plus ancienne
+    const bk = await getAutoBackups(); let ok = false;
+    for(let i = bk.length - 1; i >= 0 && !ok; i--){ try{ STATE = JSON.parse(bk[i].snapshot); migrateState(); ok = true; showToastLater = 'Données récupérées depuis ta sauvegarde du ' + bk[i].date; }catch(e){} }
+    if(!ok){ STATE = null; throw err; }   // STATE vide : rien n'écrase la sauvegarde pendant l'écran de secours
+  }
+}
+let showToastLater = null;
+/* 04/11 : remplacement volontaire des données (import, restauration, tout effacer) : testé d'abord, l'état actuel revient en cas d'échec.
+   syncEpoch monte : les autres appareils adoptent cette version au lieu de la refuser parce qu'elle a moins d'XP. */
+function adoptReplacement(next){
+  const prev = STATE;
+  try{
+    next.syncEpoch = Math.max(+next.syncEpoch||0, +(prev && prev.syncEpoch)||0) + 1;
+    STATE = next; migrateState();
+    const app = document.getElementById('app'), html = app ? app.innerHTML : '';
+    try{ render(); }catch(e){ if(app) app.innerHTML = html; throw e; }
+    return true;
+  }catch(e){ STATE = prev; try{ render(); }catch(_){} return false; }
 }
 
+const RETURN_MIN_DAYS = 3;
 // Réévalue le changement de jour (routines, eau, pomodoro, pénalités, récap hebdo).
 // Appelée au chargement ET à chaque retour au premier plan, pour ne pas rester
 // bloquée sur l'état d'hier si l'app/onglet reste ouvert(e) à travers minuit.
@@ -2272,6 +2367,9 @@ function checkDayRollover(){
   const today = todayStr();
   const yesterday = yesterdayStr();
   if(!STATE.firstUseDate) STATE.firstUseDate = today;
+  // 04/11 : retour après au moins 3 jours d'absence : aucune pénalité d'XP, les séries repartent de zéro, une seule carte pour reprendre.
+  const absentDays = STATE.todayStats.date ? Math.round((new Date(today+'T00:00:00') - new Date(STATE.todayStats.date+'T00:00:00'))/86400000) : 0;
+  const isReturn = absentDays >= RETURN_MIN_DAYS && (STATE.stats.lifetimeXP||0) > 0;
 
   const pomoCompletedPrev = STATE.pomo.completedToday;
   const pomoGoalPrev = STATE.pomo.dailyGoal;
@@ -2298,13 +2396,13 @@ function checkDayRollover(){
       };
       // 14/10 : pas de pénalité d'eau pour qui ne suit pas son eau (jamais rien noté) — un nouveau testeur perdait de l'XP chaque nuit sans comprendre
       const waterTracker = STATE.water.currentMl > 0 || (STATE.history||[]).some(h=>h.waterGoalHit || (h.waterMl||0) > 0);
-      if(!STATE.water.goalRewarded && STATE.settings.penaltiesEnabled && modOn('water') && waterTracker && STATE.water.currentMl < STATE.water.goalMl){
+      if(!isReturn && !STATE.water.goalRewarded && STATE.settings.penaltiesEnabled && modOn('water') && waterTracker && STATE.water.currentMl < STATE.water.goalMl){
         const penalty = Math.max(5, Math.round(WATER_GOAL_XP*PENALTY_RATE));
         xpPenalty(STATE.water.skill, penalty);
         histEntry.xpGained -= penalty;
         notifyIfEnabled('PÉNALITÉ // ZENKAI', `-${penalty} XP — Objectif hydratation raté`, 'hunter-log-penalty-water');
       }
-      if(STATE.settings.penaltiesEnabled && modOn('focus') && STATE.settings.pomoPenaltyEnabled && pomoDatePrev === STATE.todayStats.date && pomoCompletedPrev < pomoGoalPrev){
+      if(!isReturn && STATE.settings.penaltiesEnabled && modOn('focus') && STATE.settings.pomoPenaltyEnabled && pomoDatePrev === STATE.todayStats.date && pomoCompletedPrev < pomoGoalPrev){
         const penalty = Math.max(5, Math.round(pomoSessionXP()*PENALTY_RATE));
         xpPenalty(STATE.pomo.skill, penalty);
         histEntry.xpGained -= penalty;
@@ -2312,7 +2410,7 @@ function checkDayRollover(){
       }
       STATE.history.push(histEntry);
       if(STATE.history.length > HISTORY_MAX_DAYS) STATE.history = STATE.history.slice(-HISTORY_MAX_DAYS);
-      showToast('SYSTEM', 'NOUVEAU JOUR — QUÊTES RÉINITIALISÉES', `Hier : ${histEntry.xpGained} XP · ${histEntry.routinesDone} routines · ${histEntry.tasksDone} quêtes`);
+      if(!isReturn) showToast('SYSTEM', 'NOUVEAU JOUR — QUÊTES RÉINITIALISÉES', `Hier : ${histEntry.xpGained} XP · ${histEntry.routinesDone} routines · ${histEntry.tasksDone} quêtes`);
     }
     STATE.todayStats = {date: today, xpGained:0, routinesDone:0, tasksDone:0, goalsDone:0, focusMinutes:0, tasksAbandoned:0, xpBySkill:{}};
   }
@@ -2328,25 +2426,28 @@ function checkDayRollover(){
       // Seulement s'il y a au moins un jour archivé à résumer. Avant : un tout nouveau
       // joueur voyait comme tout premier écran un « récap de la semaine » vide, par-dessus
       // le message de bienvenue.
-      STATE.pendingWeeklyRecap = (STATE.history||[]).length > 0;
+      STATE.pendingWeeklyRecap = !isReturn && (STATE.history||[]).length > 0;
     }
   }
 
   // streak-break penalties (a routine that had momentum but missed its full period)
   // — si la pénalité de retard a déjà sanctionné cette même occurrence manquée,
   // on ne double pas la peine avec la pénalité de série rompue.
+  let streaksReset = 0;
   STATE.routines.forEach(r=>{
     if(r.streak>0 && r.lastDoneDate && !routineStreakAlive(r) && r.lastPenaltyDate!==today){
       const alreadyPenalizedForMiss = r.deadlinePenalty && r.deadlinePenalizedDate && r.deadlinePenalizedDate === (routineDays(r) ? routinePrevDue(r) : previousPeriodKey(r.freqTag||'quotidienne'));   // 10/10 : seulement la même occurrence manquée
-      if(!alreadyPenalizedForMiss) applyRoutinePenalty(r);
+      if(!alreadyPenalizedForMiss && !isReturn) applyRoutinePenalty(r);
       r.streak = 0;
       r.lastPenaltyDate = today;
+      streaksReset++;
     }
   });
+  if(isReturn) STATE.settings.returnCard = {date: today, days: absentDays, streaks: streaksReset, pick: null, closed: false};
 
   {   // 04/11 : ne rate jamais deux fois — rappel une fois par jour s'il y a un joker en cours
     const jk = STATE.routines.filter(routineJoker);
-    if(jk.length && STATE.settings.jokerToastDate !== today){ STATE.settings.jokerToastDate = today;
+    if(!isReturn && jk.length && STATE.settings.jokerToastDate !== today){ STATE.settings.jokerToastDate = today;
       setTimeout(()=>showToast('NE RATE PAS DEUX FOIS', jk.length === 1 ? jk[0].name : `${jk.length} routines`, 'raté une fois, ça arrive : ta série tient encore', ''), 1500); }
   }
   if(STATE.water.lastDate !== today){ STATE.water.currentMl = 0; STATE.water.goalRewarded = false; STATE.water.tiers = 0; STATE.water.lastDate = today; STATE.water.log = []; }
@@ -2368,7 +2469,20 @@ function goalWeekSnapTick(){
   const keys = Object.keys(STATE.goalWeekSnaps).sort(); while(keys.length > 4) delete STATE.goalWeekSnaps[keys.shift()];
 }
 
+/* 04/11 : tout ce qui manque (fichier importé incomplet, vieille sauvegarde) est complété avant la migration : l'app ne bloque plus au démarrage. */
+function fillMissingState(){
+  const d = DEFAULT_STATE();
+  Object.keys(d).forEach(k=>{
+    const dv = d[k], v = STATE[k];
+    if(dv === null) return;
+    if(v === undefined || v === null || Array.isArray(dv) !== Array.isArray(v) || typeof dv !== typeof v){ STATE[k] = dv; return; }
+    const keepForMigration = {settings:['visualTheme','awakeningDone','welcomeDismissed'], stats:['lifetimeXP']}[k] || [];   // 05/11 : migrateState calcule ces valeurs pour les anciennes sauvegardes
+    if(typeof dv === 'object' && !Array.isArray(dv) && k !== 'skills') Object.keys(dv).forEach(j=>{ if(v[j] === undefined && !keepForMigration.includes(j)) v[j] = dv[j]; });
+  });
+  if(!Object.keys(STATE.skills).length) STATE.skills = d.skills;
+}
 function migrateState(){
+  fillMissingState();
   if(STATE.water && STATE.water.tiers === undefined){   // paliers d'hydratation : pas d'XP rétroactive pour l'eau déjà bue aujourd'hui
     const p0 = STATE.water.currentMl / (STATE.water.goalMl || 3000);
     STATE.water.tiers = [0.25,0.5,0.75].filter(t=>p0>=t).length; STATE.water.reminderDate = STATE.water.reminderDate || null;
@@ -2669,10 +2783,9 @@ function flushSyncPushBeacon(){
   if(!syncCode || !syncDirty) return;   // build 78 : rien de nouveau → aucun envoi (avant : état complet à chaque mise en arrière-plan)
   const payload = JSON.stringify({code: syncCode, state: STATE, baseTs: localStateTs, deviceId: zkDeviceId()});
   try{
-    if(navigator.sendBeacon){
-      const blob = new Blob([payload], {type:'application/json'});
-      if(navigator.sendBeacon('/.netlify/functions/sync-state', blob)) return;
-    }
+    const blob = new Blob([payload], {type:'application/json'});
+    if(blob.size > 60000) return;   // 04/11 : trop gros pour un envoi en fermeture (limite 64 Ko) : syncDirty reste vrai, envoi au retour
+    if(navigator.sendBeacon && navigator.sendBeacon('/.netlify/functions/sync-state', blob)) return;
   }catch(e){ /* on retente en fetch classique ci-dessous */ }
   fetch('/.netlify/functions/sync-state', {method:'POST', headers:{'Content-Type':'application/json'}, body: payload, keepalive:true}).catch(()=>{});
 }
@@ -2699,6 +2812,8 @@ async function pullStateFromServer(){
 // 14/10 : une copie du serveur nettement EN RETARD sur cet appareil (moins d'XP cumulée) vient d'un appareil resté
 // sur une vieille sauvegarde : on ne la prend pas, on renvoie la version de cet appareil (la copie serveur est gardée à part).
 function zkSyncIsStale(server, local){
+  const se = +(server && server.syncEpoch) || 0, le = +(local && local.syncEpoch) || 0;
+  if(se !== le) return le > se;   // 04/11 : le remplacement volontaire le plus récent gagne, même avec moins d'XP
   const sx = (server && server.stats && +server.stats.lifetimeXP) || 0, lx = (local && local.stats && +local.stats.lifetimeXP) || 0;
   return lx - sx > 100 && sx < lx * 0.9;
 }
@@ -2712,7 +2827,12 @@ async function adoptServerState(state, ts, hadLocalChanges){
     return;
   }
   let merged = state;
-  if(hadLocalChanges){
+  const replacedElsewhere = (+state.syncEpoch||0) > (+STATE.syncEpoch||0);
+  if(replacedElsewhere){   // 05/11 : import, restauration ou « tout effacer » fait sur un autre appareil : on garde d'abord une copie de celui-ci
+    try{ await storeSet(SYNC_BACKUP_KEY, JSON.stringify({savedAt: Date.now(), state: STATE, from:'device'})); }catch(e){}
+    setTimeout(()=>showToast('SYNCHRO', 'Données remplacées depuis un autre appareil', 'une copie de cet appareil est gardée (Réglages → Synchro)', ''), 800);
+  }
+  if(hadLocalChanges && (+state.syncEpoch||0) === (+STATE.syncEpoch||0)){
     // Les deux appareils ont changé des choses : on fusionne au lieu de jeter l'un des deux.
     try{ await storeSet(SYNC_BACKUP_KEY, JSON.stringify({savedAt: Date.now(), state: STATE})); }catch(e){}
     // sans base connue (premier conflit après la mise à jour) : la version du serveur l'emporte
@@ -3054,8 +3174,8 @@ function syncStatusHtml(){
       <label style="width:auto;">Code de synchro</label>
       <span style="font-family:var(--font-mono); font-size:13px; letter-spacing:1px; color:var(--cyan);">${syncCode}</span>
     </div>
-    <p ${hint}>Entre ce même code sur ton autre appareil pour partager la sauvegarde. Synchro auto en arrière-plan (toutes les 20 s et à chaque retour sur l'app).<br>Dernière synchro réussie : <span style="color:var(--text-dim);">${lastSyncLabel()}</span></p>
-    <p ${hint}>Si tu modifies sur deux appareils hors connexion en même temps, c'est la dernière version envoyée qui gagne.</p>
+    <p ${hint}>Entre ce même code sur ton autre appareil pour partager la sauvegarde. Synchro auto en arrière-plan (toutes les 2 min quand l'app est ouverte, et à chaque retour sur l'app).<br>Dernière synchro réussie : <span style="color:var(--text-dim);">${lastSyncLabel()}</span></p>
+    <p ${hint}>Si tu modifies sur deux appareils hors connexion en même temps, les deux versions sont fusionnées à la prochaine synchro (une copie de l'ancienne est gardée).</p>
   ` : `
     <button class="btn ghost small" onclick="generateSyncCode()">Générer un code de synchro</button>
     <div style="display:flex; gap:6px; margin-top:8px;">
@@ -3210,9 +3330,24 @@ function modalOath(){
 }
 function oathPayload(subscription){
   const o = STATE.oath || {};
-  const p = {code: syncCode, displayName: o.displayName, text: o.text, level: STATE.hunterLevel, rank: rankForLevel(STATE.hunterLevel).label};
+  const p = {code: syncCode, displayName: o.displayName, text: o.text, level: STATE.hunterLevel, rank: rankForLevel(STATE.hunterLevel).label, week: startOfWeekStr(), weekHeld: weekHeldCount()};
   if(subscription) p.subscription = subscription;
   return p;
+}
+/* 04/11 : classement de la semaine. On compte les journées tenues depuis lundi ; tout le monde repart de zéro chaque lundi. */
+function weekHeldCount(){
+  const from = startOfWeekStr();
+  let n = (STATE.todayStats && STATE.todayStats.dayHeld) ? 1 : 0;
+  (STATE.history||[]).forEach(h=>{ if(h && h.date >= from && h.date < todayStr() && h.dayHeld) n++; });
+  return n;
+}
+function weekDaysElapsed(){ return (new Date(todayStr()+'T00:00:00').getDay()+6)%7 + 1; }
+let oathWeekTimer = null;
+function oathPushWeekSoon(){   // journée tenue (ou annulée) : le score des autres joueurs doit le voir sans attendre
+  const o = STATE.oath || {};
+  if(!o.text || !syncCode) return;
+  clearTimeout(oathWeekTimer);
+  oathWeekTimer = setTimeout(()=>{ fetch('/.netlify/functions/oath', {method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify(oathPayload())}).catch(()=>{}); }, 1500);
 }
 async function currentPushSub(){   // pour être prévenu quand quelqu'un t'encourage (si les notifications sont autorisées)
   try{
@@ -3299,7 +3434,7 @@ async function saveOath(){
   }
 }
 async function showOathLeaderboard(){
-  openModal(`<h3 style="color:var(--gold);">CLASSEMENT DES SERMENTS</h3><div class="empty">CHARGEMENT…</div>`);
+  openModal(`<h3 style="color:var(--gold);">CLASSEMENT DE LA SEMAINE</h3><div class="empty">CHARGEMENT…</div>`);
   try{
     // Met à jour son propre rang/niveau dans le classement avant de l'afficher.
     const o = STATE.oath || {};
@@ -3309,27 +3444,36 @@ async function showOathLeaderboard(){
     const res = await fetch('/.netlify/functions/oath' + (syncCode ? '?code=' + encodeURIComponent(syncCode) : ''));
     if(!res.ok) throw new Error('http '+res.status);
     const data = await res.json();
-    openModal(`<h3 style="color:var(--gold);">CLASSEMENT DES SERMENTS</h3>
-      <div class="sub" style="margin-bottom:8px;">TRIÉ PAR NIVEAU · 🔥 = ENCOURAGER (1 FOIS PAR JOUR)</div>
+    const left = 8 - weekDaysElapsed();
+    const heldToday = !!(STATE.todayStats && STATE.todayStats.dayHeld);
+    openModal(`<h3 style="color:var(--gold);">CLASSEMENT DE LA SEMAINE</h3>
+      <div class="sub" style="margin-bottom:8px;">JOURNÉES TENUES · REMISE À ZÉRO LUNDI · RESTE ${left} J</div>
+      ${o.text ? `<div class="oath-hint">${heldToday ? "Journée tenue : ton score est à jour." : "Tiens ta journée aujourd'hui : +1 au classement."}</div>` : ''}
       <div>${oathListHtml(data.oaths)}</div>
+      <div class="oath-hint">🔥 = encourager, 1 fois par jour.</div>
       <div class="modal-actions"><button class="btn ghost" onclick="closeModal()">Fermer</button></div>`);
   }catch(e){
-    openModal(`<h3 style="color:var(--gold);">CLASSEMENT DES SERMENTS</h3><div class="empty">CLASSEMENT INDISPONIBLE — VÉRIFIE TA CONNEXION</div><div class="modal-actions"><button class="btn ghost" onclick="closeModal()">Fermer</button></div>`);
+    openModal(`<h3 style="color:var(--gold);">CLASSEMENT DE LA SEMAINE</h3><div class="empty">CLASSEMENT INDISPONIBLE — VÉRIFIE TA CONNEXION</div><div class="modal-actions"><button class="btn ghost" onclick="closeModal()">Fermer</button></div>`);
   }
 }
 function oathListHtml(oaths){
   if(!oaths || !oaths.length) return '<div class="empty">AUCUN SERMENT POUR L\'INSTANT — SOIS LE PREMIER</div>';
   const mine = STATE.oath || {};
+  const elapsed = weekDaysElapsed(), medals = ['var(--gold)','#cbd5e1','#d69256'];
+  let pos = 0, last = null;
   return oaths.map((o,i)=>{
+    const held = +o.weekHeld || 0;
+    if(held !== last){ pos = i + 1; last = held; }   // même score = même place
     const rank = RANK_ORDER.includes(o.rank) ? o.rank : null;
     const color = rank ? rankForLevel(RANK_THRESHOLDS[rank]).color : 'var(--text-dim)';
     const isMe = o.mine !== undefined ? o.mine : (o.displayName === mine.displayName && o.text === mine.text);
     return `<div class="oath-row ${isMe?'me':''}">
-      <div class="oath-pos">${i+1}</div>
+      <div class="oath-pos" style="color:${held && pos <= 3 ? medals[pos-1] : 'var(--text-faint)'};">${pos}</div>
       <div class="item-body">
         <div class="item-name" style="display:flex; align-items:center; gap:8px;">${escapeHtml(o.displayName)}${rank ? `<span class="rank-chip" style="color:${color}; font-size:9px; padding:1px 5px;">${rank}</span>` : ''}${o.level ? `<span class="oath-lvl">NIV. ${o.level}</span>` : ''}</div>
         <div class="oath-row-text">« ${escapeHtml(o.text)} »</div>
       </div>
+      <div class="oath-score" aria-label="${held} journées tenues sur ${elapsed}">${held}/${elapsed} j</div>
       ${o.id ? `<button class="cheer-btn ${o.cheeredToday||isMe?'done':''}" ${o.cheeredToday||isMe?'disabled':''} aria-label="${isMe ? 'Tes encouragements' : 'Encourager ' + escapeHtml(o.displayName)}" onclick="cheerOath('${o.id}', this)">🔥 <span>${o.cheers||0}</span></button>` : ''}
     </div>`;
   }).join('');
@@ -3640,10 +3784,11 @@ function modalGoalDetail(id){
   const fd = d => d ? new Date(d+'T00:00:00').toLocaleDateString('fr-FR',{day:'numeric', month:'short'}) : '';
   const isManualQ = g.progressType === 'quantifie' && (!g.linkedSource || g.linkedSource === 'manuel');
   openModal(`<h3 style="margin-bottom:4px;">${escapeHtml(g.name)}</h3>
-    <div class="gd-meta"><span class="rank-chip" style="color:${rankForLevel(RANK_THRESHOLDS[g.rank]||1).color};">${g.rank}</span><span>${escapeHtml(sk ? sk.name : '—')}</span>${daysLeft !== null ? `<span style="color:${daysLeft < 0 ? 'var(--danger)' : daysLeft <= 3 ? 'var(--gold)' : 'var(--text-dim)'}">${daysLeft < 0 ? '⚠ retard ' + (-daysLeft) + ' j' : '⏰ J-' + daysLeft}</span>` : ''}<span style="margin-left:auto; color:var(--gold); font-family:var(--font-mono);">${pct} %</span></div>
+    <div class="gd-meta"><span class="rank-chip" style="color:${rankForLevel(RANK_THRESHOLDS[g.rank]||1).color};">${g.rank}</span><span class="term-chip ${g.term}">${g.term==='court'?'CT':'MT'}</span><span>${escapeHtml(sk ? sk.name : '—')}</span><span class="xp-tag">jusqu'à ${goalBaseXP(g.rank)} XP</span>${g.reward ? `<span class="reward-tag">🎁 ${escapeHtml(g.reward)}</span>` : ''}${daysLeft !== null ? `<span style="color:${daysLeft < 0 ? 'var(--danger)' : daysLeft <= 3 ? 'var(--gold)' : 'var(--text-dim)'}">${daysLeft < 0 ? '⚠ retard ' + (-daysLeft) + ' j' : '⏰ J-' + daysLeft}</span>` : ''}<span style="margin-left:auto; color:var(--gold); font-family:var(--font-mono);">${pct} %</span></div>
     ${g.done ? '' : goalBarHtml(g, pct)}
+    ${(()=>{ if(g.done) return ''; const rc = runCoach(g) || weightLine(g) || (g.linkedSource==='routine_days' && g.progressType==='quantifie' ? goalNextStepHint(g) : ''); return rc ? `<div class="g-coach">${g.linkedSource==='routine_days'?'🗣':g.linkedSource==='body_weight'?'⚖':'🏃'} ${escapeHtml(rc)}</div>` : ''; })()}
     ${isManualQ && !g.done ? `<div class="gd-upd"><input type="text" id="gdVal" inputmode="decimal" placeholder="ex : 350" autocomplete="off"><span>${escapeHtml(g.unit||'')}</span><button class="btn" onclick="goalSetValue('${g.id}','add')">+ Ajouter</button><button class="btn ghost" onclick="goalSetValue('${g.id}','set')">= Total</button></div><div class="q-hint">Actuel : ${escapeHtml(goalFmtVal(g, +g.currentValue||0))}. « + Ajouter » s'ajoute au total, « = Total » le remplace.</div>` : ''}
-    ${g.progressType !== 'quantifie' && !goalIsSteps(g) && !g.done ? `<div class="gd-upd"><button class="btn ghost" onclick="setGoalPercent('${g.id}', ${Math.max(0, pct-10)}); modalGoalDetail('${g.id}')">− 10 %</button><span style="flex:1; text-align:center; font-family:var(--font-mono); color:var(--gold);">${pct} %</span><button class="btn" onclick="setGoalPercent('${g.id}', ${Math.min(100, pct+10)}); if(document.getElementById('overlay').classList.contains('open')) modalGoalDetail('${g.id}')">+ 10 %</button></div>` : ''}
+    ${g.progressType !== 'quantifie' && !goalIsSteps(g) && !g.done ? `<div class="gd-upd"><button class="btn ghost" onclick="setGoalPercent('${g.id}', ${Math.max(0, pct-10)}); modalGoalDetail('${g.id}')">− 10 %</button><span style="flex:1; text-align:center; font-family:var(--font-mono); color:var(--gold);">${pct} %</span><button class="btn" onclick="setGoalPercent('${g.id}', ${Math.min(100, pct+10)}); if(document.getElementById('overlay').classList.contains('open')) modalGoalDetail('${g.id}')">+ 10 %</button></div><button class="btn wide" style="margin-top:6px;" onclick="closeModal(); toggleGoal('${g.id}')">✓ Objectif atteint</button>` : ''}
     <div class="wk-sec">${goalIsSteps(g) ? 'ÉTAPES' : 'PALIERS'}</div>
     ${pal.map((p,i)=>{ const st = p.done ? 'done' : p.key === nextKey ? 'next' : '';
       const ico = p.done ? '✓' : p.last ? '🏆' : (goalIsSteps(g) ? (i+1) : ['I','II','III'][i]);
@@ -3652,7 +3797,7 @@ function modalGoalDetail(id){
       return `<div class="gd-pal ${st}"><div class="gd-ico">${ico}</div><div class="gd-txt"><b>${escapeHtml(p.lbl)}</b>${sub || p.rw ? `<small>${escapeHtml(sub)}${p.rw ? `${sub ? ' · ' : ''}🎁 ${escapeHtml(p.rw)}` : ''}</small>` : ''}</div>${right}</div>`; }).join('')}
     <div class="wk-sec">PROGRESSION</div>
     ${goalChartSvg(g)}
-    <div class="modal-actions"><button class="btn ghost" onclick="closeModal()">Fermer</button><button class="btn" onclick="modalEditGoal('${g.id}')">✎ Modifier</button></div>`);
+    <div class="modal-actions"><button class="btn ghost" style="color:var(--danger);" onclick="closeModal(); deleteGoal('${g.id}')">Supprimer</button><button class="btn ghost" onclick="closeModal()">Fermer</button><button class="btn" onclick="modalEditGoal('${g.id}')">Modifier</button></div>`);
 }
 function goalSetValue(id, mode){
   const g = STATE.goals.find(x=>x.id===id); if(!g || g.done) return;
@@ -3737,7 +3882,7 @@ const ACHIEVEMENTS = [
   {id:'xp_10000', icon:'⚡', name:'10 000 XP cumulés', hidden:false, check:s=> s.stats.lifetimeXP >= 10000},
   {id:'xp_100000', icon:'⚡', name:'100 000 XP cumulés', hidden:true, check:s=> s.stats.lifetimeXP >= 100000},
   {id:'oath_sworn', icon:'🗡️', name:'Serment prêté', hidden:false, check:s=> !!(s.oath && s.oath.text)},
-  {id:'platinum', icon:'🏆', name:'Toutes les feuilles de route', hidden:true, check:s=> Object.keys(s.achievements).length >= ACHIEVEMENTS.length-1},
+  {id:'platinum', icon:'🏆', name:'Toutes les feuilles de route', hidden:true, check:s=> achPlatNeeded(s).every(a=>s.achievements[a.id])},
 ];
 // Badge hexagonal (même langage visuel que le sceau de rang) autour de l'icône d'un succès,
 // plutôt qu'un simple emoji posé dans la liste. Cadre bleu lumineux + icône nette si débloqué,
@@ -3818,9 +3963,10 @@ const ACH_PROGRESS = (()=>{
   add(['skills_8'], s=>Object.keys(s.skills).length, [8]);
   add(['first_day'], s=>s.stats.totalTasksDone+s.stats.totalRoutinesDone+s.stats.totalGoalsDone, [1]);
   m.monarch = s => [lvl(s), RANK_THRESHOLDS.S];
-  m.platinum = s => [Object.keys(s.achievements).filter(k=>k!=='platinum').length, ACHIEVEMENTS.length-1];
+  m.platinum = s => { const need = achPlatNeeded(s); return [need.filter(a=>s.achievements[a.id]).length, need.length]; };
   return m;
 })();
+function achPlatNeeded(s){ return ACHIEVEMENTS.filter(a=>a.id !== 'platinum' && (a.id !== 'pionnier' || (s.settings && s.settings.accessType === 'beta'))); }   // 04/11 : Pionnier est réservé aux bêta-testeurs : il ne bloque plus les autres
 function achTier(a){ return ACH_TIERS[ACH_TIER[a.id] || 'bronze']; }
 function achProgress(a){
   const f = ACH_PROGRESS[a.id];
@@ -3877,7 +4023,7 @@ const ACH_HOW = {
   initie:"Commence ton initiation : donné dès ton premier jour.",
   pionnier:"Faire partie des bêta-testeurs de ZENKAI.",
   first_day:'Valide ta première routine, quête ou objectif.',
-  streak_3:'Tiens une routine 3 jours (ou périodes) d\'affilée.', streak_7:'Tiens une routine 7 jours d\'affilée.', streak_30:'Tiens une routine 30 jours d\'affilée.', streak_100:'Tiens une routine 100 jours d\'affilée.', streak_365:'Tiens une routine un an sans casser la série.',
+  streak_3:'Tiens une routine 3 jours (ou périodes) d\'affilée. Un seul raté ne casse pas la série.', streak_7:'Tiens une routine 7 jours d\'affilée.', streak_30:'Tiens une routine 30 jours d\'affilée.', streak_100:'Tiens une routine 100 jours d\'affilée.', streak_365:'Tiens une routine un an sans casser la série.',
   tasks_25:'Termine 25 quêtes.', tasks_100:'Termine 100 quêtes.', tasks_500:'Termine 500 quêtes.', tasks_1000:'Termine 1000 quêtes.',
   focus_10h:'Cumule 10 h de focus en pomodoro.', focus_50h:'Cumule 50 h de focus en pomodoro.', focus_100h:'Cumule 100 h de focus en pomodoro.',
   first_s:'Termine une quête ou un objectif de difficulté S.', s_rank_10:'Termine 10 quêtes ou objectifs de difficulté S.', s_rank_50:'Termine 50 quêtes ou objectifs de difficulté S.',
@@ -4055,6 +4201,7 @@ function checkRoutineDeadlines(){
     if(r.deadlinePenalizedDate === today || r.deadlinePenalizedDate === per) return;   // une fois par période (hebdo = une fois par semaine)
     if(r.editedDate === today) return;   // créée ou modifiée aujourd'hui après l'heure : pas de pénalité immédiate
     r.deadlinePenalizedDate = per;
+    if(STATE.settings.returnCard && STATE.settings.returnCard.date === today) return;   // 04/11 : jour du retour : pas de pénalité
     applyDeadlinePenalty(r);
     changed = true;
   });
@@ -4242,7 +4389,62 @@ function finishAwakening(accepted){
   }
   queueSave();
   if(accepted){ currentTab = 'today'; render(); showToast(nm ? `BIENVENUE, ${nm.toUpperCase()}` : 'QUÊTE REÇUE', 'Valide ta première action', '+XP · rang E → D au niveau 5', 'reward');
-    if(!STATE.settings.modules) setTimeout(()=>modalModules(true), 700); }
+    if(!STATE.settings.modules) setTimeout(()=>modalQuickStart(1), 700); }
+}
+/* 04/11 : démarrage en 3 étapes. Tout est écrit par la personne : l'app ne propose ni chiffre ni conseil. */
+const QS_PATHS = {
+  exams:  {ico:'🎓', t:'Réussir mes examens',       goal:'Ex : valider mon semestre',       hab:'Ex : réviser chaque soir',        act:'Ex : ouvrir mon cours',        skill:'apprentissage', mods:['focus']},
+  sport:  {ico:'🏋', t:'Reprendre le sport',        goal:'Ex : reprendre la salle',         hab:'Ex : aller à ma séance',          act:'Ex : préparer mon sac',        skill:'force',         mods:['sport']},
+  days:   {ico:'☀', t:'Mieux tenir mes journées',  goal:'Ex : ne plus subir mes journées', hab:'Ex : me lever à l\'heure',        act:'Ex : ranger mon bureau',       skill:'discipline',    mods:[]},
+  project:{ico:'💼', t:'Avancer sur un projet',     goal:'Ex : sortir mon projet',          hab:'Ex : y travailler chaque jour',  act:'Ex : écrire la prochaine étape', skill:'apprentissage', mods:['focus']},
+};
+let qsDraft = {path:null, goal:'', habit:'', action:''};
+function qsSkill(){ const p = QS_PATHS[qsDraft.path]; return p && STATE.skills[p.skill] ? p.skill : (STATE.skills.discipline ? 'discipline' : Object.keys(STATE.skills)[0]); }
+function qsKeep(){ ['goal','habit','action'].forEach(k=>{ const i = document.getElementById('qs_'+k); if(i) qsDraft[k] = i.value.trim().slice(0, 60); }); }
+function qsGo(step){ qsKeep(); modalQuickStart(step); }
+function qsFill(){ ['goal','habit','action'].forEach(k=>{ const i = document.getElementById('qs_'+k); if(i) i.value = qsDraft[k]; }); }
+function qsSkip(){ closeModal(); setTimeout(()=>modalModules(true), 200); }
+function modalQuickStart(step){
+  const head = `<div class="eyebrow">ÉTAPE ${step} SUR 3</div>`, foot = `<div class="qs-foot">Tu pourras tout changer après</div>`;
+  if(step === 1){
+    openModal(`${head}<h3>QU'EST-CE QUE TU VEUX CHANGER ?</h3>
+      <div class="qs-paths">${Object.entries(QS_PATHS).map(([k,p])=>`<button type="button" class="gp-card" onclick="qsDraft.path='${k}'; modalQuickStart(2)"><b>${p.ico} ${p.t}</b></button>`).join('')}</div>
+      <div class="modal-actions"><button class="btn ghost" onclick="qsSkip()">Passer</button></div>${foot}`);
+    return;
+  }
+  const p = QS_PATHS[qsDraft.path];
+  if(step === 2){
+    openModal(`${head}<h3>TON OBJECTIF</h3>
+      <div class="qs-lead">Ce que tu veux avoir réussi. Avec tes mots.</div>
+      <input class="qs-input" type="text" id="qs_goal" maxlength="60" placeholder="${escapeHtml(p.goal)}" enterkeyhint="next" onkeydown="if(event.key==='Enter') qsNext2()">
+      <div class="modal-actions"><button class="btn ghost" onclick="qsGo(1)">Retour</button><button class="btn" onclick="qsNext2()">Continuer</button></div>${foot}`);
+    qsFill(); setTimeout(()=>document.getElementById('qs_goal')?.focus(), 60);
+    return;
+  }
+  openModal(`${head}<h3>TON PREMIER PAS</h3>
+    <label class="qs-lbl" for="qs_habit">UNE HABITUDE À TENIR</label>
+    <input class="qs-input" type="text" id="qs_habit" maxlength="60" placeholder="${escapeHtml(p.hab)}" enterkeyhint="next">
+    <label class="qs-lbl" for="qs_action">TA PREMIÈRE ACTION AUJOURD'HUI</label>
+    <input class="qs-input" type="text" id="qs_action" maxlength="60" placeholder="${escapeHtml(p.act)}" enterkeyhint="done" onkeydown="if(event.key==='Enter') qsFinish()">
+    <div class="modal-actions"><button class="btn ghost" onclick="qsGo(2)">Retour</button><button class="btn" onclick="qsFinish()">C'est parti</button></div>${foot}`);
+  qsFill(); setTimeout(()=>document.getElementById('qs_habit')?.focus(), 60);
+}
+function qsNext2(){ qsKeep(); if(!qsDraft.goal){ document.getElementById('qs_goal')?.focus(); return; } modalQuickStart(3); }
+function qsFinish(){
+  qsKeep();
+  if(!qsDraft.habit){ document.getElementById('qs_habit')?.focus(); return; }
+  if(!qsDraft.action){ document.getElementById('qs_action')?.focus(); return; }
+  const today = todayStr(), skill = qsSkill(), stamp = Date.now(), p = QS_PATHS[qsDraft.path];
+  const ng = {id:'g'+stamp, name:qsDraft.goal, term:'court', priority:'haute', rank:'C', targetDate:null, skill, xp:goalBaseXP('C'), reward:'', done:false, completedDate:null, progressType:'binaire', linkedSource:'manuel', linkedWorkoutType:null, linkedExercise:null, linkedDistance:null, linkedRoutine:null, targetValue:null, unit:'', progressPercent:0, subtasks:[], currentValue:0, createdDate:today, lastMoveDate:today, remind:'auto', remindAt:null, periodStart:null, msStepsV:1};
+  STATE.goals.push(ng);
+  STATE.routines = STATE.routines.filter(r=>!(['r1','r2'].includes(r.id) && !r.lastDoneDate));   // ses habitudes à elle remplacent les exemples
+  STATE.routines.push({id:'r'+stamp, editedDate:today, name:qsDraft.habit, skill, xp:ROUTINE_XP.D, rank:'D', lastDoneDate:null, streak:0, time:null, lastPenaltyDate:null, notifiedDate:null, morning:false, freqTag:'quotidienne', deadlinePenalty:false, deadlinePenalizedDate:null});
+  STATE.tasks.push({id:'t'+stamp, name:qsDraft.action, skill, priority:'haute', type:'secondaire', rank:'E', xp:RANK_XP.E||20, done:false, time:null, dueDate:null, notifiedDate:null, timesCompleted:0, completedDate:null, subtasks:[], every:null, lastDonePeriod:null, examLink:null});
+  const mods = {}; MODULES.forEach(([k])=>{ mods[k] = k==='routines' || k==='goals' || p.mods.includes(k); });
+  STATE.settings.modules = mods;
+  queueSave(); closeModal(); currentTab = 'today'; render();
+  setTimeout(checkAchievements, 400);
+  showToast('TA ROUTE EST TRACÉE', qsDraft.action, 'Fais-la maintenant', 'reward');
 }
 
 /* ---------- Progression en accéléré ---------- */
@@ -5537,7 +5739,7 @@ function modalWeeklyRecap(){
   const maxXp = Math.max(1, ...r.week.map(x=>x.xp));
   const tile = (label, val, delta) => `<div class="rc-tile"><span>${label}</span><b>${val}</b>${delta||''}</div>`;
   const moves = recapGoalMoves();
-  const tiles = [tile('XP GAGNÉE', (r.xpGained>=0?'+':'') + r.xpGained, recapDelta(r.xpGained, p.xpGained)), tile('JOURNÉES TENUES', `${r.daysHeld}/7`, recapDelta(r.daysHeld, p.daysHeld))];
+  const tiles = [tile(r.xpGained < 0 ? 'XP DE LA SEMAINE' : 'XP GAGNÉE', (r.xpGained>=0?'+':'') + r.xpGained, recapDelta(r.xpGained, p.xpGained)), tile('JOURNÉES TENUES', `${r.daysHeld}/7`, recapDelta(r.daysHeld, p.daysHeld))];
   const wTgt = +STATE.workouts.weekTarget || 0;
   if(modOn('sport')) tiles.push(tile('SÉANCES', r.workouts + (wTgt ? `<small>/${wTgt}${r.workouts >= wTgt ? ' ✓' : ''}</small>` : '') + (r.prs ? ` <small>· ${r.prs} record${r.prs>1?'s':''}</small>` : ''), recapDelta(r.workouts, p.workouts)));
   if(modOn('focus')) tiles.push(tile('FOCUS', fmtHoursMin(r.focusMinutes), recapDelta(r.focusMinutes, p.focusMinutes)));
@@ -5802,6 +6004,27 @@ async function subscribeToPush(){
 }
 // Envoie au serveur le strict nécessaire pour qu'il sache QUOI et QUAND notifier —
 // à appeler à chaque changement de l'engagement (submitCommitment) pour rester à jour.
+/* 04/11 : ce que le serveur doit rappeler. doneUntil = dernier jour où l'élément compte comme fait (fin de sa période) :
+   le lendemain, le rappel repart sans que l'app ait besoin d'être rouverte. */
+function pushPeriodEnd(freq){
+  const d = new Date();
+  if(freq === 'hebdomadaire') d.setDate(d.getDate() + (7 - d.getDay()) % 7);
+  else if(freq === 'mensuelle') d.setMonth(d.getMonth() + 1, 0);
+  return wkDateStr(d);
+}
+function pushTimedItems(){
+  const out = [], nm = s => String(s||'').slice(0, 40);
+  STATE.routines.filter(r=>r.time).forEach(r=>{
+    const f = r.freqTag || 'quotidienne', days = routineDays(r);
+    const wd = jokerWarnDate(r); out.push({id:'r'+r.id, name:nm(r.name), time:r.time, ...(days ? {days} : {}), ...(wd ? {warnDate: wd} : {}), doneUntil: routineDone(r) ? pushPeriodEnd(f) : null});
+  });
+  STATE.tasks.filter(t=>t.time).forEach(t=>{
+    if(t.type === 'repetable'){ out.push({id:'t'+t.id, name:nm(t.name), time:t.time, doneUntil: questPeriodDone(t) ? pushPeriodEnd(t.every) : null}); return; }
+    if(t.done || (t.dueDate && t.dueDate < todayStr())) return;
+    out.push({id:'t'+t.id, name:nm(t.name), time:t.time, ...(t.dueDate ? {date:t.dueDate} : {}), doneUntil:null});
+  });
+  return out.slice(0, 40);
+}
 async function syncPushState(existingSub){
   if(!('serviceWorker' in navigator)) return;
   try{
@@ -5812,6 +6035,7 @@ async function syncPushState(existingSub){
     const taskNames = (commitment.taskIds||[]).map(id=>{ const t=STATE.tasks.find(x=>x.id===id); return t?t.name:null; }).filter(Boolean);
     const body = {
       subscription: sub.toJSON ? sub.toJSON() : sub,
+      code: syncCode || null,   // 05/11 : le serveur n'accepte plus d'abonnement sans code d'accès valide
       timezone: Intl.DateTimeFormat().resolvedOptions().timeZone,
       state: {
         hasPendingTasks: STATE.tasks.some(t=>!t.done),
@@ -5822,19 +6046,21 @@ async function syncPushState(existingSub){
           .filter(b=>b.kind!=='repos').slice(0, 60).map(b=>{ const l = schedLinkObj(b), k = SCHED_KINDS[b.kind] || SCHED_KINDS.travail;
           const nn = schedAssigned(b, b._date).map(t=>(t.nn?'🌟 ':'⚔ ') + taskName(t)).join(', ');
           return {id:b.id, name:`${k.ico} ${b.name}`.slice(0, 40), start:b.start, date:b._date, link: (nn || (l ? l.name : '')).slice(0, 80) || null}; }),
-        goals: goalRemindersAhead().concat(jokerRemindersAhead()).slice(0, 40),   // 04/11 : + rappels « ne rate pas deux fois » (même canal, aucun changement serveur)
+        goals: prayerRemindersAhead().concat(goalRemindersAhead(), jokerRemindersAhead(true)).slice(0, 40),   // 05/11 : + prière (admin)   // 04/11 : + rappels « ne rate pas deux fois » (même canal, aucun changement serveur)
+        timed: pushTimedItems(),   // 04/11 : routines et quêtes à heure fixe, rappelées même app fermée
       },
     };
     // l'abonnement précédent de CET appareil (s'il a changé) est supprimé côté serveur : sinon les deux reçoivent chaque rappel
     let prevId = null; try{ prevId = localStorage.getItem('zenkai-push-device'); }catch(e){}
     if(prevId) body.replaces = prevId;
     // rien n'a changé depuis le dernier envoi (moins de 12 h) → pas d'appel serveur
-    const sig = JSON.stringify([body.subscription && body.subscription.endpoint, body.state]);
+    const sig = JSON.stringify([body.subscription && body.subscription.endpoint, body.code, body.state]);
     let last = null; try{ last = JSON.parse(localStorage.getItem('zenkai-push-sig') || 'null'); }catch(e){}
     if(prevId && last && last.sig === sig && Date.now() - last.at < 12*3600e3){ pushActive = true; return; }
     try{ localStorage.setItem('zenkai-push-sig', JSON.stringify({sig, at: Date.now()})); }catch(e){}
     fetch('/.netlify/functions/subscribe', {method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify(body)})
-      .then(r=>r.ok ? r.json() : null).then(d=>{ if(d && d.deviceId){ pushActive = true; try{ localStorage.setItem('zenkai-push-device', d.deviceId); }catch(e){} } }).catch(()=>{});
+      .then(r=>{ if(!r.ok){ pushActive = false; try{ localStorage.removeItem('zenkai-push-sig'); }catch(e){} return null; } return r.json(); })   // 05/11 : refusé (code absent ou désactivé) → rappels en local, et on réessaiera
+      .then(d=>{ if(d && d.deviceId){ pushActive = true; try{ localStorage.setItem('zenkai-push-device', d.deviceId); }catch(e){} } }).catch(()=>{});
   }catch(e){ /* ignore */ }
 }
 function startNotificationWatcher(){
@@ -5933,6 +6159,7 @@ function checkDayHeld(){
     t.dayHeld = false;
     addSkillXP(dayHeldSkill(), -DAY_HELD_XP);
   }
+  oathPushWeekSoon();
 }
 function dayHeldHtml(){
   const n = dayActions(), min = dayHeldMin(), ok = !!(STATE.todayStats && STATE.todayStats.dayHeld), streak = dayHeldStreak();
@@ -6002,8 +6229,17 @@ function initCheck(){
 function initShow(id){ const d = initDefs()[id]; if(d) d.show(); }
 async function initSkip(){
   if(!(await confirmModal("Masquer les quêtes d'initiation ? Tu pourras les relancer dans les réglages (Gameplay).", {title:'INITIATION', confirmLabel:'Masquer'}))) return;
-  STATE.init.skipped = true; queueSave(); render();
+  STATE.init.skipped = true; queueSave(); closeModal(); render();
 }
+/* 04/11 : sur l'écran Jour, l'initiation tient sur une ligne. La liste complète s'ouvre au toucher. */
+function initLineHtml(){
+  if(!initActive()) return '';
+  const i = STATE.init, d = initDefs(), ids = initStageIds(i.stage), nextId = ids.find(x=>!i.done[x]);
+  const total = [0,1,2].reduce((a,k)=>a + initStageIds(k).length, 0), doneN = Object.keys(i.done).length;
+  const label = i.stageDoneDate ? `Initiation : « ${INIT_STAGE_NAMES[i.stage+1]} » s'ouvre demain` : `Initiation : ${nextId && d[nextId] ? d[nextId].name : 'continuer'}`;
+  return `<button type="button" class="init-line" onclick="modalInit()"><span>${escapeHtml(label)}</span><em>${doneN}/${total}</em><i>›</i></button>`;
+}
+function modalInit(){ if(!initActive()){ closeModal(); render(); return; } openModal(`${initHtml()}<div class="modal-actions"><button class="btn ghost" onclick="closeModal()">Fermer</button></div>`); }
 function initHtml(){
   if(!initActive()) return '';
   const i = STATE.init, d = initDefs(), ids = initStageIds(i.stage);
@@ -6118,12 +6354,18 @@ function routineNextDue(r){   // prochain jour prévu après aujourd'hui (quotid
   for(let i = 0; i < 7; i++){ d.setDate(d.getDate()+1); const ds = wkDateStr(d); if(routineDueOn(r, ds)) return ds; }
   return null;
 }
-function jokerRemindersAhead(){
+function jokerWarnDate(r){   // 05/11 : jour où la routine sera « à ne pas rater deux fois » (null sinon)
+  if(!modOn('routines') || (r.freqTag||'quotidienne') !== 'quotidienne' || !r.streak || !routineStreakAlive(r)) return null;
+  if(routineJoker(r)) return todayStr();
+  return routineDueToday(r) && !routineDone(r) ? routineNextDue(r) : null;
+}
+function jokerRemindersAhead(skipTimed){
   if(!modOn('routines')) return [];
   const out = [], today = todayStr();
   STATE.routines.forEach(r=>{
     if((r.freqTag||'quotidienne') !== 'quotidienne' || !r.streak || !routineStreakAlive(r)) return;
     const early = jokerEarly(r);
+    if(skipTimed && r.time && !early) return;   // 05/11 : push actif : ses rappels 30 min avant et à l'heure portent déjà l'avertissement (warnDate)
     if(routineJoker(r)){ if(!early) out.push({id:'nmt-'+r.id, date:today, at:jokerAt(r), body:jokerBody(r)}); return; }
     // faite la dernière fois, pas encore aujourd'hui : si ça reste comme ça, il faudra la rattraper au prochain jour prévu
     if(routineDueToday(r) && !routineDone(r)){
@@ -6144,6 +6386,340 @@ function checkJokerNotifications(nowMin, today){   // app ouverte, push inactif 
     STATE.settings.jokerNotified[x.id] = today; queueSave();
   });
 }
+/* ========================= PRIÈRE (05/11 — version admin seulement pour l'instant) =========================
+   Horaires calculés dans l'app (aucun serveur, aucune API), à partir de la ville choisie à la main.
+   Suivi : à l'heure / rattrapée / pas encore. Aucune XP, aucune pénalité, rien de public.
+   Rappels : à l'heure de chaque prière, par le canal push des objectifs (date, heure, texte), sinon en local. */
+const PR_NAMES = [['fajr','Fajr'],['dhuhr','Dhuhr'],['asr','Asr'],['maghrib','Maghrib'],['isha','Icha']];
+const PR_CITIES = [
+  ['Bruxelles',50.8503,4.3517],['Anvers',51.2194,4.4025],['Liège',50.6326,5.5797],['Charleroi',50.4108,4.4446],['Gand',51.0543,3.7174],['Namur',50.4674,4.8720],
+  ['Paris',48.8566,2.3522],['Lille',50.6292,3.0573],['Lyon',45.7640,4.8357],['Marseille',43.2965,5.3698],['Strasbourg',48.5734,7.7521],
+  ['Dakar',14.7167,-17.4677],['Casablanca',33.5731,-7.5898],['Montréal',45.5019,-73.5674],
+];
+const PR_METHODS = {
+  mwl:   {label:'Ligue islamique mondiale', fajr:18,   isha:17,   desc:'Fajr 18° · Icha 17°'},
+  uoif:  {label:'UOIF (France)',            fajr:12,   isha:12,   desc:'Fajr 12° · Icha 12°'},
+  isna:  {label:'ISNA (Amérique du Nord)',  fajr:15,   isha:15,   desc:'Fajr 15° · Icha 15°'},
+  egypt: {label:'Égypte',                   fajr:19.5, isha:17.5, desc:'Fajr 19,5° · Icha 17,5°'},
+};
+const PR_HL = {seventh:{label:'1/7 de la nuit'}, angle:{label:'Selon l\'angle'}, mid:{label:'Milieu de la nuit'}};
+function prOn(){ return isAdminDevice() && !!(STATE.prayer && STATE.prayer.enabled); }
+function prCfg(){
+  if(!STATE.prayer) STATE.prayer = {};
+  const c = STATE.prayer;
+  if(!c.city){ c.city = 'Bruxelles'; c.lat = 50.8503; c.lon = 4.3517; }
+  if(!PR_METHODS[c.method]) c.method = 'mwl';
+  if(c.asr !== 2) c.asr = 1;
+  if(!PR_HL[c.hl]) c.hl = 'seventh';
+  c.offsets = c.offsets || {}; PR_NAMES.forEach(([k])=>{ if(typeof c.offsets[k] !== 'number') c.offsets[k] = 0; });
+  if(c.remind === undefined) c.remind = true;
+  if(c.th === undefined) c.th = true;   // tahajjud
+  if(c.thRemind === undefined) c.thRemind = true;
+  if(typeof c.thOff !== 'number') c.thOff = 0;
+  c.log = c.log || {};
+  return c;
+}
+// Calcul astronomique (même méthode que PrayTimes.org). Renvoie des heures décimales locales.
+function prCompute(ds){
+  const c = prCfg(), m = PR_METHODS[c.method];
+  const [y, mo, d] = ds.split('-').map(Number);
+  const tz = -new Date(y, mo-1, d, 12).getTimezoneOffset() / 60;   // fuseau de l'appareil ce jour-là (heure d'été comprise)
+  const rad = x => x*Math.PI/180, deg = x => x*180/Math.PI;
+  let Y = y, M = mo; if(M <= 2){ Y--; M += 12; }
+  const A = Math.floor(Y/100), B = 2 - A + Math.floor(A/4);
+  const J = Math.floor(365.25*(Y+4716)) + Math.floor(30.6001*(M+1)) + d + B - 1524.5 - c.lon/(15*24);
+  const sun = t => {
+    const D = J + t - 2451545.0, g = rad((357.529 + 0.98560028*D) % 360), q = (280.459 + 0.98564736*D) % 360;
+    const L = rad((q + 1.915*Math.sin(g) + 0.020*Math.sin(2*g)) % 360), e = rad(23.439 - 0.00000036*D);
+    const RA = deg(Math.atan2(Math.cos(e)*Math.sin(L), Math.cos(L))) / 15;
+    return {dec: Math.asin(Math.sin(e)*Math.sin(L)), eq: q/15 - ((RA % 24) + 24) % 24};
+  };
+  const fix = h => ((h % 24) + 24) % 24;
+  const mid = t => fix(12 - sun(t).eq);
+  const at = (a, t, ccw) => {
+    const s = sun(t), la = rad(c.lat);
+    const v = (-Math.sin(rad(a)) - Math.sin(s.dec)*Math.sin(la)) / (Math.cos(s.dec)*Math.cos(la));
+    if(Math.abs(v) > 1) return NaN;
+    const T = deg(Math.acos(v)) / 15; return mid(t) + (ccw ? -T : T);
+  };
+  const asrAt = t => { const s = sun(t), la = rad(c.lat); return at(-deg(Math.atan(1/(c.asr + Math.tan(Math.abs(la - s.dec))))), t, false); };
+  const r = {fajr: at(m.fajr, 5/24, true), sunrise: at(0.833, 6/24, true), dhuhr: mid(12/24), asr: asrAt(13/24), maghrib: at(0.833, 18/24, false), isha: at(m.isha, 18/24, false)};
+  // hautes latitudes (Belgique en été : le soleil ne descend pas à 18°) : Fajr et Icha bornés à une part de la nuit
+  const night = 24 - (r.maghrib - r.sunrise);
+  const part = a => c.hl === 'mid' ? 1/2 : c.hl === 'angle' ? a/60 : 1/7;
+  if(isNaN(r.fajr) || r.sunrise - r.fajr > part(m.fajr)*night) r.fajr = r.sunrise - part(m.fajr)*night;
+  if(isNaN(r.isha) || r.isha - r.maghrib > part(m.isha)*night) r.isha = r.maghrib + part(m.isha)*night;
+  const adj = c.lon/15 - tz, out = {};
+  Object.keys(r).forEach(k=>{ out[k] = r[k] - adj + (k === 'dhuhr' ? 1/60 : 0) + ((c.offsets[k]||0)/60); });
+  return out;
+}
+function prMin(h){ return Math.round(h*60); }
+function prHHMM(min){ min = ((min % 1440) + 1440) % 1440; return `${String(Math.floor(min/60)).padStart(2,'0')}:${String(min%60).padStart(2,'0')}`; }
+function prTimes(ds){ const t = prCompute(ds); return PR_NAMES.map(([k, n])=>({k, n, min: prMin(t[k]), hhmm: prHHMM(prMin(t[k]))})); }
+function prNext(){
+  const now = new Date(), nowMin = now.getHours()*60 + now.getMinutes(), today = todayStr();
+  const t = prTimes(today).find(p=>p.min > nowMin);
+  if(t) return {...t, inMin: t.min - nowMin, tomorrow:false};
+  const d = new Date(); d.setDate(d.getDate()+1); const f = prTimes(wkDateStr(d))[0];
+  return {...f, inMin: f.min + 1440 - nowMin, tomorrow:true};
+}
+/* Tahajjud : la nuit est comptée de Maghrib à Fajr ; on affiche le milieu et le début du dernier tiers.
+   Une nuit est rangée à la date du matin qui la termine (nuit du 5 au 6 → « 2026-11-06 »). */
+function prAddDays(ds, n){ const d = new Date(ds+'T00:00:00'); d.setDate(d.getDate()+n); return wkDateStr(d); }
+function prNight(key){
+  const mg = prTimes(prAddDays(key, -1))[3].min, fj = prTimes(key)[0].min;
+  const len = fj + 1440 - mg, third = fj - Math.round(len/3), mid = fj - Math.round(len/2);
+  return {key, len, fajr: fj, fajrHHMM: prHHMM(fj), third, mid, thirdHHMM: prHHMM(third), midHHMM: prHHMM(mid),
+    thirdDate: third < 0 ? prAddDays(key, -1) : key, thirdDayMin: ((third % 1440) + 1440) % 1440};
+}
+function prCurNight(){   // avant Dhuhr : la nuit qui vient de finir (pour pouvoir la noter au réveil) ; après Dhuhr : la nuit qui vient
+  const today = todayStr(), nowMin = new Date().getHours()*60 + new Date().getMinutes();
+  return prNight(nowMin < prTimes(today)[1].min ? today : prAddDays(today, 1));
+}
+function prThHtml(){
+  const c = prCfg(); if(!c.th) return '';
+  const n = prCurNight(), done = (c.log[n.key] || {}).tahajjud === 'ok';
+  const today = todayStr(), nowMin = new Date().getHours()*60 + new Date().getMinutes();
+  const inThird = n.key === today && nowMin >= n.third && nowMin < n.fajr, past = n.key === today && nowMin >= n.fajr;
+  const txt = past ? (done ? 'faite la nuit dernière' : 'la nuit dernière · touche pour noter') : done ? 'faite cette nuit' : inThird ? `maintenant · jusqu'à Fajr ${n.fajrHHMM}` : `cette nuit · dernier tiers dès ${n.thirdHHMM}`;
+  return `<button type="button" class="zp-th ${done ? 'ok' : inThird ? 'nx' : ''}" onclick="prThOpen()"><span>🌙 <b>Tahajjud</b> ${txt}</span><span class="s">${done ? '✓' : '›'}</span></button>`;
+}
+function prThOpen(){
+  const c = prCfg(), n = prCurNight(), st = (c.log[n.key] || {}).tahajjud || '';
+  const d1 = new Date(prAddDays(n.key, -1)+'T00:00:00').toLocaleDateString('fr-FR', {day:'numeric'}), d2 = new Date(n.key+'T00:00:00').toLocaleDateString('fr-FR', {day:'numeric', month:'long'});
+  openModal(`<h3 style="color:var(--gold); letter-spacing:1px;">TAHAJJUD</h3>
+    <div class="sub" style="margin-bottom:12px;">NUIT DU ${d1} AU ${escapeHtml(d2.toUpperCase())}</div>
+    <div class="zp-thinfo"><div><span>Milieu de la nuit</span><b>${n.midHHMM}</b></div><div><span>Dernier tiers dès</span><b>${n.thirdHHMM}</b></div><div><span>Fin (Fajr)</span><b>${n.fajrHHMM}</b></div></div>
+    <p style="font-size:12px; color:var(--text-dim); margin:8px 0 14px;">Nuit comptée de Maghrib (${prHHMM(n.fajr - n.len)}) à Fajr (${n.fajrHHMM}) : ${Math.floor(n.len/60)} h ${String(n.len%60).padStart(2,'0')}.</p>
+    <div style="display:flex; flex-direction:column; gap:10px;">
+      <button type="button" class="btn ${st === 'ok' ? '' : 'ghost'} zp-opt" onclick="prThMark('${n.key}','ok')">✓ Faite</button>
+      <button type="button" class="btn ${st === 'ok' ? 'ghost' : ''} zp-opt" style="${st === 'ok' ? '' : 'opacity:.85;'}" onclick="prThMark('${n.key}','')">○ Pas cette nuit</button>
+    </div>
+    <p style="margin-top:14px; font-size:13px; color:var(--text-dim); line-height:1.5;">Aucune XP, aucune pénalité. Rien n'est visible par les autres joueurs.</p>
+    <div class="modal-actions"><button class="btn ghost" onclick="closeModal()">Fermer</button></div>`);
+}
+function prThMark(key, v){
+  const c = prCfg(); c.log[key] = c.log[key] || {};
+  if(v) c.log[key].tahajjud = v; else delete c.log[key].tahajjud;
+  queueSave(); goalPushSoon(); closeModal(); render();
+}
+function prInLbl(m){ return m < 60 ? `dans ${m} min` : `dans ${Math.floor(m/60)} h${m%60 ? ' ' + String(m%60).padStart(2,'0') : ''}`; }
+function prCardHtml(){
+  if(!prOn()) return '';
+  const c = prCfg(), today = todayStr(), log = c.log[today] || {}, nx = prNext();
+  const nowMin = new Date().getHours()*60 + new Date().getMinutes();
+  const cells = prTimes(today).map(p=>{
+    const st = log[p.k], cur = !nx.tomorrow && nx.k === p.k;
+    const cls = st === 'ok' ? 'ok' : st === 'qd' ? 'qd' : cur ? 'nx' : (p.min <= nowMin ? 'late' : '');
+    const sym = st === 'ok' ? '✓' : st === 'qd' ? '↺' : cur ? '●' : '';
+    return `<button type="button" class="zp-p ${cls}" onclick="prOpen('${p.k}')" aria-label="${p.n} ${p.hhmm}"><span class="n">${p.n}</span><span class="t">${p.hhmm}</span><span class="s">${sym}</span></button>`;
+  }).join('');
+  return `<div class="panel full zp-card">
+    <div class="c-tl"></div><div class="c-br"></div>
+    <div class="zp-head"><div class="eyebrow">PROCHAINE PRIÈRE · ${escapeHtml(c.city.toUpperCase())}</div><button type="button" class="zp-set" onclick="prSettings()" aria-label="Réglages de la prière">⚙</button></div>
+    <div class="zp-top"><div class="zp-next">${nx.tomorrow ? 'Demain · ' : ''}<b>${nx.n}</b> ${nx.hhmm}</div><div class="zp-in">${prInLbl(nx.inMin)}</div></div>
+    <div class="zp-row">${cells}</div>
+    ${prThHtml()}
+    <div class="zp-foot">✓ à l'heure · ↺ rattrapée</div>
+  </div>`;
+}
+function prOpen(k){
+  const c = prCfg(), today = todayStr(), p = prTimes(today).find(x=>x.k === k); if(!p) return;
+  const st = (c.log[today] || {})[k] || '';
+  const dl = new Date().toLocaleDateString('fr-FR', {weekday:'long', day:'numeric', month:'long'});
+  const b = (v, ico, lbl, extra) => `<button type="button" class="btn ${st === v ? '' : 'ghost'} zp-opt" style="${extra||''}" onclick="prMark('${k}','${v}')">${ico} ${lbl}</button>`;
+  openModal(`<h3 style="color:var(--gold); letter-spacing:1px;">${p.n.toUpperCase()} · ${p.hhmm}</h3>
+    <div class="sub" style="margin-bottom:14px;">AUJOURD'HUI · ${escapeHtml(dl.toUpperCase())}</div>
+    <div style="display:flex; flex-direction:column; gap:10px;">
+      ${b('ok', '✓', "Faite à l'heure")}
+      ${b('qd', '↺', 'Rattrapée', st === 'qd' ? '' : 'border-color:rgba(255,201,77,.6); color:#ffc94d;')}
+      ${b('', '○', 'Pas encore')}
+    </div>
+    <p style="margin-top:16px; font-size:13px; color:var(--text-dim); line-height:1.5;">Aucune XP, aucune pénalité. Rien n'est visible par les autres joueurs.</p>
+    <div class="modal-actions"><button class="btn ghost" onclick="closeModal()">Fermer</button></div>`);
+}
+function prMark(k, v){
+  const c = prCfg(), today = todayStr();
+  c.log[today] = c.log[today] || {};
+  if(v) c.log[today][k] = v; else delete c.log[today][k];
+  const keep = Object.keys(c.log).sort().slice(-120); Object.keys(c.log).forEach(d=>{ if(!keep.includes(d)) delete c.log[d]; });   // 4 mois d'historique
+  queueSave(); closeModal(); render();
+}
+function prSettings(){
+  const c = prCfg(), p = 'style="font-size:12px; color:var(--text-dim); margin:2px 0 0;"';
+  const sel = (id, opts, val, fn) => `<select id="${id}" onchange="${fn}" style="max-width:55%;">${opts.map(([v,l])=>`<option value="${v}" ${String(v)===String(val)?'selected':''}>${escapeHtml(l)}</option>`).join('')}</select>`;
+  const row = (l, h, ctl) => `<div class="field-row" style="justify-content:space-between; gap:10px; align-items:center;"><div style="flex:1; min-width:0;"><label style="width:auto;">${l}</label>${h ? `<p ${p}>${h}</p>` : ''}</div>${ctl}</div>`;
+  const t = prTimes(todayStr());
+  openModal(`<h3 style="color:var(--gold); letter-spacing:1px;">MODULE PRIÈRE</h3>
+    <div class="sub" style="margin-bottom:6px;">RÉGLAGES · TOUT RESTE SUR TON APPAREIL</div>
+    ${row('Ville', 'choisie à la main, pas de GPS', sel('prCity', PR_CITIES.map(x=>[x[0], x[0]]), c.city, 'prSetCity(this.value)'))}
+    ${row('Méthode de calcul', PR_METHODS[c.method].desc, sel('prMethod', Object.entries(PR_METHODS).map(([k,v])=>[k, v.label]), c.method, "prSet('method', this.value)"))}
+    ${row('Asr', c.asr === 2 ? 'ombre = 2 fois la hauteur' : 'ombre = 1 fois la hauteur', sel('prAsr', [[1,'Standard'],[2,'Hanafite']], c.asr, "prSet('asr', +this.value)"))}
+    ${row('Été (hautes latitudes)', 'en juin, le soleil ne descend pas à 18° en Belgique', sel('prHl', Object.entries(PR_HL).map(([k,v])=>[k, v.label]), c.hl, "prSet('hl', this.value)"))}
+    <div style="margin-top:12px; font-size:14px; color:var(--text);">Décalage pour coller à ta mosquée (minutes)</div>
+    <div class="zp-offs">${PR_NAMES.map(([k, n])=>`<div><span>${n}</span><input type="number" inputmode="numeric" step="1" min="-60" max="60" value="${c.offsets[k]}" onchange="prSetOff('${k}', this.value)"></div>`).join('')}</div>
+    <p ${p}>Aujourd'hui : ${t.map(x=>`${x.n} ${x.hhmm}`).join(' · ')}</p>
+    ${row('Rappel à l\'heure', 'même app fermée, si les notifications sont activées', `<div class="mini-switch ${c.remind?'on':''}" id="prRemindSw" onclick="prSet('remind', !prCfg().remind)" role="button" aria-label="Rappel à l'heure de chaque prière"></div>`)}
+    ${row('Tahajjud', 'milieu et dernier tiers de la nuit (Maghrib → Fajr)', `<div class="mini-switch ${c.th?'on':''}" onclick="prSet('th', !prCfg().th)" role="button" aria-label="Afficher le Tahajjud"></div>`)}
+    ${c.th ? `${row('Rappel Tahajjud', `au début du dernier tiers${c.thOff ? (c.thOff > 0 ? ' + ' : ' − ') + Math.abs(c.thOff) + ' min' : ''} · cette nuit : ${prHHMM(prCurNight().third + c.thOff)}`, `<div class="mini-switch ${c.thRemind?'on':''}" onclick="prSet('thRemind', !prCfg().thRemind)" role="button" aria-label="Rappel Tahajjud"></div>`)}
+    ${c.thRemind ? row('Décalage du rappel', 'en minutes, ex. +15 pour te laisser le temps', `<input type="number" inputmode="numeric" step="5" min="-120" max="120" value="${c.thOff}" onchange="prSetThOff(this.value)" style="width:80px; text-align:center; font-size:16px;">`) : ''}` : ''}
+    <p ${p}>Pas d'XP pour la prière : elle ne compte ni pour la journée tenue ni pour le classement.</p>
+    <div class="modal-actions"><button class="btn ghost" onclick="closeModal(); render();">Fermer</button></div>`);
+}
+function prSet(key, v){ prCfg()[key] = v; queueSave(); goalPushSoon(); prSettings(); }
+function prSetCity(name){ const x = PR_CITIES.find(c=>c[0] === name); if(!x) return; const c = prCfg(); c.city = x[0]; c.lat = x[1]; c.lon = x[2]; queueSave(); goalPushSoon(); prSettings(); }
+function prSetThOff(v){ prCfg().thOff = Math.max(-120, Math.min(120, Math.round(+v || 0))); queueSave(); goalPushSoon(); prSettings(); }
+function prSetOff(k, v){ const n = Math.max(-60, Math.min(60, Math.round(+v || 0))); prCfg().offsets[k] = n; queueSave(); goalPushSoon(); prSettings(); }
+function togglePrayerPref(){
+  const c = prCfg(); c.enabled = !c.enabled; queueSave(); goalPushSoon();
+  document.getElementById('prayerSwitch')?.classList.toggle('on', c.enabled);
+}
+// Rappels : aujourd'hui (prières encore à venir) + 2 jours, par le canal des objectifs (le serveur envoie à l'heure, une fois par jour et par id).
+function prayerRemindersAhead(){
+  if(!prOn() || !prCfg().remind) return [];
+  const out = [], c = prCfg(), nowMin = new Date().getHours()*60 + new Date().getMinutes();
+  for(let i = 0; i < 3; i++){
+    const d = new Date(); d.setDate(d.getDate()+i); const ds = wkDateStr(d);
+    prTimes(ds).forEach(p=>{
+      if(i === 0 && (p.min <= nowMin || (c.log[ds]||{})[p.k])) return;
+      out.push({id:'pr-'+p.k, date:ds, at:p.hhmm, body:`🕌 ${p.n} — ${p.hhmm} (${c.city})`});
+    });
+  }
+  if(c.th && c.thRemind){   // tahajjud : la nuit en cours (si le rappel est encore à venir) + les 2 suivantes
+    const k0 = prCurNight().key;
+    for(let i = 0; i < 3; i++){
+      const n = prNight(prAddDays(k0, i)); if((c.log[n.key]||{}).tahajjud) continue;
+      const m = n.thirdDayMin + c.thOff, date = m >= 1440 ? prAddDays(n.thirdDate, 1) : m < 0 ? prAddDays(n.thirdDate, -1) : n.thirdDate;
+      const atMin = ((m % 1440) + 1440) % 1440;
+      if(date < todayStr() || (date === todayStr() && atMin <= nowMin)) continue;   // déjà passé
+      out.push({id:'pr-tahajjud', date, at: prHHMM(atMin), body:`🌙 Tahajjud — dernier tiers de la nuit, jusqu'à Fajr ${n.fajrHHMM}`});
+    }
+  }
+  return out;
+}
+function checkPrayerNotifications(nowMin, today){   // app ouverte, push inactif
+  if(pushActive || !prOn() || !prCfg().remind) return;
+  const c = prCfg(); c.notified = c.notified || {};
+  prTimes(today).forEach(p=>{
+    if(nowMin < p.min || nowMin >= p.min + 30 || c.notified[p.k] === today || (c.log[today]||{})[p.k]) return;
+    fireNotification('SYSTÈME // ZENKAI', `🕌 ${p.n} — ${p.hhmm} (${c.city})`, 'zenkai-goal-pr-'+p.k);
+    c.notified[p.k] = today; queueSave();
+  });
+  if(c.th && c.thRemind){
+    const n = prCurNight(), m = ((n.thirdDayMin + c.thOff) % 1440 + 1440) % 1440;
+    if(n.thirdDate === today && nowMin >= m && nowMin < m + 30 && c.notified.tahajjud !== n.key && !(c.log[n.key]||{}).tahajjud){
+      fireNotification('SYSTÈME // ZENKAI', `🌙 Tahajjud — dernier tiers de la nuit, jusqu'à Fajr ${n.fajrHHMM}`, 'zenkai-goal-pr-tahajjud');
+      c.notified.tahajjud = n.key; queueSave();
+    }
+  }
+}
+
+/* ========================= FICHE ROUTINE (05/11) : série, record, 30 derniers jours ========================= */
+function routineSinceDate(r){   // début du suivi jour par jour : création de la routine (id horodaté) ou 10/10 (début de doneLog)
+  const m = /^r(\d{12,})$/.exec(r.id || ''); let d = '2026-10-10';
+  if(m){ const c = wkDateStr(new Date(+m[1])); if(c > d) d = c; }
+  const first = (r.doneLog || []).slice().sort()[0];
+  return first && first < d ? first : d;
+}
+function routineBest(r){
+  let best = Math.max(+r.best || 0, (routineStreakAlive(r) ? r.streak : 0) || 0);
+  if((r.freqTag || 'quotidienne') !== 'quotidienne') return best;
+  const done = new Set(r.doneLog || []), start = routineSinceDate(r), today = todayStr();
+  let run = 0, missed = false;
+  for(const d = new Date(start+'T00:00:00'); wkDateStr(d) <= today; d.setDate(d.getDate()+1)){
+    const ds = wkDateStr(d); if(!routineDueOn(r, ds)) continue;
+    if(done.has(ds)){ run++; missed = false; best = Math.max(best, run); }
+    else if(ds !== today){ if(missed) run = 0; missed = true; }   // ne rate jamais deux fois : un raté toléré, deux cassent la série
+  }
+  return best;
+}
+function modalRoutineSheet(id){
+  const r = STATE.routines.find(x=>x.id === id); if(!r) return;
+  const daily = (r.freqTag || 'quotidienne') === 'quotidienne';
+  const done = new Set(r.doneLog || []), since = routineSinceDate(r), today = todayStr();
+  const cells = []; let nDone = 0, nDue = 0, nWeek = 0, nWeekDue = 0;
+  const ws = wkDateStr(wkWeekStart(new Date()));
+  for(let i = 29; i >= 0; i--){
+    const d = new Date(); d.setDate(d.getDate() - i); const ds = wkDateStr(d);
+    const due = daily ? routineDueOn(r, ds) : true, isDone = done.has(ds), before = ds < since;
+    let cls = 'na';
+    if(isDone) cls = 'ok';
+    else if(before) cls = 'nd';
+    else if(ds === today) cls = 'td';
+    else if(due && daily) cls = 'ko';
+    if(!before && daily && due && (ds !== today || isDone)){ nDue++; if(isDone) nDone++; }
+    if(!daily && isDone) nDone++;
+    if(ds >= ws && daily && due && !before && (ds !== today || isDone)){ nWeekDue++; if(isDone) nWeek++; }
+    const lbl = new Date(ds+'T00:00:00').toLocaleDateString('fr-FR', {weekday:'short', day:'numeric', month:'short'});
+    cells.push(`<i class="rs-c ${cls}" title="${lbl}${isDone ? ' · faite' : ''}"></i>`);
+  }
+  const streak = routineStreakAlive(r) ? r.streak : 0, best = routineBest(r);
+  const sk = STATE.skills[r.skill];
+  const freq = routineDaysLabel(r) || {quotidienne:'tous les jours', hebdomadaire:'chaque semaine', mensuelle:'chaque mois'}[r.freqTag || 'quotidienne'];
+  const d0 = new Date(); d0.setDate(d0.getDate() - 29);
+  const ratio = daily ? `${nDone} / ${nDue} jours prévus` : `${nDone} fois`;
+  openModal(`<h3 style="letter-spacing:.5px;">${escapeHtml(r.name)}</h3>
+    <div class="sub" style="margin-bottom:14px;">ROUTINE · ${escapeHtml((sk ? sk.name : '').toUpperCase())} · ${escapeHtml(String(freq).toUpperCase())}</div>
+    <div class="rs-stats">
+      <div><b>🔥 ${streak} j</b><span>série</span></div>
+      <div><b>${best} j</b><span>record</span></div>
+      <div><b>${daily ? `${nWeek} / ${nWeekDue}` : nDone}</b><span>${daily ? 'cette semaine' : 'en 30 jours'}</span></div>
+    </div>
+    <div class="rs-t"><span>30 DERNIERS JOURS</span><b>${ratio}</b></div>
+    <div class="rs-grid">${cells.join('')}</div>
+    <div class="rs-dates"><span>${d0.toLocaleDateString('fr-FR', {day:'numeric', month:'short'})}</span><span>aujourd'hui</span></div>
+    <div class="rs-leg">${[['ok','faite'],['ko','pas faite'],['na','repos'],['nd','pas encore suivie']].filter(([c])=>cells.some(x=>x.includes('rs-c '+c+'"'))).map(([c,l])=>`<span><i class="rs-c ${c}"></i>${l}</span>`).join('')}</div>
+    <div class="modal-actions" style="margin-top:18px;">
+      <button class="btn ghost" style="color:var(--danger);" onclick="closeModal(); deleteRoutine('${r.id}')">Supprimer</button>
+      <button class="btn ghost" onclick="closeModal()">Fermer</button>
+      <button class="btn" onclick="closeModal(); modalEditRoutine('${r.id}')">✎ Modifier</button>
+    </div>`);
+}
+
+/* ========================= SPORT : refaire une séance en un toucher (05/11) ========================= */
+function wkSortedLog(){ return STATE.workouts.log.slice().sort((a,b)=> (b.date||'').localeCompare(a.date||'') || String(b.time||'').localeCompare(String(a.time||''))); }
+function wkExLine(e){
+  if(e.mode === 'dist' || (+e.km && !e.sets)) return `${e.name} ${+e.km || 0} km${+e.min ? ` en ${e.min} min` : ''}`;
+  return `${e.name} ${e.sets || 1}×${e.reps || '?'}${+e.kg ? ` à ${String(+e.kg).replace('.', ',')} kg` : ''}`;
+}
+function wkDayLbl(ds){ return new Date(ds+'T00:00:00').toLocaleDateString('fr-FR', {weekday:'short', day:'numeric', month:'numeric'}); }
+function wkRedoPicks(){
+  const out = [], sigs = new Set();
+  for(const w of wkSortedLog()){
+    const ex = (w.exercises || []).filter(e=>e.name); if(!ex.length) continue;
+    const sig = w.type + '|' + ex.map(e=>wkKey(e.name)).sort().join(',');
+    if(sigs.has(sig)) continue; sigs.add(sig); out.push(w);
+    if(out.length === 2) break;
+  }
+  return out;
+}
+function wkRedoHtml(){
+  if(wkCurrent()) return '';
+  const picks = wkRedoPicks(); if(!picks.length) return '';
+  return `<div class="wk-redo-t">REFAIRE EN UN TOUCHER</div><div class="wk-redo">${picks.map(w=>{
+    const ex = (w.exercises || []).filter(e=>e.name);
+    const isDist = ex.length === 1 && (ex[0].mode === 'dist' || (+ex[0].km && !ex[0].sets));
+    const sub = isDist ? `${+ex[0].km || 0} km${+ex[0].min ? ` en ${ex[0].min} min` : ''}` : ex.slice(0, 2).map(e=>escapeHtml(e.name)).join(', ') + (ex.length > 2 ? ` +${ex.length - 2}` : '');
+    const day = new Date(w.date+'T00:00:00').toLocaleDateString('fr-FR', {weekday:'long'});
+    return `<button type="button" onclick="wkRedo('${w.id}')"><b>${escapeHtml(w.type)}</b><span>${day} · ${sub}</span><em>↻ Refaire</em></button>`;
+  }).join('')}</div>`;
+}
+function wkRecentHtml(){
+  const last = wkSortedLog().slice(0, 3); if(!last.length) return '';
+  return `<div class="wk-redo-t">DERNIÈRES SÉANCES</div>${last.map(w=>{
+    const ex = (w.exercises || []).filter(e=>e.name);
+    return `<div class="wk-recent" onclick="modalWorkoutHistory()" role="button"><div><b>${escapeHtml(w.type)} · ${w.durationMin} min</b><small>${ex.length ? escapeHtml(ex.map(wkExLine).join(' · ')) : (w.note ? escapeHtml(w.note) : '—')}${w.prs ? ' 🏆' : ''}</small></div><span>${wkDayLbl(w.date)}</span></div>`;
+  }).join('')}`;
+}
+function wkRedo(id){
+  const src = STATE.workouts.log.find(w=>w.id === id); if(!src) return;
+  if(wkCurrent()){ modalLogWorkout(); return; }   // une séance est déjà en cours : on la rouvre au lieu de l'écraser
+  modalLogWorkout({type: src.type, durationMin: src.durationMin});
+  wkDraft = (src.exercises || []).filter(e=>e.name).map(e=>({name:e.name, mode:e.mode, sets:e.sets, reps:e.reps, kg:e.kg, km:e.km, min:e.min, int: e.int ? {...e.int} : undefined}));
+  wkRedraw();
+  try{ wkAutoSaveSoon(); }catch(e){}
+}
+
 function checkPlanningNotifications(){
   if(!STATE.settings.notificationsOn || typeof Notification === 'undefined' || Notification.permission !== 'granted') return;
   const now = new Date();
@@ -6157,14 +6733,16 @@ function checkPlanningNotifications(){
   if(!pushActive) schedBlocksOn(today).forEach(b=>{
     if(b.kind === 'repos') return;
     const [bh, bm] = b.start.split(':').map(Number), bMin = bh*60 + bm;
-    if(nowMin >= bMin - REMINDER_LEAD_MIN && nowMin < bMin && b.notifiedDate !== today){
+    STATE.settings.blockNotified = STATE.settings.blockNotified || {};   // 04/11 : gardé ici : une plage « ce jour seulement » est une copie, elle sonnait toutes les 30 s
+    if(nowMin >= bMin - REMINDER_LEAD_MIN && nowMin < bMin && STATE.settings.blockNotified[b.id] !== today){
       const link = schedLinkObj(b), k = SCHED_KINDS[b.kind] || SCHED_KINDS.travail;
       const nn = schedAssigned(b, today).map(t=>(t.nn?'🌟 ':'⚔ ') + taskName(t)).join(', ');
       fireNotification('SYSTÈME // ZENKAI', `${k.ico} ${b.name} dans ${bMin - nowMin} min (${b.start})${nn ? ' — ' + nn : link ? ' — ' + link.name : ''}`, `zenkai-block-${b.id}`);
-      b.notifiedDate = today; queueSave();
+      STATE.settings.blockNotified = {[b.id]: today, ...Object.fromEntries(Object.entries(STATE.settings.blockNotified).filter(([,d])=>d === today))}; queueSave();
     }
   });
   try{ checkJokerNotifications(nowMin, today); }catch(e){}
+  try{ checkPrayerNotifications(nowMin, today); }catch(e){}
   planningItems().forEach(p=>{
     if(p.done) return;
     const [ph, pm] = p.time.split(':').map(Number);
@@ -6175,7 +6753,7 @@ function checkPlanningNotifications(){
     if(nowMin >= startMin && nowMin < itemMin){
       // Rappel 30 min avant
       if(item.notifiedDate !== today){
-        fireNotification('SYSTÈME // ZENKAI', `${p.name} — dans ${itemMin - nowMin} min (${p.time})`, `hunter-log-${p.kind}-${p.id}`);
+        if(!pushActive) fireNotification('SYSTÈME // ZENKAI', `${p.name} — dans ${itemMin - nowMin} min (${p.time})`, `hunter-log-${p.kind}-${p.id}`);   // 04/11 : push actif = le serveur s'en charge (pas de doublon)
         item.notifiedDate = today;
         queueSave();
       }
@@ -6184,7 +6762,7 @@ function checkPlanningNotifications(){
       // Rappel "au moment même" (fenêtre de 5 min pour rattraper un tick manqué) — pour toutes les quêtes
       if(late < 5){
         if(item.notifiedNowDate !== today){
-          fireNotification('SYSTÈME // ZENKAI', `C'est l'heure : ${p.name} (${p.time})`, `hunter-log-now-${p.kind}-${p.id}`);
+          if(!pushActive) fireNotification('SYSTÈME // ZENKAI', `C'est l'heure : ${p.name} (${p.time})`, `hunter-log-now-${p.kind}-${p.id}`);
           item.notifiedNowDate = today;
           queueSave();
         }
@@ -6323,8 +6901,8 @@ async function restoreSyncBackup(){
   const d = await syncBackupInfo(); if(!d) return;
   const when = new Date(d.savedAt).toLocaleString('fr-FR',{day:'numeric', month:'short', hour:'2-digit', minute:'2-digit'});
   if(!(await confirmModal(`Revenir à la version mise de côté par la synchro (${when}, ${d.from === 'server' ? 'copie du serveur' : 'copie de cet appareil'}) ? Les données actuelles seront remplacées.`, {title:'RESTAURER', confirmLabel:'Restaurer'}))) return;
-  try{ STATE = d.state; migrateState(); queueSave(); closeModal(); pomoReset(); render(); showToast('RESTAURATION RÉUSSIE', 'Version d\'avant synchro restaurée'); }
-  catch(e){ showToast('ERREUR', 'Restauration impossible', '', 'penalty'); }
+  if(!adoptReplacement(d.state)){ showToast('ERREUR', 'Restauration impossible', 'tes données actuelles sont gardées', 'penalty'); return; }
+  queueSave(); closeModal(); pomoReset(); render(); showToast('RESTAURATION RÉUSSIE', 'Version d\'avant synchro restaurée');
 }
 async function listAutoBackupsHtml(){
   const backups = await getAutoBackups(), sb = await syncBackupInfo();
@@ -6346,8 +6924,7 @@ async function restoreAutoBackup(idx){
   if(!b) return;
   if(!(await confirmModal(`Restaurer la sauvegarde automatique du ${b.date} ? Les données actuelles non exportées seront remplacées.`, {title:'RESTAURER LA SAUVEGARDE', confirmLabel:'Restaurer'}))) return;
   try{
-    STATE = JSON.parse(b.snapshot);
-    migrateState();
+    if(!adoptReplacement(JSON.parse(b.snapshot))) throw new Error('invalide');
     queueSave(); closeModal(); pomoReset(); render();
     showToast('RESTAURATION RÉUSSIE', `Sauvegarde du ${b.date} restaurée`);
   }catch(e){
@@ -6391,14 +6968,13 @@ function handleImportFile(input){
   reader.onload = e=>{
     try{
       const data = JSON.parse(e.target.result);
-      if(typeof data !== 'object' || !data.skills) throw new Error('format invalide');
+      if(!data || typeof data !== 'object' || Array.isArray(data) || !data.skills || typeof data.skills !== 'object') throw new Error('format invalide');
       const lastDay = (data.history && data.history.length) ? data.history[data.history.length-1].date : (data.todayStats && data.todayStats.date) || '?';
       const info = `Niveau ${data.hunterLevel||1} · ${(data.tasks||[]).length} quêtes · ${(data.routines||[]).length} routines · dernier jour : ${lastDay}`;
       (async ()=>{
         const ok = await confirmModal(`Remplacer TOUTES les données de cet appareil par ce fichier ?\n\n${info}${syncCode ? '\n\nTa sauvegarde en ligne et tes autres appareils seront aussi remplacés.' : ''}`, {title:'IMPORTER CE FICHIER', confirmLabel:'Remplacer'});
         if(!ok) return;
-        STATE = data;
-        migrateState();
+        if(!adoptReplacement(data)){ closeModal(); showToast('FICHIER INUTILISABLE', 'Rien n\'a été remplacé', 'tes données actuelles sont gardées', 'penalty'); return; }
         queueSave(); closeModal(); pomoReset(); render();
         showToast('IMPORT RÉUSSI', 'Données restaurées');
       })();
@@ -6413,6 +6989,7 @@ function handleImportFile(input){
 /* ========================= MODALS ========================= */
 let _pendingConfirmResolve = null;
 function openModal(html){
+  wkAutoSaveNow();   // 04/11 : une autre fenêtre remplace la séance en saisie : on la garde d'abord
   // Une confirmModal() encore en attente et remplacée par une autre fenêtre = "Annuler"
   // (sinon sa Promise restait en suspens pour toujours).
   if(_pendingConfirmResolve){ const r = _pendingConfirmResolve; _pendingConfirmResolve = null; r(false); }
@@ -6424,7 +7001,13 @@ function closeModal(){
   // Une confirmModal() encore en attente (fermeture via clic hors-modale, ex.) équivaut à "Annuler".
   if(_pendingConfirmResolve){ const resolve = _pendingConfirmResolve; _pendingConfirmResolve = null; resolve(false); }
 }
-document.getElementById('overlay').addEventListener('click', e=>{ if(e.target.id==='overlay') closeModal(); });
+document.getElementById('overlay').addEventListener('click', e=>{
+  if(e.target.id !== 'overlay') return;
+  const kept = wkAutoSaveNow();   // 04/11 : toucher à côté ne perd plus la séance en saisie
+  closeModal();
+  if(kept){ render(); showToast('SÉANCE GARDÉE', 'Rien n\'est perdu', 'Reprends-la quand tu veux', ''); }
+});
+['input','change','click'].forEach(ev=>document.getElementById('modalBody').addEventListener(ev, wkAutoSaveSoon));
 
 // Remplace window.confirm() (fenêtre système, hors charte graphique) par une fenêtre modale
 // cohérente avec le reste de l'app — même motif que confirmResetAll() plus bas, généralisé.
@@ -6649,6 +7232,7 @@ function submitAddRoutine(){
   const deadlinePenalty = (document.getElementById('mDeadlinePenalty').value === 'true') && !!time;
   const editId = document.getElementById('mEditId')?.value;
   if(!name) return;
+  if(!highRankAllowed(rank, editId ? (STATE.routines.find(x=>x.id===editId)||{}).rank : null)) return;
   const steps = zkReadSteps(); zkEnsureSkill(skill);
   const daysRaw = String((document.getElementById('mDays')||{}).value||'').split(',').filter(x=>x!=='').map(Number).filter(n=>n>=0 && n<=6);
   if(freqTag === 'quotidienne' && !daysRaw.length){ showToast('JOURS', 'Choisis au moins un jour', 'ou « Tous les jours »', ''); return; }
@@ -6666,12 +7250,18 @@ function submitAddRoutine(){
   }else{
     STATE.routines.push({id:'r'+Date.now(), editedDate: todayStr(), name, skill, xp, rank, lastDoneDate:null, streak:0, time, lastPenaltyDate:null, notifiedDate:null, morning, freqTag, deadlinePenalty, deadlinePenalizedDate:null, ...(days ? {days} : {})}); if(steps.length) STATE.routines[STATE.routines.length-1].steps = steps;
   }
-  queueSave(); closeModal(); render();
+  queueSave(); closeModal(); render(); goalPushSoon();
 }
 async function deleteRoutine(id){
-  if(!(await confirmModal('Supprimer cette routine ?', {title:'SUPPRIMER LA ROUTINE', confirmLabel:'Supprimer'}))) return;
+  const dr = STATE.routines.find(r=>r.id===id), paidToday = !!(dr && routineDone(dr) && dr.lastDoneDay === todayStr());
+  if(!(await confirmModal(paidToday ? `Supprimer cette routine ? Elle a été validée aujourd'hui : cette XP sera retirée.` : 'Supprimer cette routine ?', {title:'SUPPRIMER LA ROUTINE', confirmLabel:'Supprimer'}))) return;
+  if(paidToday){   // 04/11 : créer, cocher, supprimer ne rapporte plus rien
+    addSkillXP(dr.skill, -(dr.awardedXp ?? dr.xp));
+    STATE.todayStats.routinesDone = Math.max(0, STATE.todayStats.routinesDone - 1);
+    STATE.stats.totalRoutinesDone = Math.max(0, STATE.stats.totalRoutinesDone - 1);
+  }
   STATE.routines = STATE.routines.filter(r=>r.id!==id);
-  queueSave(); render();
+  queueSave(); render(); goalPushSoon();
 }
 function toggleRoutine(id){
   const r = STATE.routines.find(x=>x.id===id);
@@ -6686,6 +7276,7 @@ function toggleRoutine(id){
     r.streak = Math.max(0, r.streak-1);
     STATE.todayStats.routinesDone = Math.max(0, STATE.todayStats.routinesDone - 1);
     STATE.stats.totalRoutinesDone = Math.max(0, STATE.stats.totalRoutinesDone - 1);
+    if(STATE.stats.perfectDayCountedDate === todayStr()){ STATE.stats.perfectDays = Math.max(0, (STATE.stats.perfectDays||0) - 1); STATE.stats.perfectDayCountedDate = null; }   // 04/11
     if(r.doneLog && r.lastDoneDay){ const ix = r.doneLog.lastIndexOf(r.lastDoneDay); if(ix >= 0) r.doneLog.splice(ix,1); }
     refreshQuantifiedGoals();
     addSkillXP(r.skill, -(r.awardedXp ?? r.xp));   // build 78 : décocher retire l'XP (avant : XP infinie)
@@ -6693,6 +7284,7 @@ function toggleRoutine(id){
   }
   if(r.lastDoneDate && routineStreakAlive(r)) r.streak += 1;   // 04/11 : après un seul raté, la série continue
   else r.streak = 1;
+  r.best = Math.max(+r.best || 0, r.streak);   // 05/11 : record de la routine (fiche)
   r.prevDoneDate = r.lastDoneDate; r.lastDoneDate = period; r.lastDoneDay = todayStr();
   r.doneLog = (r.doneLog||[]).concat([todayStr()]).slice(-400);   // 10/10 : jours faits, pour les objectifs « jours de routine »
   refreshQuantifiedGoals();
@@ -7449,12 +8041,19 @@ function zkShowDone(r, info){
 
 /* ---- Séance guidée, série par série ---- */
 function zkRunWorkout(){
-  const list = wkDraft.map((e,i)=>({e,i})).filter(x=>String(x.e.name||'').trim()).map(x=>x.i);   // 22/10 : la course & co. font partie du guidé
+  let list = wkDraft.map((e,i)=>({e,i})).filter(x=>String(x.e.name||'').trim()).map(x=>x.i);   // 22/10 : la course & co. font partie du guidé
+  const left = list.filter(i=>!wkDraft[i].done); if(left.length) list = left;   // 04/11 : on reprend aux exercices pas encore faits
   if(!list.length){ showToast('MODE GUIDÉ', 'Ajoute d\'abord un exercice', 'ou « Refaire la dernière »', ''); return; }
   const recs = wkRecords();
   ZR = {type:'workout', list, k:0, set:1, phase:'set', res:{}, recs, rest:STATE.settings.restSec || 120, restEnd:0};
+  zkWakeOn();
   zkWkLoad(); zkEl().classList.add('on'); zkDrawWorkout();
 }
+/* 04/11 : l'écran reste allumé pendant toute la séance guidée (repos compris). Sinon, aucune alerte de fin de repos. */
+let zkWake = null;
+async function zkWakeOn(){ try{ if('wakeLock' in navigator && !zkWake){ zkWake = await navigator.wakeLock.request('screen'); zkWake.addEventListener('release', ()=>{ zkWake = null; }); } }catch(e){} }
+function zkWakeOff(){ if(zkWake){ zkWake.release().catch(()=>{}); zkWake = null; } }
+document.addEventListener('visibilitychange', ()=>{ if(document.visibilityState === 'visible' && ZR && ZR.type === 'workout') zkWakeOn(); });
 function zkFmtMS(m){ const t = Math.round((+m||0)*60), h = Math.floor(t/3600), mm = Math.floor((t%3600)/60), ss = t%60; return h ? `${h}:${String(mm).padStart(2,'0')}:${String(ss).padStart(2,'0')}` : `${mm}:${String(ss).padStart(2,'0')}`; }
 function zkWkType(f, v){   // 22/10 : saisie exacte (5,37 km · 31:45 · 1:02:10)
   if(!ZR) return; v = String(v||'').trim().replace(',', '.');
@@ -7557,6 +8156,7 @@ function zkRestAdd(d){
 }
 function zkWkRecord(val){
   const idx = ZR.list[ZR.k]; (ZR.res[idx] = ZR.res[idx] || [])[ZR.set-1] = val;
+  zkWkPersist();
   if(ZR.set < ZR.sets){ ZR.set++; ZR.phase = 'rest'; ZR.restKind = 'set'; ZR.restTotal = zkRestFor('set'); ZR.restEnd = Date.now() + ZR.restTotal*1000; clearInterval(zkRestT); zkRestT = setInterval(zkWkTick, 1000); return zkDrawWorkout(); }
   zkWkFinishEx();
 }
@@ -7567,7 +8167,19 @@ function zkWkApply(idx){
   if(!res.length) return;
   if(wkIsDist(e)){ if(!e.int){ e.km = res[0].km; e.min = res[0].min; } e.done = true; return; }
   const best = res.reduce((a,b)=> wkBetter(b, a) ? b : a, res[0]);
-  e.sets = res.length; e.reps = best.reps; e.kg = best.kg ? best.kg : ''; e.setReps = res.map(v=>v.reps); e.done = true;
+  e.sets = res.length; e.reps = best.reps; e.kg = best.kg ? best.kg : ''; e.det = res.map(v=>({r:v.reps, k:+v.kg||0})); e.done = true;
+}
+/* 04/11 : après chaque série guidée, la séance est écrite sur le téléphone. App tuée = les séries faites sont là à la réouverture. */
+function zkWkPersist(){
+  if(!ZR || ZR.type !== 'workout') return;
+  const f = wkReadForm(), cur = wkCurrent(), saved = wkDraft;
+  try{
+    wkDraft = saved.map(e=>({...e}));
+    ZR.list.forEach(i=>zkWkApply(i));
+    f.exercises = wkDraft.map(e=>({...e}));
+  }finally{ wkDraft = saved; }
+  STATE.workouts.current = {...f, blockId: (wkLogCtx && wkLogCtx.blockId) || (cur && cur.blockId) || null, startedAt: (cur && cur.startedAt) || Date.now()};
+  queueSave();
 }
 function zkWkFinishEx(){
   zkWkApply(ZR.list[ZR.k]);
@@ -7579,13 +8191,14 @@ function zkWkFinishEx(){
   zkEl().innerHTML = `<div class="zr-done ${anyRec ? 'gold' : ''}">${anyRec ? '<div class="zr-rays"></div>' : ''}<span class="zr-tag" style="${anyRec ? 'color:var(--gold); background:rgba(255,196,77,.12);' : ''}">${anyRec ? 'NOUVEAU RECORD EN VUE' : 'SÉANCE TERMINÉE'}</span>
     <div class="zr-check"><i></i><b>✓</b></div>
     <span class="zr-gold" style="${anyRec ? '' : 'color:var(--text); text-shadow:none;'}">${[totalSets ? `${totalSets} série${totalSets>1?'s':''}` : '', nDist ? `${nDist} sortie${nDist>1?'s':''}` : ''].filter(Boolean).join(' · ') || '0 série'}</span>
-    <span class="zr-ds">${doneEx.map(i=>`${escapeHtml(wkDraft[i].name)} : ${escapeHtml(wkFmtSet(wkDraft[i]))}`).join('<br>') || 'Aucune série notée'}</span>
+    <span class="zr-ds">${doneEx.map(i=>`${escapeHtml(wkDraft[i].name)} : ${escapeHtml(wkFmtDet(wkDraft[i]) || wkFmtSet(wkDraft[i]))}`).join('<br>') || 'Aucune série notée'}</span>
     <button type="button" class="zr-main" style="width:100%;" onclick="zkWkSubmit()">Terminer la séance (+XP)</button>
     <button type="button" class="zr-skip" style="width:100%;" onclick="zkWkExit()">Revoir avant</button></div>`;
   try{ sfxReward(); }catch(e){}
 }
-function zkWkExit(){ if(ZR && ZR.type==='workout') ZR.list.forEach(i=>zkWkApply(i)); clearInterval(zkRestT); zkRestT = null; ZR = null; const el = document.getElementById('zkRun'); if(el){ el.classList.remove('on'); el.innerHTML=''; } try{ wkRedraw(); }catch(e){} }
+function zkWkExit(){ zkWakeOff(); if(ZR && ZR.type==='workout') ZR.list.forEach(i=>zkWkApply(i)); clearInterval(zkRestT); zkRestT = null; ZR = null; const el = document.getElementById('zkRun'); if(el){ el.classList.remove('on'); el.innerHTML=''; } try{ wkRedraw(); wkAutoSaveNow(); }catch(e){} }
 function zkWkSubmit(){
+  zkWakeOff();
   const keep = (ZR && ZR.list) || [];   // le mode guidé ne gère pas la distance : ces exercices restent comptés
   wkDraft.forEach((e,i)=>{ if(!keep.includes(i) && String(e.name||'').trim() && wkIsDist(e)) e.done = true; });
   clearInterval(zkRestT); zkRestT = null; ZR = null; const el = document.getElementById('zkRun'); if(el){ el.classList.remove('on'); el.innerHTML=''; } try{ wkRedraw(); }catch(e){} submitLogWorkout(); }
@@ -7752,7 +8365,7 @@ function submitAddTask(){
   const priority = document.getElementById('mPriority').value;
   const repeat = document.getElementById('mRepeat').value === 'true';
   const rank = document.getElementById('mRank').value;
-  const xp = Math.max(1, parseInt(document.getElementById('mXP').value)||RANK_XP[rank]||20);
+  const xp = Math.min(RANK_XP[rank]||120, Math.max(1, parseInt(document.getElementById('mXP').value)||RANK_XP[rank]||20));
   const time = document.getElementById('mTime').value || null;
   const dueDate = repeat ? null : (document.getElementById('mDue').value || null);
   const type = repeat ? 'repetable' : (dueDate ? 'limitee' : 'secondaire');
@@ -7762,6 +8375,8 @@ function submitAddTask(){
   const exv = (document.getElementById('mExamLink')||{}).value || '';
   const examLink = exv ? {g: exv.split('|')[0], i: exv.split('|')[1]} : null;
   if(!name) return;
+  if(!highRankAllowed(rank, editId ? (STATE.tasks.find(x=>x.id===editId)||{}).rank : null)) return;
+  try{ goalPushSoon(); }catch(e){}   // 04/11 : heure ajoutée ou changée → le serveur le sait
   if(editId){
     const t = STATE.tasks.find(x=>x.id===editId);
     if(t && document.getElementById('mExamLink')) t.examLink = examLink;
@@ -7782,6 +8397,7 @@ function submitAddTask(){
 function toggleTask(id){
   const t = STATE.tasks.find(x=>x.id===id);
   if(!t) return;
+  try{ goalPushSoon(); }catch(e){}   // 04/11 : quête faite = plus de rappel côté serveur
   if(t.type==='limitee' && t.dueDate && t.dueDate < todayStr() && !t.done){
     showToast('QUÊTE EXPIRÉE', t.name, "Cette quête n'est plus valide", 'penalty');
     return;
@@ -7861,16 +8477,40 @@ function reporterTask(id){
 }
 // `after` : callback optionnel rappelé une fois la fenêtre de confirmation fermée
 // (ex. rouvrir l'historique des tâches d'où la suppression a été lancée).
+function taskPaidToday(t){
+  if(!t) return 0;
+  const today = todayStr();
+  if(t.type === 'repetable'){
+    if(t.lastDoneDay !== today) return 0;
+    return (!t.every || t.every === 'libre') ? t.xp * Math.min(5, (t.libreDay === today ? t.libreN : 0) || 0) : t.xp;
+  }
+  return t.done && t.completedDate === today ? t.xp : 0;
+}
+/* 04/11 : 3 quêtes ou routines de rang A ou S créées par jour : au-delà, le rang ne se distribue plus à volonté. */
+const HIGH_RANK_DAILY_MAX = 3;
+function highRankAllowed(rank, oldRank){
+  if(!['A','S'].includes(rank) || ['A','S'].includes(oldRank)) return true;
+  if((STATE.todayStats.highRankMade||0) >= HIGH_RANK_DAILY_MAX){ showToast('RANG A OU S', `${HIGH_RANK_DAILY_MAX} par jour au maximum`, 'choisis un rang plus bas, ou reviens demain', ''); return false; }
+  STATE.todayStats.highRankMade = (STATE.todayStats.highRankMade||0) + 1;
+  return true;
+}
 async function deleteTask(id, after){
   const t = STATE.tasks.find(x=>x.id===id);
+  const paid = taskPaidToday(t);
   const ok = await confirmModal(t && (t.done || t.type === 'repetable')
-    ? `Supprimer « ${t.name} »${t.done ? " de l'historique" : ''} ? L'XP déjà gagnée est conservée.`
+    ? `Supprimer « ${t.name} »${t.done ? " de l'historique" : ''} ? ${paid ? "L'XP gagnée aujourd'hui avec cette quête sera retirée." : "L'XP des jours passés est conservée."}`
     : `Supprimer « ${t ? t.name : 'cette quête'} » ? Elle comptera comme abandonnée dans tes stats.`,
     {title:'SUPPRIMER LA QUÊTE', confirmLabel:'Supprimer'});
   if(!ok){ if(after) after(); return; }
   if(t && !t.done && t.type !== 'repetable'){
     STATE.stats.tasksAbandoned++;
     STATE.todayStats.tasksAbandoned = (STATE.todayStats.tasksAbandoned||0) + 1;
+  }
+  if(paid && t){   // 04/11 : créer, cocher, supprimer ne rapporte plus rien
+    addSkillXP(t.skill, -paid);
+    STATE.todayStats.tasksDone = Math.max(0, STATE.todayStats.tasksDone - 1);
+    STATE.stats.totalTasksDone = Math.max(0, STATE.stats.totalTasksDone - 1);
+    if(t.rank === 'S') STATE.stats.sRankDone = Math.max(0, STATE.stats.sRankDone - 1);
   }
   STATE.tasks = STATE.tasks.filter(x=>x.id!==id);
   queueSave(); render();
@@ -8954,7 +9594,7 @@ function wkSessionXP(exercises, date){
   return {xp: WK_BASE_XP + wkSetsXP(sets), sets, capped:false};
 }
 let wkDraft = [];   // exercices en cours de saisie dans la fenêtre
-function wkKey(n){ return String(n||'').trim().toLowerCase().replace(/\s+/g,' '); }
+function wkKey(n){ return String(n||'').normalize('NFD').replace(/[\u0300-\u036f]/g,'').trim().toLowerCase().replace(/\s+/g,' '); }   // 04/11 : « developpe couche » = « Développé couché »
 /* build 78 : deux sortes d'exercices — « séries » (reps × kg) et « distance » (km + temps, ex. course).
    Records distance : la plus longue distance, et la meilleure allure (min/km) dès 1 km. */
 const WK_DIST_RE = /(?<!\p{L})(course|run|running|footing|jogging|v[ée]lo|natation|nage|marche|rameur|trail)(?!\p{L})/iu   // 27/10 : « Dévelo… » (en tapant Développé) passait en mode distance : é n'est pas une lettre pour \b;   // 10/10 : mots entiers (« Développé » contenait « velo », « Gainage » contenait « nage »)
@@ -9004,6 +9644,17 @@ function wkRecords(excludeId){
   // record principal déjà au poids du corps → le record de reps fait doublon
   Object.keys(rec).forEach(k=>{ if(k.endsWith('|reps')){ const m = rec[k.slice(0,-5)]; if(m && !wkIsDist(m) && !(+m.kg)) delete rec[k]; } });
   return rec;
+}
+/* 04/11 : détail série par série du mode guidé (e.det = [{r:reps, k:kg}]). sets/reps/kg restent le résumé (meilleure série) :
+   records et XP ne changent pas. Détail affiché seulement si les séries diffèrent. */
+function wkKeepDet(e, o){
+  const d = Array.isArray(e.det) ? e.det : null;
+  if(d && d.length > 1 && d.length === o.sets && d.some(x=>+x.r === o.reps && (+x.k||0) === o.kg)) o.det = d.map(x=>({r:+x.r||0, k:+x.k||0}));   // saisie modifiée à la main : le détail ne correspond plus, on le laisse
+  return o;
+}
+function wkFmtDet(e){
+  const d = e && e.det; if(!Array.isArray(d) || d.length < 2 || d.every(x=>x.r === d[0].r && x.k === d[0].k)) return '';
+  return d.map(x=> x.k ? `${x.r} × ${String(x.k).replace('.',',')}` : `${x.r}`).join(', ') + (d.some(x=>x.k) ? ' kg' : ' reps');
 }
 function wkFmtSet(e){
   if(e.mode === 'pace') return `${wkFmtPace(e.pace)} (${String(+e.km).replace('.',',')} km)`;
@@ -9267,16 +9918,42 @@ function wkReadForm(){
     exercises: wkDraft.map(e=>({...e}))};
 }
 function wkKeepForLater(){
+  clearTimeout(wkSaveTimer);
   const cur = wkCurrent(), f = wkReadForm();
   STATE.workouts.current = {...f, blockId: (wkLogCtx && wkLogCtx.blockId) || (cur && cur.blockId) || null, startedAt: (cur && cur.startedAt) || Date.now()};
   queueSave(); closeModal(); render();
   showToast('SÉANCE EN COURS', 'Gardée pour plus tard', 'L\'XP tombe quand tu appuies sur « Terminer »', '');
 }
-function wkDropCurrent(){ delete STATE.workouts.current; queueSave(); closeModal(); render(); }
-function modalLogWorkout(ctx){
+function wkDropCurrent(){ clearTimeout(wkSaveTimer); delete STATE.workouts.current; queueSave(); closeModal(); render(); }
+/* 04/11 : brouillon automatique. La séance en saisie est gardée à chaque changement :
+   toucher à côté ou fermer l'app ne perd plus rien. Aucune XP avant « Terminer ». */
+let wkSaveTimer = null, wkOpenSnap = null;
+function wkFormOpen(){ return !!document.getElementById('wkExList') && document.getElementById('overlay').classList.contains('open'); }
+function wkHasContent(list){ return (list||[]).some(e=>String(e.name||'').trim()); }
+function wkAutoSaveNow(){
+  clearTimeout(wkSaveTimer);
+  if(!wkFormOpen() || (ZR && ZR.type === 'workout')) return false;
+  const cur = wkCurrent();
+  if(!wkHasContent(wkDraft) && !cur) return false;
+  STATE.workouts.current = {...wkReadForm(), blockId: (wkLogCtx && wkLogCtx.blockId) || (cur && cur.blockId) || null, startedAt: (cur && cur.startedAt) || Date.now()};
+  queueSave();
+  return wkHasContent(wkDraft);
+}
+function wkAutoSaveSoon(){ if(!wkFormOpen()) return; clearTimeout(wkSaveTimer); wkSaveTimer = setTimeout(wkAutoSaveNow, 400); }
+async function wkCancel(){
+  const kept = wkAutoSaveNow(), snap = wkOpenSnap;
+  if(!kept && !snap){ delete STATE.workouts.current; queueSave(); closeModal(); render(); return; }
+  const ok = await confirmModal(snap ? 'Annuler tes derniers changements sur cette séance ?' : 'Effacer cette séance en saisie ?', {title:'ANNULER LA SÉANCE', confirmLabel: snap ? 'Annuler les changements' : 'Effacer'});
+  if(!ok){ modalLogWorkout(wkLogCtx, true); return; }
+  if(snap) STATE.workouts.current = snap; else delete STATE.workouts.current;
+  queueSave(); closeModal(); render();
+}
+function modalLogWorkout(ctx, keepSnap){
+  clearTimeout(wkSaveTimer);
   wkDraft = [];
   wkLogCtx = ctx || null;
   const cur = wkCurrent();
+  if(!keepSnap) wkOpenSnap = cur ? JSON.parse(JSON.stringify(cur)) : null;
   if(cur){
     wkDraft = (cur.exercises||[]).map(e=>({...e, int: e.int ? {...e.int} : undefined}));
     if(!wkLogCtx && cur.blockId) wkLogCtx = {blockId: cur.blockId};
@@ -9306,12 +9983,13 @@ function modalLogWorkout(ctx){
     <div class="field-row" style="margin-top:8px;"><label>Note</label><input type="text" id="mWNote" placeholder="optionnel" maxlength="60" value="${cur ? escapeHtml(cur.note||'') : ''}"></div>
     <label class="wk-save-tpl"><input type="checkbox" id="mWSaveTpl" onchange="document.getElementById('mWTplName').style.display=this.checked?'block':'none'"> Enregistrer comme modèle</label>
     <input type="text" id="mWTplName" placeholder="Nom du modèle (ex : Push)" maxlength="20" style="display:none; width:100%; margin-top:6px;">
-    <div class="modal-actions wk-actions"><button class="btn ghost" onclick="closeModal()">Annuler</button><button class="btn ghost wk-later" onclick="wkKeepForLater()" title="Sans XP : tu la termines après">⏸ Plus tard</button><button class="btn" onclick="submitLogWorkout()">✓ Terminer</button></div>
+    <div class="modal-actions wk-actions"><button class="btn ghost" onclick="wkCancel()">Annuler</button><button class="btn ghost wk-later" onclick="wkKeepForLater()" title="Sans XP : tu la termines après">⏸ Plus tard</button><button class="btn" onclick="submitLogWorkout()">✓ Terminer</button></div>
     <div class="wk-foot">« Plus tard » garde la séance sans XP (avant ou pendant la salle). L'XP tombe à « Terminer ».${cur ? ` <a href="#" onclick="event.preventDefault(); wkDropCurrent()">Supprimer ce brouillon</a>` : ''}</div>
   `);
   wkMetaSync();
 }
 function submitLogWorkout(){
+  clearTimeout(wkSaveTimer);
   const type = document.getElementById('mWType').value;
   const durationMin = Math.min(600, Math.max(1, parseInt(document.getElementById('mWDuration').value)||30));
   const note = document.getElementById('mWNote').value.trim();
@@ -9320,7 +9998,7 @@ function submitLogWorkout(){
       ? (e.int ? (()=>{ const it = {reps:Math.min(50, Math.max(1, parseInt(e.int.reps)||1)), m:Math.min(10000, Math.max(50, parseInt(e.int.m)||400)), sec:Math.min(3600, Math.max(0, parseInt(e.int.sec)||0))};
             return {name:String(e.name||'').trim().slice(0,30), mode:'dist', int:it, km:Math.round(it.reps*it.m/10)/100, min:Math.round(it.reps*it.sec)/60}; })()
           : {name:String(e.name||'').trim().slice(0,30), mode:'dist', km:Math.min(300, Math.max(0, Math.round((parseFloat(String(e.km).replace(',','.'))||0)*100)/100)), min:Math.min(900, Math.max(0, Math.round((parseFloat(e.min)||0)*60)/60))})
-      : {name:String(e.name||'').trim().slice(0,30), sets:Math.min(20, Math.max(1, parseInt(e.sets)||1)), reps:Math.min(500, Math.max(0, parseInt(e.reps)||0)), kg:Math.min(500, Math.max(0, Math.round((parseFloat(String(e.kg).replace(',','.'))||0)*2)/2))})
+      : wkKeepDet(e, {name:String(e.name||'').trim().slice(0,30), sets:Math.min(20, Math.max(1, parseInt(e.sets)||1)), reps:Math.min(500, Math.max(0, parseInt(e.reps)||0)), kg:Math.min(500, Math.max(0, Math.round((parseFloat(String(e.kg).replace(',','.'))||0)*100)/100))}))   // 04/11 : charge exacte (1,25 kg reste 1,25 kg)
     .filter(e=>e.name && (wkIsDist(e) ? e.km > 0 : e.reps > 0));
   // séance 100 % distance (ex. une course) : type et durée déduits de ce qui a été saisi
   let type2 = type, dur2 = durationMin;
@@ -9526,7 +10204,7 @@ function deleteWorkoutTypeAt(idx){
 }
 function wkSessionSummary(w){
   const ex = w.exercises || [];
-  return ex.length ? ex.map(e=> wkIsDist(e) ? `${escapeHtml(e.name)} ${escapeHtml(wkFmtSet(e))}` : `${escapeHtml(e.name)} ${e.sets}×${e.reps}${+e.kg ? ` @${String(+e.kg).replace('.',',')}kg` : ''}`).join(' · ') : '';
+  return ex.length ? ex.map(e=> wkIsDist(e) ? `${escapeHtml(e.name)} ${escapeHtml(wkFmtSet(e))}` : (wkFmtDet(e) ? `${escapeHtml(e.name)} ${escapeHtml(wkFmtDet(e))}` : `${escapeHtml(e.name)} ${e.sets}×${e.reps}${+e.kg ? ` @${String(+e.kg).replace('.',',')}kg` : ''}`)).join(' · ') : '';
 }
 function wkSessionItem(w, showDate){
   const sum = wkSessionSummary(w);
@@ -9625,7 +10303,7 @@ function wkFicheSets(name, rows){
   }
   if(wt.length){
     const b = wt.reduce((a,r)=> (+r.e.kg > +a.e.kg || (+r.e.kg === +a.e.kg && +r.e.reps > +a.e.reps)) ? r : a);
-    cards.push(`<div class="exf-pr"><span>Le plus lourd</span><b>+${wkFicheNum(+b.e.kg)} kg × ${b.e.reps}</b><em>${wkFicheDate(b.date)}</em></div>`);
+    cards.push(`<div class="exf-pr"><span>Le plus lourd</span><b>${bw.length ? '+' : ''}${wkFicheNum(+b.e.kg)} kg × ${b.e.reps}</b><em>${wkFicheDate(b.date)}</em></div>`);
   }
   h += `<div class="exf-prs">${cards.join('')}</div>`;
   if(bw.length){
@@ -9634,10 +10312,10 @@ function wkFicheSets(name, rows){
   }
   if(wt.length){
     const pts = wkFicheSeries(wt, r=>({v:+r.e.kg, reps:+r.e.reps}));
-    h += `<div class="exf-sec">CHARGE AJOUTÉE (KG)</div>${wkFicheDelta(pts, d=>`${d > 0 ? '+' : ''}${wkFicheNum(d)} kg`)}${wkFicheChart(pts, p=>`+${wkFicheNum(p.v)}kg ×${p.reps}`, {aria:'Charge ajoutée'})}`;
+    h += `<div class="exf-sec">${bw.length ? 'CHARGE AJOUTÉE' : 'CHARGE'} (KG)</div>${wkFicheDelta(pts, d=>`${d > 0 ? '+' : ''}${wkFicheNum(d)} kg`)}${wkFicheChart(pts, p=>`${bw.length ? '+' : ''}${wkFicheNum(p.v)}kg ×${p.reps}`, {aria: bw.length ? 'Charge ajoutée' : 'Charge'})}`;
     const by = new Map(); wt.forEach(r=>{ const kg = +r.e.kg, c = by.get(kg); if(!c || +r.e.reps > c.reps) by.set(kg, {reps:+r.e.reps, date:r.date}); });
     const lst = [...by.entries()].sort((a,b)=>a[0]-b[0]);
-    if(lst.length > 1 || bw.length) h += `<div class="exf-sec">TON MEILLEUR À CHAQUE CHARGE</div><div class="exf-tab">${bw.length ? `<div><span>Poids du corps</span><b>${Math.max(...bw.map(r=>+r.e.reps))} ${u}</b></div>` : ''}${lst.map(([kg,c])=>`<div><span>+${wkFicheNum(kg)} kg</span><b>${c.reps} ${u}</b></div>`).join('')}</div>`;
+    if(lst.length > 1 || bw.length) h += `<div class="exf-sec">TON MEILLEUR À CHAQUE CHARGE</div><div class="exf-tab">${bw.length ? `<div><span>Poids du corps</span><b>${Math.max(...bw.map(r=>+r.e.reps))} ${u}</b></div>` : ''}${lst.map(([kg,c])=>`<div><span>${bw.length ? '+' : ''}${wkFicheNum(kg)} kg</span><b>${c.reps} ${u}</b></div>`).join('')}</div>`;
   }
   return h;
 }
@@ -9679,7 +10357,7 @@ function wkFicheOpen(name){
   el.innerHTML = `<div class="exf-card" role="dialog" aria-label="Fiche ${escapeHtml(name)}">
     <div class="exf-top"><div><div class="eyebrow">FICHE EXERCICE</div><h3>${escapeHtml(name)}</h3><div class="exf-sub">${rows.length} fois · depuis le ${rows.length ? wkFicheDate(rows[0].date, true) : '—'}</div></div><button type="button" class="icon-btn" aria-label="Fermer" onclick="wkFicheClose()">✕</button></div>
     ${body}
-    ${last.length ? `<div class="exf-sec">DERNIÈRES FOIS</div><div class="exf-list">${last.map(r=>`<div><span>${wkFicheDate(r.date)}</span><b>${escapeHtml(wkIsDist(r.e) ? wkFmtSet(r.e) : `${r.e.sets || 1} × ${wkFmtSet(r.e)}`)}</b></div>`).join('')}</div>` : ''}
+    ${last.length ? `<div class="exf-sec">DERNIÈRES FOIS</div><div class="exf-list">${last.map(r=>`<div><span>${wkFicheDate(r.date)}</span><b>${escapeHtml(wkIsDist(r.e) ? wkFmtSet(r.e) : (wkFmtDet(r.e) || `${r.e.sets || 1} × ${wkFmtSet(r.e)}`))}</b></div>`).join('')}</div>` : ''}
     <button type="button" class="btn" style="width:100%; margin-top:14px;" onclick="wkFicheClose()">Fermer</button></div>`;
   el.classList.add('on');
 }
@@ -9761,35 +10439,40 @@ function renderWorkoutLog(){
   const todayMin = todayLogs.reduce((s,w)=>s+w.durationMin,0), todayXp = todayLogs.reduce((s,w)=>s+(w.xp||0),0), todayPr = todayLogs.reduce((s,w)=>s+(w.prs||0),0);
   return `
     <div class="sub">${Math.round((weekMinutes/60)*10)/10} H · ${weekLogs.length} SÉANCE${weekLogs.length>1?'S':''} CETTE SEMAINE${STATE.stats.totalPRs ? ` · 🏆 ${STATE.stats.totalPRs} RECORD${STATE.stats.totalPRs>1?'S':''}` : ''}</div>
-    <div class="wk-week">${days.map((d,i)=>`<div class="wk-day ${byDay[d]?'on':''} ${d===today?'today':''}" title="${byDay[d]||0} min"><span>${'LMMJVSD'[i]}</span><i></i></div>`).join('')}</div>
+    <div style="display:flex; gap:8px; margin-top:12px;">
+      ${wkCurrent() ? `<button class="btn wide wk-resume" onclick="modalLogWorkout()">⏸ SÉANCE EN COURS · ${(wkCurrent().exercises||[]).filter(e=>e.name).length} EXO${(wkCurrent().exercises||[]).filter(e=>e.name).length>1?'S':''} — REPRENDRE</button>` : `<button class="btn wide" onclick="modalLogWorkout()">+ NOUVELLE SÉANCE</button>`}
+      <button class="btn ghost small" title="Historique" aria-label="Historique et records" onclick="modalWorkoutHistory()">📈</button>
+      <button class="btn ghost small" title="Réglages" aria-label="Réglages sport" onclick="modalWorkoutSettings()">⚙</button>
+    </div>
+    ${wkRedoHtml()}
+    ${wkRecentHtml()}
+    <div class="wk-week" style="margin-top:16px;">${days.map((d,i)=>`<div class="wk-day ${byDay[d]?'on':''} ${d===today?'today':''}" title="${byDay[d]||0} min"><span>${'LMMJVSD'[i]}</span><i></i></div>`).join('')}</div>
     ${(()=>{ const tgt = +STATE.workouts.weekTarget || 0;
       if(!tgt) return `<div class="wk-rythm"><span>Ton rythme :</span>${[2,3,4,5].map(n=>`<button type="button" class="g-chip" onclick="wkSetWeekTarget(${n})">${n} / semaine</button>`).join('')}</div>`;
       const n = weekLogs.length, st = wkWeekStreak(), ok = n >= tgt;
       return `<div class="wk-rythm ${ok?'ok':''}" onclick="modalWorkoutSettings()" role="button"><b>${ok ? '✓ ' : ''}${Math.min(n,tgt)}/${tgt} séances</b><span>cette semaine${ok ? ` · +${WK_WEEK_XP} XP` : ` · encore ${tgt-n}`}</span>${st ? `<em>🔥 ${st} sem.</em>` : ''}</div>`; })()}
     ${wkRunKmHtml()}
     ${todayLogs.length ? `<div class="wk-today" onclick="modalWorkoutHistory()" role="button">Aujourd'hui : <b>${todayLogs.map(w=>escapeHtml(w.type)).join(' + ')}</b> · ${todayMin} min · <span class="xp-tag">+${todayXp} XP</span>${todayPr ? ` <span class="pr-chip">🏆 ${todayPr}</span>` : ''}</div>` : ''}
-    <div style="display:flex; gap:8px; margin-top:10px;">
-      ${wkCurrent() ? `<button class="btn wide wk-resume" onclick="modalLogWorkout()">⏸ SÉANCE EN COURS · ${(wkCurrent().exercises||[]).filter(e=>e.name).length} EXO${(wkCurrent().exercises||[]).filter(e=>e.name).length>1?'S':''} — REPRENDRE</button>` : `<button class="btn wide" onclick="modalLogWorkout()">+ ENREGISTRER UNE SÉANCE</button>`}
-      <button class="btn ghost small" title="Historique" aria-label="Historique et records" onclick="modalWorkoutHistory()">📈</button>
-      <button class="btn ghost small" title="Réglages" aria-label="Réglages sport" onclick="modalWorkoutSettings()">⚙</button>
-    </div>
   `;
 }
 
 /* ---- quick add (floating button) ---- */
 /* build 78 : le « + » explique la différence au moment où on choisit (cause n°1 de confusion des nouveaux) */
-function modalQuickAdd(){
+function modalQuickAdd(){   // 05/11 : grille de choix courts (avant : 4 à 5 grandes cartes à lire)
   const opts = [
-    ['routines','🔁','Routine','Une habitude qui revient chaque jour ou chaque semaine.','Ex. : se lever à 7 h, lire 10 pages, pas de téléphone au lit', "zkCreate('routine')"],
-    [null,'⚔','Quête','Une chose à faire, une fois ou à répéter.',"Ex. : rendre le devoir, appeler le médecin, ranger la chambre", "zkCreate('quest')"],
-    ['goals','🎯','Objectif','Un but avec une échéance, qui avance petit à petit.','Ex. : 100 kg au DC, réussir l\'examen, 20 séances ce mois', 'modalAddGoal()'],
-    ['sport','🏋','Séance de sport','Ce que tu viens de faire à la salle ou en course. Fixe ton rythme (ex. 3 séances par semaine) dans le panneau Sport.','Ex. : 4 × 10 tractions, 5 km en 28 min', 'modalLogWorkout()'],
-    ['nutrition','🍽','Repas ou protéines','Estimer un repas en un geste, ou ajouter un aliment précis.','Ex. : déjeuner « normal », shaker +25 g, 150 g de poulet', 'modalNutrition()'],
+    ['routines','🔁','Routine','une habitude', "zkCreate('routine')"],
+    [null,'⚔','Quête','une chose à faire', "zkCreate('quest')"],
+    ['goals','🎯','Objectif','un but chiffré', 'modalAddGoal()'],
+    ['sport','🏋','Séance','sport', 'modalLogWorkout()'],
+    ['water','💧','Eau','+250 ml', 'addWater(250)'],
+    ['focus','⏱','Focus','un pomodoro', "switchTab('pomodoro')"],
+    ['nutrition','🍽','Repas','ou protéines', 'modalNutrition()'],
   ].filter(o=>!o[0] || modOn(o[0]));
   openModal(`
-    <h3>QUE VEUX-TU AJOUTER ?</h3>
-    <div style="display:flex; flex-direction:column; gap:8px;">
-      ${opts.map(([,ico,name,desc,ex,fn])=>`<button type="button" class="qa-opt" onclick="closeModal(); ${fn};"><span class="ico">${ico}</span><div><b>${name}</b><span>${desc}</span><small>${ex}</small></div></button>`).join('')}
+    <h3>AJOUTER</h3>
+    <div class="sub" style="margin-bottom:14px;">QU'EST-CE QUE TU VEUX AJOUTER ?</div>
+    <div class="qa-grid">
+      ${opts.map(([,ico,name,desc,fn])=>`<button type="button" onclick="closeModal(); ${fn};"><span class="i">${ico}</span><b>${name}</b><small>${desc}</small></button>`).join('')}
     </div>
     <div class="modal-actions"><button class="btn ghost wide" onclick="closeModal()">Fermer</button></div>
   `);
@@ -9959,10 +10642,38 @@ function zkGuideGo(si, xi){
   if((s.mod && !modOn(s.mod)) || (x.mod && !modOn(x.mod))) return modalModules();
   try{ x.go(); }catch(e){ closeModal(); }
 }
-function guideCardHtml(){
-  if(STATE.settings.guideSeen || !STATE.settings.nameAsked) return '';
-  return `<div class="zg-card"><div><b>📖 Tout ce que l'app sait faire</b><span>Modules, pomodoro sur une quête, examens, cycles de focus… en 2 minutes.</span></div>
-    <div class="zg-card-a"><button class="btn small" onclick="zkGuideOpen=0; modalGuide()">Ouvrir le guide</button><button class="icon-btn" aria-label="Masquer" onclick="STATE.settings.guideSeen=true; queueSave(); render();">✕</button></div></div>`;
+/* 04/11 : carte de retour. Elle dit ce qui reste et ce qui repart de zéro, puis demande une seule action. */
+function returnCard(){ const c = STATE.settings.returnCard; return c && c.date === todayStr() && !c.closed ? c : null; }
+function returnChoices(){
+  const out = [];
+  if(modOn('routines')) STATE.routines.filter(r=>!routineDone(r) && routineDueToday(r)).forEach(r=>out.push({k:'routine', id:r.id, name:r.name}));
+  STATE.tasks.filter(t=>!t.done && !questPeriodDone(t) && !(t.dueDate && t.dueDate < todayStr())).forEach(t=>out.push({k:'task', id:t.id, name:taskName(t)}));
+  return out.slice(0, 3);
+}
+function returnPicked(c){
+  const p = c.pick; if(!p) return null;
+  if(p.k === 'routine'){ const r = STATE.routines.find(x=>x.id===p.id); return r ? {name:r.name, done:routineDone(r)} : null; }
+  const t = STATE.tasks.find(x=>x.id===p.id); return t ? {name:taskName(t), done:t.done || questPeriodDone(t)} : null;
+}
+function returnPick(k, id){ const c = returnCard(); if(!c) return; c.pick = {k, id}; queueSave(); render(); }
+function returnClose(){ const c = STATE.settings.returnCard; if(c) c.closed = true; queueSave(); render(); }
+function returnCardHtml(){
+  const c = returnCard(); if(!c) return '';
+  const head = `<div class="c-tl"></div><div class="c-br"></div><div class="eyebrow">SYSTÈME // RETOUR</div>`;
+  const picked = returnPicked(c);
+  if(picked && picked.done) return `<div class="panel full">${head}<h2>Tu es reparti.</h2>
+    <div class="qs-lead" style="margin-top:6px;">« ${escapeHtml(picked.name)} » est fait. Le reste de ta journée est en option.</div>
+    <button type="button" class="q-more" style="margin-top:4px;" onclick="returnClose()">Fermer</button></div>`;
+  if(picked) return `<div class="panel full">${head}<h2>Ton action du jour</h2>
+    <div class="item" style="margin-top:8px;"><div class="chk" role="button" aria-label="Valider" onclick="togglePlanningItem('${c.pick.k}', '${c.pick.id}')"></div><div class="item-body"><div class="item-name">${escapeHtml(picked.name)}</div></div></div>
+    <button type="button" class="q-more" style="margin-top:8px;" onclick="returnClose()">Plus tard</button></div>`;
+  const list = returnChoices();
+  return `<div class="panel full">${head}<h2>Te revoilà.</h2>
+    <div class="qs-lead" style="margin-top:6px;">${c.days} jours d'absence. Ton rang et ton XP sont intacts.${c.streaks ? ' Tes séries repartent de zéro.' : ''}</div>
+    ${list.length ? `<div class="qs-lbl" style="margin-top:4px;">CHOISIS UNE SEULE ACTION POUR AUJOURD'HUI</div>
+    <div class="qs-paths" style="margin-top:6px;">${list.map(i=>`<button type="button" class="gp-card" style="width:100%;" onclick="returnPick('${i.k}', '${i.id}')"><b>${escapeHtml(i.name)}</b></button>`).join('')}</div>`
+    : `<button type="button" class="btn wide" style="margin-top:4px;" onclick="modalAddTask()">Choisir une action pour aujourd'hui</button>`}
+    <button type="button" class="q-more" style="margin-top:8px;" onclick="returnClose()">Plus tard</button></div>`;
 }
 function zkHelp(si){ return `<button type="button" class="zg-q" aria-label="Comment ça marche ?" title="Comment ça marche ?" onclick="event.stopPropagation(); zkGuideOpen=${si}; modalGuide()">?</button>`; }   // « ? » à côté des titres → la bonne rubrique du guide
 function modalGeneralSettings(){
@@ -9983,7 +10694,12 @@ function modalGeneralSettings(){
         <label style="font-family:var(--font-mono); font-size:10px; color:var(--text-faint); width:auto;">Mon personnage (en-tête + Stats)</label>
         <div class="mini-switch ${STATE.settings.personalAvatar?'on':''}" id="personalAvatarSwitch" onclick="togglePersonalAvatarPref()" role="button" aria-label="Afficher mon personnage dans le badge de rang"></div>
       </div>
-      <p ${p}>Version perso (visible seulement sur un appareil admin) : ton personnage dans l'en-tête d'« Aujourd'hui » (styles Monarque, Système, Manhwa, Donjon, Épuré) et dans l'onglet Stats, à la place du portail évolutif (sans le réglage, le portail avec l'emblème est affiché). Pour la version publique, supprimer le dossier avatars/ du dépôt suffit : l'emblème revient tout seul.</p>` : ''}
+      <p ${p}>Version perso (visible seulement sur un appareil admin) : ton personnage dans l'en-tête d'« Aujourd'hui » (styles Monarque, Système, Manhwa, Donjon, Épuré) et dans l'onglet Stats, à la place du portail évolutif (sans le réglage, le portail avec l'emblème est affiché). Pour la version publique, supprimer le dossier avatars/ du dépôt suffit : l'emblème revient tout seul.</p>
+      <div class="field-row" style="justify-content:space-between;">
+        <label style="font-family:var(--font-mono); font-size:10px; color:var(--text-faint); width:auto;">Module Prière</label>
+        <div class="mini-switch ${STATE.prayer && STATE.prayer.enabled?'on':''}" id="prayerSwitch" onclick="togglePrayerPref()" role="button" aria-label="Afficher le module Prière"></div>
+      </div>
+      <p ${p}>Version perso (appareil admin) : horaires des 5 prières, suivi à l'heure ou rattrapée, rappels. Sans XP. Réglages avec le ⚙ de la carte Prière sur « Aujourd'hui ».</p>` : ''}
       <div class="field-row" style="justify-content:space-between;">
         <label style="font-family:var(--font-mono); font-size:10px; color:var(--text-faint); width:auto;">En-tête complet sur tous les écrans</label>
         <div class="mini-switch ${STATE.settings.fullHeaderEverywhere?'on':''}" id="fullHeaderSwitch" onclick="toggleFullHeaderPref()" role="button" aria-label="Afficher l'en-tête complet sur tous les écrans"></div>
@@ -10013,7 +10729,7 @@ function modalGeneralSettings(){
           <div class="radio-opt ${!STATE.settings.penaltiesEnabled?'active':''}" id="penOff" onclick="setPenaltyPref(false)">DÉSACTIVÉES</div>
         </div>
       </div>
-      <p ${p}>Pénalité : XP retirée si une routine avec série en cours est ratée un jour complet, si l'objectif d'eau n'est pas atteint, ou si une routine avec heure limite (⏰) n'est pas validée à temps.</p>
+      <p ${p}>Pénalité : XP retirée si une routine avec série en cours est ratée deux fois de suite, si l'objectif d'eau n'est pas atteint, ou si une routine avec heure limite (⏰) n'est pas validée à temps. Après au moins 3 jours d'absence, le retour se fait sans pénalité.</p>
       <div class="field-row"><label>Modules</label><button class="btn small" style="flex:1;" onclick="modalModules(false)">${MODULES.filter(([k])=>modOn(k)).length}/${MODULES.length} actifs — choisir</button></div>
       <p ${p}>Masque ce que tu n'utilises pas (sport, focus, eau, agenda…). Les données sont gardées.</p>
       <div class="field-row"><label>Journée tenue</label><button class="btn small ghost" style="flex:1;" onclick="modalDayHeld()">Minimum : ${dayHeldMin()} action${dayHeldMin()>1?'s':''}</button></div>
@@ -10026,7 +10742,7 @@ function modalGeneralSettings(){
       <div class="field-row"><label>Rappels</label>
         <button class="btn small" style="flex:1;" onclick="requestNotifications()">${notifState==='granted' && STATE.settings.notificationsOn ? 'ACTIVÉES ✓' : 'ACTIVER'}</button>
       </div>
-      <p ${p}>Deux types de rappels. Rappels du planning (heure d'une routine ou d'une quête) : tant que l'app tourne, même en arrière-plan. Rappels serveur (le soir dès 20h pour choisir tes tâches de demain, et le matin pour tes non-négociables) : même app fermée. Sur iPhone, ils ne marchent que si l'app a été ajoutée à l'écran d'accueil (iOS 16.4 ou plus récent).</p>
+      <p ${p}>Même app fermée : l'heure de tes routines et de tes quêtes (30 min avant, puis à l'heure), tes plages d'agenda, tes objectifs, tes non-négociables et le choix du soir. Un rappel peut arriver jusqu'à 10 minutes plus tard. Sur iPhone, ils ne marchent que si l'app a été ajoutée à l'écran d'accueil (iOS 16.4 ou plus récent).</p>
       ${notifState==='denied' ? `<p ${p}><span style="color:var(--danger);">Les notifications sont bloquées pour ce site dans ton navigateur. Pour les réactiver : réglages du navigateur (ou de l'app sur iPhone) → Notifications → autoriser ce site, puis reviens appuyer sur ACTIVER.</span></p>` : ''}
     `;
   } else if(settingsTab==='donnees'){
@@ -10040,7 +10756,7 @@ function modalGeneralSettings(){
       <div class="field-row"><label>Sauvegarde auto</label>
         <button class="btn small ghost" style="flex:1;" onclick="modalAutoBackups()">Voir / restaurer</button>
       </div>
-      <p ${p}>Une sauvegarde automatique est prise chaque jour sur cet appareil (3 derniers jours conservés) — un filet de sécurité en cas d'erreur. Elle ne remplace pas « Exporter », seul moyen de transférer tes données vers un autre appareil.</p>
+      <p ${p}>Une sauvegarde automatique est prise chaque jour sur cet appareil (3 derniers jours conservés) — un filet de sécurité en cas d'erreur. Elle reste sur cet appareil. Pour retrouver tes données ailleurs, utilise la synchro ou « Exporter ».</p>
       <div class="eyebrow" style="margin-top:20px; color:var(--danger);">ZONE DE DANGER</div>
       <button class="btn danger-outline wide" onclick="confirmResetAll()">Réinitialiser tout</button>
     `;
@@ -10053,7 +10769,6 @@ function modalGeneralSettings(){
       `<button class="tab-btn small ${settingsTab===id?'active':''}" onclick="switchSettingsTab('${id}')">${label}</button>`
     ).join('')}</div>
     <div id="settingsTabBody">${body}</div>
-    <div style="text-align:center; margin-top:18px;"><span style="font-family:var(--font-mono); font-size:9px; color:var(--text-faint); letter-spacing:1px;">ZENKAI — BUILD ${APP_VERSION}</span></div>
     <div class="modal-actions" style="justify-content:center;"><button class="btn ghost" onclick="closeModal()">Fermer</button></div>
   `);
 }
@@ -10116,7 +10831,8 @@ async function doResetAll(everywhere){
     clearTimeout(syncPushTimer); syncDirty = false;
     syncCode = null; await storeSet(SYNC_CODE_KEY, '');
   }
-  STATE = DEFAULT_STATE(); migrateState(); queueSave(); closeModal(); pomoReset(); render();
+  const fresh = DEFAULT_STATE(); fresh.syncEpoch = (+(STATE && STATE.syncEpoch)||0) + 1;   // 04/11 : les autres appareils suivent la remise à zéro
+  STATE = fresh; migrateState(); queueSave(); closeModal(); pomoReset(); render();
   showToast('RÉINITIALISÉ', everywhere ? 'Toutes tes données ont été effacées' : 'Cet appareil repart de zéro', everywhere ? '' : 'ta sauvegarde en ligne est intacte');
 }
 
@@ -10187,7 +10903,7 @@ function renderRoutinesList(onlyPending){
     return `
     <div class="item" style="${rest ? 'opacity:.5;' : ''}">
       <div class="chk ${done?'done':''}" onclick="zkRoutineTap('${r.id}')" title="${rest ? 'Repos aujourd\'hui' : ''}">${done?'✓':rest?'💤':''}</div>
-      <div class="item-body">
+      <div class="item-body" style="cursor:pointer;" onclick="modalRoutineSheet('${r.id}')">
         <div class="item-name ${done?'done':''}">${r.morning?'🌅 ':''}${escapeHtml(r.name)}</div>
         <div class="item-meta">
           <span>${escapeHtml(sk ? sk.name : '—')}</span>
@@ -10306,6 +11022,40 @@ function renderGoalsList(onlyActive, limit){
   }
   return entries.map(e=>e.html).join('');
 }
+/* 04/11 : « ce qui te rapproche » — uniquement pour les objectifs dont l'app connaît vraiment les données.
+   Objectif manuel, au ressenti, à étapes, examen, poids : rien (on n'invente pas de lien). */
+function goalWeekText(g){
+  if(g.done || g.progressType !== 'quantifie') return null;
+  const s = g.linkedSource || '', from = startOfWeekStr();
+  const plural = (n, w) => `${n} ${w}${n > 1 ? 's' : ''}`;
+  const logs = STATE.workouts.log.filter(w=>w.date >= from);
+  if(s === 'workouts_count' || s === 'workouts_minutes'){
+    const l = logs.filter(w=>!g.linkedWorkoutType || w.type === g.linkedWorkoutType);
+    return {n:l.length, txt: s === 'workouts_count' ? plural(l.length, 'séance') : wkFmtMin(l.reduce((a,w)=>a+(+w.durationMin||0),0))};
+  }
+  if(/^exercise_/.test(s)){
+    const k = wkKey(g.linkedExercise); if(!k) return null;
+    const n = logs.filter(w=>(w.exercises||[]).some(e=>wkKey(e.name) === k)).length;
+    return {n, txt: plural(n, 'séance')};
+  }
+  if(s === 'focus_minutes'){ const m = focusMinutesThisWeek(); return {n:m, txt:`${wkFmtMin(m)} de focus`}; }
+  if(s === 'run_km'){ const km = wkRunKmBetween(from, '9999-12-31').km; return {n:km, txt:`${Math.round(km*10)/10} km`}; }
+  if(s === 'routine_days'){
+    const r = STATE.routines.find(x=>x.id===g.linkedRoutine); if(!r) return null;
+    const n = new Set((r.doneLog||[]).filter(d=>d >= from)).size;
+    return {n, txt:`${plural(n, 'jour')} : ${r.name}`};
+  }
+  if(s === 'water_days'){
+    let n = (STATE.todayStats.date >= from && STATE.water.currentMl >= STATE.water.goalMl) ? 1 : 0;
+    STATE.history.forEach(h=>{ if(h.date >= from && h.waterGoalHit) n++; });
+    return {n, txt:`${plural(n, 'jour')} d'eau`};
+  }
+  return null;
+}
+function goalWeekHtml(g){
+  const w = goalWeekText(g); if(!w) return '';
+  return `<div class="g-week ${w.n ? '' : 'zero'}">Cette semaine : ${w.n ? escapeHtml(w.txt) : 'rien encore. ' + escapeHtml(goalNextStepHint(g))}</div>`;
+}
 function goalRowHtml(g){
   const today = todayStr();
   return (()=>{
@@ -10328,12 +11078,12 @@ function goalRowHtml(g){
               ? `<button class="icon-btn" style="width:34px; height:34px; font-size:18px; color:var(--gold);" title="Mettre à jour" aria-label="Mettre à jour" onclick="modalGoalDetail('${g.id}'); setTimeout(()=>{ const i=document.getElementById('gdVal'); if(i) i.focus(); }, 80)">＋</button>`
               : isManualQ && !hasSubtasks
               ? `<div style="display:flex; flex-direction:column; gap:2px;">
-                  <button class="icon-btn" style="width:20px; height:16px; font-size:11px;" title="+1" onclick="incrementGoalValue('${g.id}',1)">+</button>
-                  <button class="icon-btn" style="width:20px; height:16px; font-size:11px;" title="-1" onclick="incrementGoalValue('${g.id}',-1)">−</button>
+                  <button class="icon-btn" style="width:36px; height:30px; font-size:14px;" title="+1" aria-label="Ajouter 1" onclick="incrementGoalValue('${g.id}',1)">+</button>
+                  <button class="icon-btn" style="width:36px; height:30px; font-size:14px;" title="-1" aria-label="Retirer 1" onclick="incrementGoalValue('${g.id}',-1)">−</button>
                 </div>`
               : hasSubtasks ? `<div class="chk" role="button" title="Valider l'étape suivante" aria-label="Valider l'étape suivante" onclick="goalStepNext('${g.id}')"></div>`
-              : `<div class="chk" style="cursor:default;" title="Se complète automatiquement"></div>`))
-      : `<div class="chk ${g.done?'done':''}" onclick="toggleGoal('${g.id}')">${g.done?'✓':''}</div>`;
+              : ''))   // 04/11 : objectif automatique : pas de case vide
+      : (g.done ? `<div class="chk done" onclick="toggleGoal('${g.id}')">✓</div>` : '');   // 04/11 : au ressenti : « atteint » est dans le détail
     let deadlineBadge = '';
     if(daysLeft!==null && !g.done){
       const color = daysLeft<0 ? 'var(--danger)' : daysLeft<=3 ? 'var(--gold)' : 'var(--text-dim)';
@@ -10341,25 +11091,19 @@ function goalRowHtml(g){
       deadlineBadge = `<div class="deadline-badge" style="color:${color}; border-color:${color};">${label}</div>`;
     }
     return `
-    <div class="item" style="${(hasSubtasks || isExam)?'flex-wrap:wrap;':''}">
-      <div class="pri-dot" style="background:${PRIORITY_COLOR[g.priority]}" title="Priorité ${PRIORITY_LABEL[g.priority]}"></div>
+    <div class="item g-card" style="${(hasSubtasks || isExam)?'flex-wrap:wrap;':''}">
       ${checkboxCell}
       <div class="item-body">
-        <div class="g-head"><div class="item-name ${g.done?'done':''}" style="cursor:pointer;" onclick="modalGoalDetail('${g.id}')">${escapeHtml(g.name)}</div>${deadlineBadge}<button class="icon-btn g-mini" title="Modifier" aria-label="Modifier" onclick="modalEditGoal('${g.id}')">✎</button><button class="icon-btn danger g-mini" title="Supprimer" aria-label="Supprimer" onclick="deleteGoal('${g.id}')">✕</button></div>
+        <div class="g-head g-open" onclick="modalGoalDetail('${g.id}')"><div class="item-name ${g.done?'done':''}">${escapeHtml(g.name)}</div>${deadlineBadge}${g.done ? '' : `<span class="g-pct">${pct} %</span>`}<span class="g-chev" aria-hidden="true">›</span></div>
         ${!g.done && (hasSubtasks || (isQ && g.targetValue) || !isQ) ? `
         <div style="cursor:pointer;" onclick="modalGoalDetail('${g.id}')">${goalBarHtml(g, pct)}</div>
         ${(hasSubtasks || isExam) ? '' : goalNextPalierHtml(g)}
-        ${(()=>{ const rc = runCoach(g) || weightLine(g) || (g.linkedSource==='routine_days' && isQ ? goalNextStepHint(g) : ''); return rc ? `<div class="g-coach">${g.linkedSource==='routine_days'?'🗣':g.linkedSource==='body_weight'?'⚖':'🏃'} ${escapeHtml(rc)}</div>` : ''; })()}
-        ${isExam ? `<div class="item-meta" style="cursor:pointer;" onclick="modalExam('${g.id}')"><span style="font-family:var(--font-mono); color:var(--cyan);">${pct} % prêt · ${examMasteredCount(g)}/${examItemCount(g)} maîtrisés${g.exam.studyMin ? ` · ⏱ ${wkFmtMin(g.exam.studyMin)}` : ''}${g.done ? '' : ` · 📅 ${Math.min(examRevCount(g), examRevNeed(g))}/${examRevNeed(g)} j de révision`}</span><span style="color:#ffc94d;">${exCanDeclare ? 'résultat ›' : 'ouvrir ›'}</span></div>` : `<div class="item-meta">${!isQ && !hasSubtasks ? `<button class="g-step" aria-label="Reculer de 10 %" onclick="setGoalPercent('${g.id}', ${pct-10})">−</button>` : ''}<span style="font-family:var(--font-mono); color:var(--cyan);">${hasSubtasks ? pct+' %' : isQ ? pct+' %' : ''}</span>${!isQ && !hasSubtasks ? `<button class="g-step" aria-label="Avancer de 10 %" onclick="setGoalPercent('${g.id}', ${pct+10})">+10 %</button>` : ''}</div>`}
+        ${goalWeekHtml(g)}
+        ${isExam ? `<div class="item-meta" style="cursor:pointer;" onclick="modalExam('${g.id}')"><span style="font-family:var(--font-mono); color:var(--cyan);">${examMasteredCount(g)}/${examItemCount(g)} maîtrisés · 📅 ${Math.min(examRevCount(g), examRevNeed(g))}/${examRevNeed(g)} j de révision</span>${exCanDeclare ? `<span style="color:#ffc94d;">résultat ›</span>` : ''}</div>` : ''}
+        ${!isQ && !hasSubtasks && !isExam ? `<div class="g-acts"><button class="g-step" aria-label="Avancer de 10 %" onclick="setGoalPercent('${g.id}', ${pct+10})">+10 %</button></div>` : ''}
         ` : ''}
-        <div class="item-meta">
-          <span class="term-chip ${g.term}">${g.term==='court'?'CT':'MT'}</span>
-          <span class="rank-chip" style="color:${rankForLevel(RANK_THRESHOLDS[g.rank]||1).color}; font-size:9px; padding:1px 4px;">${g.rank}</span>
-          <span>${escapeHtml(sk ? sk.name : '—')}</span>
-          <span class="xp-tag" title="XP complète à partir de ${goalFullDays(g.rank)} jours">${g.done ? `+${g.awardedXp ?? g.xp} XP` : `jusqu'à ${goalBaseXP(g.rank)} XP`}</span>
-          ${g.reward?`<span class="reward-tag">🎁 ${escapeHtml(g.reward)}</span>`:''}
-          ${hasSubtasks ? subToggle : ''}
-        </div>
+        ${g.done ? `<div class="item-meta"><span class="xp-tag">+${g.awardedXp ?? g.xp} XP</span>${g.reward?`<span class="reward-tag">🎁 ${escapeHtml(g.reward)}</span>`:''}</div>` : ''}
+        ${hasSubtasks ? `<div class="item-meta">${subToggle}</div>` : ''}
         ${subList}
       </div>
       ${(hasSubtasks || isExam) && !g.done ? `<div class="zk-gstep-wrap">${goalNextHtml(g)}</div>` : ''}
@@ -10475,20 +11219,14 @@ function tabToday(){
         <div style="margin-bottom:6px;"><b style="color:var(--cyan);">XP</b> — chaque routine, quête ou objectif validé rapporte de l'XP dans une compétence (Force, Focus, Discipline…).</div>
         <div style="margin-bottom:6px;"><b style="color:var(--cyan);">RANG</b> — l'XP fait monter tes compétences et ton niveau de chasseur, du rang E jusqu'au rang S.</div>
         <div style="margin-bottom:6px;"><b style="color:var(--danger);">PÉNALITÉS</b> — ${STATE.settings.penaltiesEnabled ? "casser une série ou rater l'objectif d'eau coûte de l'XP (désactivable dans les réglages ⚙)." : "coupées ta première semaine ; on te proposera ensuite de les activer."}</div>
-        <div style="margin-bottom:6px;"><b style="color:#ffc94d;">JOURNÉE TENUE</b> — fais ton minimum du jour (3 actions) : +${DAY_HELD_XP} XP et une série de jours tenus.</div>
+        <div style="margin-bottom:6px;"><b style="color:#ffc94d;">JOURNÉE TENUE</b> — fais ton minimum du jour (${dayHeldMin()} actions) : +${DAY_HELD_XP} XP et une série de jours tenus.</div>
         <div style="margin-bottom:6px;">Dans « ⚔ Quêtes » : les <b style="color:var(--cyan);">routines</b> sont tes habitudes (série de jours), les <b style="color:var(--cyan);">quêtes</b> les choses à faire, et le panneau <b style="color:var(--cyan);">Sport</b> enregistre tes séances.</div>
         <div>Deux routines d'exemple t'attendent : valide-les, modifie-les ou remplace-les par les tiennes.</div>
       </div>
       <button class="btn small" onclick="dismissWelcome()">Compris</button>
     </div>` : ''}
 
-    ${guideCardHtml()}
-    ${initHtml()}
-    ${dayHeldHtml()}
-    ${penaltyNudgeHtml()}
-    ${modOn('agenda') ? schedNowCardHtml() : ''}
-    ${oathReminderHtml()}
-
+    ${returnCardHtml()}
     ${(STATE.commitment && STATE.commitment.forDate===todayStr() && STATE.commitment.taskIds.length) ? `
     <div class="panel full" style="border-color:var(--gold); box-shadow:0 0 0 1px rgba(255,201,77,0.15), inset 0 0 30px rgba(255,201,77,0.04);">
       <div class="c-tl" style="border-color:var(--gold);"></div><div class="c-br" style="border-color:var(--gold);"></div>
@@ -10508,36 +11246,13 @@ function tabToday(){
       }).join('')}
     </div>` : ''}
 
-    ${(()=>{
-      const h = new Date().getHours();
-      const alreadySet = STATE.commitment && STATE.commitment.forDate === tomorrowStr();
-      const dismissedToday = STATE.commitment && STATE.commitment.promptDismissedDate === todayStr();
-      if(h>=20 && !alreadySet && !dismissedToday && STATE.tasks.some(t=>!t.done)){
-        return `<div class="panel full" style="display:flex; align-items:center; justify-content:space-between; gap:10px; flex-wrap:wrap;">
-          <div class="tip-banner" style="margin:0; flex:1;">🌙 Quelles quêtes sont non-négociables demain ? Choisis-les maintenant, à froid.</div>
-          <div style="display:flex; gap:8px;">
-            <button class="btn small" onclick="modalCommitTomorrow()">Choisir</button>
-            <button class="icon-btn" title="Plus tard" aria-label="Plus tard" onclick="dismissCommitmentPrompt()">✕</button>
-          </div>
-        </div>`;
-      }
-      return '';
-    })()}
-
-    ${!modOn('goals') || !STATE.goals.some(g=>!g.done) ? '' : `<div class="panel full panel-compact">
-      <div class="c-tl"></div><div class="c-br"></div>
-      <div class="eyebrow">OBJECTIFS</div>
-      <h2>🎯 Objectifs en cours ${zkHelp(3)}</h2>
-      <div class="sub">${STATE.goals.filter(g=>!g.done).length} OBJECTIF(S) ACTIF(S) · COURT &amp; MOYEN TERME</div>
-      ${renderGoalsList(true, 3)}
-    </div>`}
-
+    ${prCardHtml()}
     ${currentThemeId()==='systeme' ? systemeDailyQuestHtml(pendingPlan, waterLeft) : `
     <div class="panel full">
       <div class="c-tl"></div><div class="c-br"></div>
       <div class="eyebrow">AUJOURD'HUI</div>
       <h2>Il te reste aujourd'hui ${zkHelp(0)}</h2>
-      <div class="sub">${STATE.todayStats.xpGained} XP GAGNÉE JUSQU'ICI</div>
+      <div class="sub">${STATE.todayStats.xpGained < 0 ? `${STATE.todayStats.xpGained} XP AUJOURD'HUI` : `${STATE.todayStats.xpGained} XP GAGNÉE JUSQU'ICI`}${(STATE.hunterDebt||0) > 0 ? ` · ${STATE.hunterDebt} XP À REGAGNER` : ''}</div>
       ${zkNextHtml()}
 
       ${modOn('routines') ? `<div class="today-card">
@@ -10577,6 +11292,37 @@ function tabToday(){
           ${Array.from({length:STATE.pomo.dailyGoal}).map((_,i)=>`<div class="pomo-goal-seg ${i<STATE.pomo.completedToday?'filled':''}"></div>`).join('')}
         </div>
       </div>` : ''}
+    </div>`}
+
+    ${dayHeldHtml()}
+    ${penaltyNudgeHtml()}
+    ${modOn('agenda') ? schedNowCardHtml() : ''}
+    ${oathReminderHtml()}
+
+    ${(()=>{
+      const h = new Date().getHours();
+      const alreadySet = STATE.commitment && STATE.commitment.forDate === tomorrowStr();
+      const dismissedToday = STATE.commitment && STATE.commitment.promptDismissedDate === todayStr();
+      if(h>=20 && !alreadySet && !dismissedToday && STATE.tasks.some(t=>!t.done)){
+        return `<div class="panel full" style="display:flex; align-items:center; justify-content:space-between; gap:10px; flex-wrap:wrap;">
+          <div class="tip-banner" style="margin:0; flex:1;">🌙 Quelles quêtes sont non-négociables demain ? Choisis-les maintenant, à froid.</div>
+          <div style="display:flex; gap:8px;">
+            <button class="btn small" onclick="modalCommitTomorrow()">Choisir</button>
+            <button class="icon-btn" title="Plus tard" aria-label="Plus tard" onclick="dismissCommitmentPrompt()">✕</button>
+          </div>
+        </div>`;
+      }
+      return '';
+    })()}
+
+    ${initLineHtml()}
+
+    ${!modOn('goals') || !STATE.goals.some(g=>!g.done) ? '' : `<div class="panel full panel-compact">
+      <div class="c-tl"></div><div class="c-br"></div>
+      <div class="eyebrow">OBJECTIFS</div>
+      <h2>🎯 Objectifs en cours ${zkHelp(3)}</h2>
+      <div class="sub">${STATE.goals.filter(g=>!g.done).length} OBJECTIF(S) ACTIF(S) · COURT &amp; MOYEN TERME</div>
+      ${renderGoalsList(true, 3)}
     </div>`}`;
 }
 
@@ -11097,6 +11843,12 @@ function changeCalendarMonth(delta){
   calendarMonthOffset += delta;
   render();
 }
+function calGoalOpen(id, dateStr){   // 04/11 : un objectif chiffré ou un examen ne se coche pas : on ouvre sa fiche
+  const g = STATE.goals.find(x=>x.id===id); if(!g) return;
+  if(g.progressType === 'exam' && g.exam){ modalExam(id); return; }
+  if(g.progressType === 'quantifie' || (g.subtasks||[]).length){ modalGoalDetail(id); return; }
+  toggleGoal(id); showCalendarDay(dateStr);
+}
 function showCalendarDay(dateStr){
   const tasks = STATE.tasks.filter(t=>t.type==='limitee' && t.dueDate===dateStr);
   const goals = STATE.goals.filter(g=>g.targetDate===dateStr);
@@ -11115,7 +11867,7 @@ function showCalendarDay(dateStr){
     </div>`).join('');
   const goalRows = goals.map(g=>`
     <div class="item">
-      <div class="chk ${g.done?'done':''}" onclick="toggleGoal('${g.id}'); showCalendarDay('${dateStr}');">${g.done?'✓':''}</div>
+      <div class="chk ${g.done?'done':''}" role="button" onclick="calGoalOpen('${g.id}', '${dateStr}')">${g.done?'✓':''}</div>
       <div class="item-body">
         <div class="item-name ${g.done?'done':''}">${escapeHtml(g.name)}</div>
         <div class="item-meta"><span class="term-chip">OBJECTIF</span><span class="xp-tag">+${g.xp} XP</span></div>
@@ -11656,11 +12408,39 @@ function setupPWA(){
   }catch(e){ /* PWA setup is best-effort */ }
 }
 
+/* 04/11 : écran de secours. Les données restent récupérables, même si l'app ne démarre plus. */
+function rescueHtml(e){
+  const b = 'display:block; width:100%; margin-top:10px; padding:13px; border-radius:12px; border:1px solid rgba(167,139,250,.5); background:rgba(139,92,246,.18); color:#fff; font:600 15px sans-serif; cursor:pointer;';
+  return `<div style="max-width:340px; margin:0 auto; text-transform:none; letter-spacing:0; line-height:1.5; font-size:14px;">
+    <div style="font-size:17px; font-weight:700; margin-bottom:6px;">L'app n'a pas pu démarrer</div>
+    <div>Tes données ne sont pas effacées. Commence par les exporter, puis essaie de restaurer.</div>
+    <button type="button" style="${b}" onclick="rescueExport()">Exporter mes données</button>
+    <button type="button" style="${b}" onclick="rescueRestore()">Restaurer la dernière sauvegarde</button>
+    <button type="button" style="${b}" onclick="location.reload()">Réessayer</button>
+    <div id="rescueMsg" style="margin-top:10px; font-size:13px;"></div>
+    <div style="margin-top:12px; font-size:11px; opacity:.7; word-break:break-word;">Détail à envoyer si ça revient : ${escapeHtml(String(e && e.message || e))}</div></div>`;
+}
+async function rescueExport(){
+  const raw = await storeGet(STORAGE_KEY), m = document.getElementById('rescueMsg');
+  if(!raw){ if(m) m.textContent = 'Aucune donnée à exporter sur cet appareil.'; return; }
+  const url = URL.createObjectURL(new Blob([raw], {type:'application/json'})), a = document.createElement('a');
+  a.href = url; a.download = `zenkai-secours-${todayStr()}.json`; document.body.appendChild(a); a.click(); a.remove();
+  setTimeout(()=>URL.revokeObjectURL(url), 3000);
+  if(m) m.textContent = 'Fichier exporté.';
+}
+async function rescueRestore(){
+  const bk = await getAutoBackups(), m = document.getElementById('rescueMsg');
+  if(!bk.length){ if(m) m.textContent = 'Aucune sauvegarde automatique sur cet appareil.'; return; }
+  await storeSet(STORAGE_KEY, bk[bk.length-1].snapshot);
+  location.reload();
+}
+
 /* ========================= INIT ========================= */
 (async function init(){
   try{
     zkSetIcons();
     await loadState();
+    if(showToastLater){ const msg = showToastLater; showToastLater = null; setTimeout(()=>showToast('SAUVEGARDE', msg, '', ''), 1500); }
     await loadSyncMeta();
     const allowed = await accessBoot();
     if(!allowed){ render(); return; }   // écran du code affiché : la suite démarre une fois le code validé
@@ -11668,7 +12448,7 @@ function setupPWA(){
   }catch(e){   // 21/10 : plus d'écran « Connexion au système » muet en cas d'erreur
     console.error(e);
     const l = document.getElementById('loading');
-    if(l) l.innerHTML = 'ERREUR AU DÉMARRAGE<br><span style="font-size:11px; letter-spacing:0; text-transform:none;">' + escapeHtml(String(e && e.message || e)) + '<br>Recharge la page. Si ça revient, envoie une capture.</span>';
+    if(l) l.innerHTML = rescueHtml(e);
   }
 })();
 async function bootRest(){

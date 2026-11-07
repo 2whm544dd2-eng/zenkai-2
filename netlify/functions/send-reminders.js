@@ -108,6 +108,30 @@ exports.handler = async (event) => {
       for (const id of Object.keys(record.goalNotified)) if (record.goalNotified[id] !== today) { delete record.goalNotified[id]; changed = true; }
     }
 
+    // Routines et quêtes à heure fixe (04/11) : 30 min avant, puis à l'heure, même app fermée.
+    // Tâche planifiée toutes les 10 min : fenêtres larges, doublons bloqués par timedNotified.
+    // Le serveur lit le jour lui-même : le lendemain, le rappel repart sans que l'app soit rouverte.
+    if (!dead && Array.isArray(state.timed)) {
+      record.timedNotified = record.timedNotified || {};
+      for (const it of state.timed.slice(0, 40)) {
+        if (!it || typeof it.id !== 'string' || typeof it.time !== 'string' || !/^\d{2}:\d{2}$/.test(it.time)) continue;
+        if (it.doneUntil && it.doneUntil >= today) continue;                 // déjà fait sur sa période
+        if (it.date ? it.date !== today : (Array.isArray(it.days) && !it.days.includes(weekday))) continue;   // pas prévu aujourd'hui
+        const [h, m] = it.time.split(':').map(Number);
+        const diff = h * 60 + m - nowMin;
+        const name = String(it.name || '').slice(0, 40);
+        const warn = it.warnDate === today ? '⚠ Raté la dernière fois, pas deux · ' : '';   // 05/11 : remplace le rappel séparé « ne rate pas deux fois »
+        const send = diff > 0 && diff <= 30 ? { k: 'pre', body: `${warn}${name} — dans ${diff} min (${it.time})` }
+          : diff <= 0 && diff > -15 ? { k: 'now', body: `${warn}C'est l'heure : ${name} (${it.time})` } : null;
+        if (!send) continue;
+        const nk = `${it.id}|${send.k}`;
+        if (record.timedNotified[nk] === today) continue;
+        const r = await sendPush(record.subscription, { title: 'SYSTÈME // ZENKAI', body: send.body, tag: `zenkai-timed-${it.id}` });
+        if (r) { record.timedNotified[nk] = today; changed = true; } else if (r === null) { dead = true; break; }
+      }
+      for (const id of Object.keys(record.timedNotified)) if (record.timedNotified[id] !== today) { delete record.timedNotified[id]; changed = true; }
+    }
+
     if (dead) await store.delete(key);
     else if (changed) await store.setJSON(key, record);
   }
