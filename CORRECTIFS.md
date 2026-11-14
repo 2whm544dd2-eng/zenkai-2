@@ -1,5 +1,59 @@
 # ZENKAI — build 78 (mise en ligne du 14/10/2026)
 
+## 14/11 (4) — Tout le nouveau passe en BÊTA (visible seulement sur ton compte) — index.html
+- Tout ce qui a été ajouté depuis le 08/11 (« Se mettre au travail », armée et boss, révisions, plages qui se lancent, routines évolutives, ton pourquoi, calendrier des journées) n'est visible que sur les comptes où la bêta est activée. Les autres comptes gardent l'app d'avant, sans rien perdre.
+- Activer : ouvrir l'app une fois avec ?beta=1 à la fin de l'adresse, ou bouton « 🧪 Activer la bêta sur ce compte » dans Réglages → Synchro → Admin (appareil admin). Le réglage suit le compte sur tous les appareils synchronisés. Désactiver : ?beta=0 ou le même bouton.
+- Pour sortir de la bêta (tout le monde), il suffira de changer une ligne (zkBeta).
+
+## 14/11 (3) — Retours de Moustapha : feuille blanche, ton pourquoi, agenda — index.html
+- « Je me lance » retiré de l'onglet Jour. La relance démarrage dit maintenant « lance une session, même courte ».
+- Calendrier « Mes journées » (tenue / à moitié / ratée) déplacé dans l'Agenda. Il reste dans le Journal seulement si l'Agenda est coupé. « Ce que disent tes soirs » reste dans le Journal.
+- Agenda : bouton Pomodoro à côté de chaque quête du jour (dans les plages et dans la chronologie).
+- Feuille blanche + révision espacée : bouton « 📄 Réviser » sur chaque chapitre d'un examen, bouton « Feuille blanche » dans le Focus quand un examen est choisi, et « ▶ Réviser » dans « À revoir aujourd'hui ». Écran en 3 étapes (sans le cours → compléter avec le cours → « Ça allait » / « J'ai galéré »), puis la session se lance. Le chapitre est replanifié tout seul (1, 3, 7, 14, 30 j) et la prochaine date s'affiche sous le chapitre.
+- Ton pourquoi : une phrase, écrite dans Mes rappels (« ✍ Mon pourquoi »). Elle s'ajoute au dernier appel du soir et s'affiche sur l'onglet Jour quand la série est en danger (journée ratée hier, pas encore tenue aujourd'hui).
+- Bug corrigé : au stade « Brume », l'ombre était une image floue qui faisait penser à un bug d'affichage. Elle se forme maintenant de bas en haut au rythme de la session, avec sa silhouette en filigrane.
+- Boss de la 1re semaine (commencée en cours de semaine) : au moins 2 h de PV (avant : parfois 1 h, battu en une session).
+- Agenda : panneau « Mes révisions » avec tous les chapitres planifiés (à revoir aujourd'hui, cette semaine, plus tard), « ▶ Réviser » ou « Avancer », ✕ pour retirer un chapitre, et un raccourci « 📄 » par examen.
+- Mode Masqué de l'armée : la question « Tu as bossé sur quel chapitre ? » s'affiche quand même après une session liée à un examen. Après une feuille blanche, elle n'est plus posée en double.
+- Routine évolutive : l'option « 📈 Monter petit à petit » n'apparaît que si le nom contient un nombre, avec l'exemple exact (« 20 pompes » → « 22 pompes »). Une heure (« Debout à 7 h », « 6h30 ») n'est jamais évolutive.
+
+## 14/11 (2) — Armée des ombres, boss, révisions espacées, plages qui se lancent, routines évolutives — index.html
+- Focus : avant la session, tu choisis la classe de l'ombre à invoquer (Mage, Guerrier, Archer, Assassin, Gardien). Pendant la session, elle apparaît en 4 stades (Brume, Forme, Armure, Éveil). En plein écran aussi.
+- 1 session terminée = 1 ombre. Rang selon la durée : moins de 45 min = soldat, 45 min = chevalier, 90 min = élite. Rareté sans hasard : 3e session de 25 min ou plus dans la journée = rare, 4e = épique, 90 min = +1, boss de la semaine vaincu = légendaire.
+- Fin de session : carte de révélation (rareté, n° de l'ombre, prochaine rareté). Session lâchée (Arrêter après plus d'une minute, ou « j'ai lâché » en focus strict) : l'ombre se dissipe. Rien de déjà acquis n'est retiré.
+- Boss de la semaine : PV = heures de focus visées, calculées sur tes 2 dernières semaines (+10 %), jamais au-dessus de ta meilleure semaine. 1re semaine au prorata des jours restants. 1 min de focus = 1 PV, barre en direct pendant la session, phases à 50 % et 20 %. Battu : il rejoint ton armée comme général et revient plus tard un rang au-dessus (nouvelle forme). Pas battu : il s'échappe, le suivant garde le même objectif. 4 boss qui tournent : Seigneur du Scroll, Flemme, Lendemain, Brouillard.
+- Sbire du jour : PV = ton objectif de sessions du jour. Battu : l'ombre de cette session est au moins rare.
+- Carte « Armée des ombres » sous le minuteur, fenêtre « Mon armée » (classes, raretés, généraux, dernières invocations) et fenêtre « Boss » (dégâts par jour, bestiaire).
+- Révision espacée automatique : session liée à un examen → un toucher sur le chapitre travaillé. L'app le ressort à J+1, J+3, J+7, J+14, J+30 dans « À revoir aujourd'hui » (onglet Jour), avec « ▶ Réviser ». Fin de la révision : « Ça allait » (étape suivante) ou « J'ai galéré » (on repart à J+1).
+- Planning : la plage en cours (Étude, Travail, Projet) a un bouton « ▶ Lancer » qui ouvre le Focus avec la quête ou l'examen de la plage. Option « Début de plage » dans Mes rappels (coupée par défaut).
+- Routines évolutives : option choisie à la création (ou en modifiant) la routine, coupée par défaut, routines quotidiennes avec un nombre dans le nom (pas d'heure). Après 2 semaines tenues à 85 % : proposition discrète sur l'onglet Jour (« 20 pompes » → « 22 pompes »), une fois toutes les 2 semaines au plus.
+- Affichage de l'armée au choix (Réglages du Pomodoro ⚙, ou fenêtre « Mon armée ») : Complet (grande ombre, révélation), Discret (une ligne : classe, stade, PV du boss ; pas d'effets lourds, plus léger pour la batterie) ou Masqué (le Focus comme avant ; les ombres et les dégâts sont quand même comptés).
+- Nouveaux dessins des ombres (5 classes) et des 4 boss (3 formes chacun, une par rang), détourés depuis les planches de Moustapha. Visages entièrement noirs. Plus légers à afficher que les anciens effets de fumée (environ 400 Ko d'images dans index.html).
+- Rien de nouveau côté serveur.
+
+## 14/11 — Se mettre au travail — index.html
+- Onglet Jour : « Je me lance » (2 min, sur une routine ou une quête du jour) tant que rien n'est lancé, et « Reset 2 min » (respiration guidée, compte comme une action de la journée, une fois par jour).
+- Focus strict (option) : si tu quittes l'app plus de 20 s pendant une session, au retour : « Écran éteint, je continue » ou « J'ai lâché · on recommence la session ».
+- Heures par compétence automatiques (« Mes heures » sous le minuteur), avec paliers.
+- Bilan du soir (à partir de 20 h) : note de la journée, ce qui a freiné, pourquoi une routine a raté. +5 XP une fois par jour.
+- Journal : calendrier « Mes journées » (tenue, à moitié, ratée) et « Ce que disent tes soirs ».
+- Mes rappels : « Relance démarrage » (seulement si rien n'est lancé à l'heure choisie).
+
+## 08/11 (3) — Toucher la gourde : tes 7 derniers jours — index.html
+- Toucher la gourde (Jour ou Quêtes) ouvre « Mon eau · 7 derniers jours » : une petite gourde par jour avec les litres, dorée quand l'objectif est atteint, celle d'aujourd'hui entourée. En dessous : jours à 100 %, moyenne, jours d'affilée à 100 %.
+- Rien de nouveau à enregistrer : les données viennent de l'historique (waterMl, waterGoalHit). Les jours sans donnée affichent « — ».
+- Vérifier : toucher la gourde sur Jour.
+
+## 08/11 (2) — Relance eau dans « Mes rappels » — index.html
+- Nouveau rappel « 💧 Relance eau » (désactivé par défaut, Réglages → Notifications → Mes rappels) : part seulement si rien n'est noté depuis 2 h, 2 h 30 ou 3 h (au choix) ET si tu es en retard sur ton rythme, entre 10 h et 19 h, 2 fois par jour au plus. Même app fermée (canal des objectifs, aucun changement serveur). Noter un verre décale la relance.
+- Les jours où l'app n'est pas ouverte : « Pas encore d'eau notée aujourd'hui ».
+- Quand la relance est activée, l'ancien rappel local de 18 h ne part plus.
+- Vérifier : activer la relance, régler 2 h, noter un verre, fermer l'app : la notification arrive 2 h plus tard si tu es en retard (jusqu'à 10 min de décalage).
+
+## 08/11 — Écrans guidés : plus de bandeaux par-dessus — index.html
+- Pendant une routine guidée ou une séance guidée (étapes, puis « Un pas de plus »), les bandeaux (niveau, succès) et l'XP flottant ne recouvrent plus l'écran. L'XP est déjà affiché sur l'écran de fin ; les bandeaux de niveau et de succès s'affichent un par un après « Continuer » (3 au plus).
+- Vérifier : routine avec étapes → toutes les étapes → l'écran « Un pas de plus » est net ; après « Continuer », les éventuels « Succès débloqué » apparaissent.
+
 ## 07/11 (4) — Bugs de l'analyse du 07/11, « Mes rappels », un seul rappel le soir — index.html
 - Une seule série : l'en-tête affiche la série de journées tenues (avant : la meilleure série de routine, « 12 j » à côté de « série de 26 j »).
 - Journée tenue avec les pastilles Focus : « 🔥 26 j » au lieu de « série de 26 j » (les pastilles sortaient de la carte à 390 px).
