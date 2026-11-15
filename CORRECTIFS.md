@@ -1,5 +1,14 @@
 # ZENKAI — build 78 (mise en ligne du 14/10/2026)
 
+## 15/11 — Boss et faiblesses (bêta) — index.html
+- 9 boss au lieu de 4, chacun avec une faiblesse que l'app mesure seule : la Flemme (session lancée avant 10 h), le Brouillard (session de 45 min ou plus), le Seigneur du Scroll (focus strict sans quitter l'app plus de 20 s), le Lendemain (lancée à l'heure de ta plage à 10 min près, ou dans les 5 min après avoir ouvert l'app), l'Hydre aux Onglets (intention écrite ou quête liée), le Briseur de Chaînes (2e session d'un combo), le Doute (session qui tient ta journée), le Voleur de Matins (session sur une non-négociable du jour).
+- Coup critique : une session qui exploite la faiblesse donne +1 rareté à l'ombre (jusqu'à épique ; la légendaire reste réservée au coup final). Affiché sur la carte de révélation, sous la barre du boss et dans sa fenêtre.
+- Boss final, le Roi des Excuses : verrouillé dans le bestiaire (« ? ») tant que les 8 autres n'ont pas été battus au moins une fois. PV +30 %. Faiblesse : frapper chaque jour de la semaine, sans exception.
+- Chaque lundi, une fenêtre présente le nouveau boss (dessin, faiblesse, PV, règles expliquées la 1re fois), en affichage Complet seulement.
+- Écran de victoire en plein écran quand le boss tombe : coup final (flash, entaille, barre à 0 PV, vibration), le boss se brise en particules, « VICTOIRE », bilan qui défile (jours de combat, heures de focus infligées, coups critiques). Puis « Maintiens : LÈVE-TOI » : en gardant le doigt appuyé, l'ombre du boss se relève en violet et rejoint ton armée comme général. Butin (général + ombre légendaire) et silhouette noire du boss de lundi. Toucher l'écran passe l'animation.
+- Nouveaux dessins pour l'Hydre, le Briseur, le Doute, le Voleur et le Roi (3 formes chacun).
+- Bug corrigé : sur certains appareils, la bêta se désactivait toute seule après une synchro (la version du serveur effaçait le réglage). Le réglage est maintenant aussi gardé sur l'appareil et réappliqué après chaque synchro.
+
 ## 14/11 (4) — Tout le nouveau passe en BÊTA (visible seulement sur ton compte) — index.html
 - Tout ce qui a été ajouté depuis le 08/11 (« Se mettre au travail », armée et boss, révisions, plages qui se lancent, routines évolutives, ton pourquoi, calendrier des journées) n'est visible que sur les comptes où la bêta est activée. Les autres comptes gardent l'app d'avant, sans rien perdre.
 - Activer : ouvrir l'app une fois avec ?beta=1 à la fin de l'adresse, ou bouton « 🧪 Activer la bêta sur ce compte » dans Réglages → Synchro → Admin (appareil admin). Le réglage suit le compte sur tous les appareils synchronisés. Désactiver : ?beta=0 ou le même bouton.
