@@ -1,5 +1,68 @@
 # ZENKAI — build 78 (mise en ligne du 14/10/2026)
 
+## 16/11 (9) — Plan de révision en étapes cochées, plus en temps (bêta) — index.html
+- Le plan compte en étapes : comprendre un point de théorie, le réexpliquer sans notes, faire une série avec la correction, la refaire seul. « 3 étapes aujourd'hui », « 2 faites », maximum réglé en étapes par jour.
+- Une journée est faite quand ses étapes sont cochées, peu importe le temps passé. Le rythme (et la date « prêt le ») se calcule sur les étapes vraiment cochées.
+- Une session lancée depuis le plan coche l'étape quand on répond « Fait » à la fin (« Pas fait » ne coche rien).
+- Le temps reste affiché pour information : « environ 1h40 de travail · 1h40 passées aujourd'hui » dans Jour, temps passé et restant dans Agenda.
+- Les étapes cochées sont notées par jour (et retirées si on décoche).
+
+## 16/11 (8) — Plan de révision : corrections après relecture (bêta) — index.html
+- Quand le maximum de sessions par jour bloque, l'examen le plus proche est servi d'abord (avant : partage proportionnel, le premier examen pouvait ne pas être fini à temps alors que le plan disait « dans les temps »).
+- Les 7 prochains jours sont simulés un par un (ce qui est fait un jour n'est plus compté le lendemain).
+- À 2 jours d'un examen, le dimanche n'est plus un jour tampon, et le travail restant se répartit sur les 2 jours au lieu de tout mettre le premier. Le plan ne propose plus de monter le maximum à ce moment-là.
+- Rythme réel : mesuré depuis le début du plan (3 jours au moins, 14 au plus). Avant, 2 jours de révision étaient divisés par 14 et le plan annonçait un faux retard.
+- Un nouveau plan après un ancien ne signale plus de « jours sans révision » le premier jour.
+- Carte du Jour : « Tu as fait ce qui était prévu » quand le plan du jour est fait ; l'examen du jour est affiché.
+- Maximum par jour réglable jusqu'à 10. Explications « Comment c'est calculé ? » mises à jour.
+
+## 16/11 (7) — Module Lecture (bêta) — index.html
+- Nouveau module « Lecture », éteint par défaut : il s'allume en ajoutant un livre (bouton + → Livre) ou dans Réglages → Modules.
+- Un livre : titre, nombre de pages (facultatif), genre (facultatif, dans une liste ou écrit à la main). Dans Jour : le livre en cours, sa progression, la date de fin au rythme des 7 derniers jours, le logo pomodoro (le même que dans les quêtes) et les pages en un toucher (+10, +20, page exacte).
+- Relié au Pomodoro : le logo pomodoro à côté du livre lance une session de focus sur le livre ; à la fin, le temps est ajouté au livre et l'app demande de combien de pages tu as avancé.
+- XP (compétence Apprentissage) : la session rapporte l'XP d'un focus ; +5 XP toutes les 10 pages, 30 XP par jour au plus ; +50 XP quand le livre est fini.
+- « Mes livres » : livres en cours et finis (date, durée, pages, genre), total par année, temps en sessions, filtre par genre.
+
+## 16/11 (6) — Révision par type de chapitre, « blocus » seulement près de l'examen (bêta) — index.html
+- La feuille blanche ne sert plus que pour la théorie. Un chapitre qui ne contient que des exercices se révise avec « Exercices sans correction » (refaire, se corriger, noter où ça bloque) ; un chapitre mixte garde la feuille blanche avec un exercice à refaire. Le bouton du Focus s'appelle « Révision espacée · sans notes ».
+- Le plan s'appelle « Révisions » et « Mon plan de révision » tant que le premier examen est à plus de 21 jours, « Blocus » et « Mon blocus » ensuite. Le calcul ne change pas.
+
+## 16/11 (5) — Parcours des 7 premiers jours (bêta) — index.html
+- Un nouveau compte ne voit d'abord que l'onglet Jour, avec une carte « [ SYSTÈME ] Jour 1 sur 7 ». Les autres onglets sont affichés avec un cadenas et s'ouvrent au fil des jours où au moins une action est faite : Quêtes, eau et bouton + au jour 2, Focus au jour 3, Agenda au jour 5, Stats, Succès et Journal au jour 7. Chaque ouverture est annoncée par une fenêtre « Débloqué ».
+- Un jour raté ne referme rien. Toucher un onglet verrouillé montre ce qui s'ouvre et quand ; « Tout ouvrir maintenant » met fin au parcours.
+- Le parcours n'est créé qu'à l'Éveil d'un nouveau compte, et seulement si la bêta est active (constante ZJ_OPEN à passer à true pour l'ouvrir à tous). Les comptes existants ne changent pas.
+- Pour l'essayer sur ton compte sans rien effacer : Réglages → Synchro → Admin → « 🧭 Essayer le parcours des 7 jours », puis « ⏭ Jour suivant (essai) » dans la fenêtre des déblocages.
+
+## 16/11 (4) — Plan de blocus (bêta) — index.html
+- Dès qu'un examen a une date et des chapitres, l'app calcule un plan de révision. Dans Jour : les étapes à faire aujourd'hui, un bouton « ▶ Lancer » qui démarre la session liée au chapitre (feuille blanche pour une reprise de théorie) et une case pour valider l'étape.
+- Dans l'Agenda, « Mon blocus » : pour chaque examen, le pourcentage prêt, les étapes restantes et la date où il sera prêt à ton rythme réel (14 derniers jours, jours vides compris), avec l'avance ou le retard ; les sessions prévues sur 7 jours ; « Comment c'est calculé ? ».
+- Marge : rien de prévu le dimanche, et les 2 derniers jours avant chaque examen servent aux reprises. Jour manqué : le plan se recalcule tout seul, sans double journée. Un seul réglage : le maximum de sessions par jour. Si tout ne rentre plus, l'app le dit et propose le nombre de sessions qui suffit.
+- Les étapes validées gardent leur date (pour espacer la reprise) et chaque examen garde ses minutes par jour (40 jours).
+
+## 16/11 (3) — Focus allégé, bilan du soir en une question (bêta) — index.html
+- Focus, avant de démarrer : le boss, la classe, le minuteur, l'intention et un grand bouton DÉMARRER. La compétence, le focus strict, le Reset, les réglages, le plein écran et les totaux sont sous « ⚙ Options » (un toucher les déplie). Dès que la session tourne ou est en pause, les boutons habituels reviennent. Un examen déjà choisi reste affiché.
+- Bilan du soir : une seule question pour toutes les routines non faites (la raison choisie est notée pour chacune, comme avant).
+
+## 16/11 (2) — Transitions et bandeaux (bêta) — index.html
+- Changer d'onglet : le contenu glisse du côté de l'onglet touché (0,2 s) et la page revient en haut tout de suite. Le fond des fenêtres apparaît en fondu (la fenêtre garde son animation d'origine ; correctif du soir : elle ne clignote plus à l'ouverture). Rien ne bouge si le téléphone demande moins d'animations.
+- Bandeaux : 2 visibles au maximum, les suivants s'affichent à la suite (avant : jusqu'à 8 empilés).
+- Les « +XP » qui s'envolent ne passent plus sur les bandeaux.
+- Premier lancement : plus de bandeau de bienvenue par-dessus la fenêtre « Étape 1 sur 3 ».
+
+## 16/11 — Revue avant gel : Focus, Agenda, Jour (bêta) — index.html
+- Focus : le boss n'apparaît plus deux fois (la carte du haut suffit, le bloc Armée garde le sbire du jour) ; barre du boss sur une ligne ; le bloc Armée affiche le niveau de ta classe à la place de « puissance » ; « Mes heures » montre la semaine en cours, de lundi à dimanche.
+- Armée et boss : textes à 12 px au minimum ; fenêtre Armée sans la ligne de raretés par classe ; présentation du lundi : « 7h30 de focus pour le battre ».
+- Agenda : explication de la semaine type en une phrase ; le calendrier des quêtes et objectifs est replié sous « Mes journées » (un toucher l'ouvre).
+- Jour : gourde plus petite avec 3 boutons (+250 ml, +500 ml, Autre…) ; « Autre… » ouvre la gourde complète (toutes les quantités, frise, réglages), toucher la gourde ouvre toujours les 7 derniers jours ; lignes de routine réduites au nom, à l'heure et à la série ; bouton « ▶ Lancer » à côté des sessions du jour.
+- Quêtes : le bloc Hydratation est retiré (il est dans Jour).
+
+## 15/11 (2) — L'armée frappe le boss toute seule, niveaux de classe (bêta) — index.html
+- À la fin de chaque session, l'armée frappe le boss de la semaine toute seule. Rien à faire : il suffit d'enchaîner les sessions. L'écran de fin de session ne change pas : le coup ne s'affiche pas, la barre du boss baisse et sa fenêtre indique le dernier coup (« dernier coup : −61 PV »).
+- Les dégâts partent toujours des minutes de la session, avec un bonus : ombre rare ×1,1, épique ×1,25, légendaire ×1,5 ; niveau de la classe +10 % (Élite) ou +20 % (Maréchal) ; tes 3 derniers généraux chargent avec toi (+5 % chacun). Pour compenser, les PV des nouveaux boss sont augmentés de 15 %.
+- Chaque classe évolue sur 3 niveaux : Soldat, Élite à 10 ombres, Maréchal à 30. Nouveaux dessins pour les 15 ombres (5 classes × 3 niveaux). La montée de niveau se voit dans la fenêtre Armée (niveau + barre de progression) et dans la nouvelle forme de l'ombre ; l'écran de fin de session reste celui d'avant.
+- Fenêtre Armée : niveau et progression de chaque classe (ex. « Élite · 10/30 vers Maréchal »), « meilleur niveau » à la place de « puissance ».
+- Bug corrigé : « 2 généralaux » → « 2 généraux ».
+
 ## 15/11 — Boss et faiblesses (bêta) — index.html
 - 9 boss au lieu de 4, chacun avec une faiblesse que l'app mesure seule : la Flemme (session lancée avant 10 h), le Brouillard (session de 45 min ou plus), le Seigneur du Scroll (focus strict sans quitter l'app plus de 20 s), le Lendemain (lancée à l'heure de ta plage à 10 min près, ou dans les 5 min après avoir ouvert l'app), l'Hydre aux Onglets (intention écrite ou quête liée), le Briseur de Chaînes (2e session d'un combo), le Doute (session qui tient ta journée), le Voleur de Matins (session sur une non-négociable du jour).
 - Coup critique : une session qui exploite la faiblesse donne +1 rareté à l'ombre (jusqu'à épique ; la légendaire reste réservée au coup final). Affiché sur la carte de révélation, sous la barre du boss et dans sa fenêtre.
