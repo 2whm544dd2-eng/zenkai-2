@@ -1,5 +1,11 @@
 # ZENKAI — build 78 (mise en ligne du 14/10/2026)
 
+## 16/11 (10) — Agenda plus clair : planning jour par jour, fiche d'étape, un seul calendrier (bêta) — index.html
+- « Ma journée » revient en haut d'Agenda ; le plan de révision passe dessous.
+- Le plan montre ce que tu fais jour par jour, avec le nom de chaque étape (7 jours, puis « Voir tout le plan » jusqu'au dernier examen). La bande de chiffres est retirée.
+- Toucher une étape ouvre une fiche : l'examen, le chapitre, ce qu'il faut faire en une phrase, « ▶ Lancer » ou « ✓ C'est fait ». Le bouton du plan nomme l'étape (« Commencer : … ») et la session affiche l'étape et l'action.
+- Un seul calendrier, « Mon mois » : journées tenues + échéances (quêtes datées, objectifs, examens), toucher un jour ouvre son détail, mois à venir accessibles. Le « Calendrier des quêtes et objectifs » en double est retiré.
+
 ## 16/11 (9) — Plan de révision en étapes cochées, plus en temps (bêta) — index.html
 - Le plan compte en étapes : comprendre un point de théorie, le réexpliquer sans notes, faire une série avec la correction, la refaire seul. « 3 étapes aujourd'hui », « 2 faites », maximum réglé en étapes par jour.
 - Une journée est faite quand ses étapes sont cochées, peu importe le temps passé. Le rythme (et la date « prêt le ») se calcule sur les étapes vraiment cochées.
